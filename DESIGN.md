@@ -12,7 +12,7 @@ The program will begin with the Main class which creates a CellSociety object an
 # **User Interface**
 At the program’s onset, there will be a ‘splash screen’ where the user can select which XML file to base the simulation off of (by selecting the appropriate button--buttons are used so that there are no erroneous situation). From there, the user is taken to the actual simulation UI, where each cell is represented by a square and each cell state is represented by a color.
 
-
+![GUI Design Image](https://coursework.cs.duke.edu/CompSci308_2017Spring/cellsociety_team07/blob/master/GUIDesign.jpg)
 
 # **Design Details**
 ## CLASSES:
