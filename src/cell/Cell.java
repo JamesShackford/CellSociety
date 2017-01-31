@@ -16,12 +16,12 @@ public abstract class Cell {
 
 	public Cell(int s) {
 		state = s;
-		stateColorMap = getMap();
+		stateColorMap = getStateMap();
 	}
 
 	public abstract int getNextState();
 	
-	public abstract Map<Integer, Paint> getMap();
+	public abstract Map<Integer, Paint> getStateMap();
 
 	public void updateCell() {
 		this.setState(this.getNextState());
@@ -45,6 +45,10 @@ public abstract class Cell {
 
 	public void setEdge(boolean isEdge) {
 		this.isEdge = isEdge;
+	}
+
+	public boolean getIsCorner() {
+		return isCorner;
 	}
 
 }
