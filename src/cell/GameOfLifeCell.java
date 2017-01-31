@@ -30,9 +30,12 @@ public class GameOfLifeCell extends Cell {
 		Map<String, Cell> map = myGrid.getNeighbors(xPos, yPos);
 		int numAlive = 0;
 		for (Cell neighborCell : map.values()) {
-			if (neighborCell.getState() == 1) {
-				numAlive++;
+			if(neighborCell != null){
+				if (neighborCell.getState() == 1) {
+					numAlive++;
+				}
 			}
+			
 		}
 
 		// need to simplify this if statement structure
