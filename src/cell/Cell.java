@@ -1,24 +1,43 @@
 package cell;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+
 public abstract class Cell {
-	
+
 	private boolean isEdge;
 	private boolean isCorner;
-	
-	public Cell(){
-		
+	private Map<Integer, Paint> stateColorMap;
+	private int state;
+	private int nextState;
+
+	public Cell(int s) {
+		state = s;
+		stateColorMap = getMap();
 	}
+
+	public abstract int getNextState();
 	
-	public abstract void updateCell();
-	
-	public void getState(){
-		
+	public abstract Map<Integer, Paint> getMap();
+
+	public void updateCell() {
+		this.setState(this.getNextState());
 	}
-	
-	public void setState(){
-		
+
+	public int getState() {
+		return state;
 	}
-	
+
+	public void setState(int s) {
+		state = s;
+	}
+
+	public void setNextState(int s) {
+		nextState = s;
+	}
 
 	public boolean getIsEdge() {
 		return isEdge;
@@ -27,7 +46,5 @@ public abstract class Cell {
 	public void setEdge(boolean isEdge) {
 		this.isEdge = isEdge;
 	}
-	
-	
 
 }
