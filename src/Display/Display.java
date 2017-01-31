@@ -17,6 +17,7 @@ public class Display
 	public static final double DISPLAY_HEIGHT = 600;
 	public static final double DISPLAY_WIDTH = 600;
 	public static final Paint BACKGROUND_COLOR = Color.BLACK;
+	public static final String TITLE = "CellSociety";
 
 	private Stage stage;
 	private Group root;
@@ -26,13 +27,16 @@ public class Display
 	public Display(Stage stage)
 	{
 		this.stage = stage;
-
+		this.scene = setupScene();
+		this.stage.setScene(scene);
+		stage.setTitle(TITLE);
+		stage.show();
 	}
 
-	public void setupScene()
+	public Scene setupScene()
 	{
 		root = new Group();
-		scene = new Scene(root, DISPLAY_WIDTH, DISPLAY_HEIGHT, BACKGROUND_COLOR);
+		return new Scene(root, DISPLAY_WIDTH, DISPLAY_HEIGHT, BACKGROUND_COLOR);
 	}
 
 	public void refreshDisplay()
@@ -46,14 +50,13 @@ public class Display
 		int width = cellGrid.getWidth();
 		int cellHeight = DISPLAY_HEIGHT / cellGrid.getHeight();
 		int cellWidth = DISPLAY_WIDTH / cellGrid.getWidth();
-
 		ArrayList<Shape> addedCells = new ArrayList<Shape>();
 
 		for (int i = 0; i < cellGrid.getGrid().length; i++) {
 			for (int j = 0; j < cellGrid.getGrid()[i].length; j++) {
 				Cell currCell = cellGrid.getGrid()[i][j];
 				Rectangle newCell = new Rectangle(cellWidth * j, cellHeight * i, j, i);
-				newCell.setFill(cellGrid.getStateMap().get(currCell.getState()));
+				newCell.setFill(currCell.getStateMap().get(currCell.getState()));
 				addedCells.add(newCell);
 			}
 		}
