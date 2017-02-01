@@ -14,15 +14,14 @@ import javafx.stage.Stage;
 
 public class Display
 {
-	public static final double DISPLAY_HEIGHT = 600;
-	public static final double DISPLAY_WIDTH = 600;
+	public static final int DISPLAY_HEIGHT = 600;
+	public static final int DISPLAY_WIDTH = 600;
 	public static final Paint BACKGROUND_COLOR = Color.BLACK;
 	public static final String TITLE = "CellSociety";
 
 	private Stage stage;
 	private Group root;
 	private Scene scene;
-	private CellGrid cellGrid;
 
 	public Display(Stage stage)
 	{
@@ -44,7 +43,7 @@ public class Display
 		root.getChildren().clear();
 	}
 
-	public void displayGrid()
+	public void displayGrid(CellGrid cellGrid)
 	{
 		int height = cellGrid.getHeight();
 		int width = cellGrid.getWidth();
