@@ -1,4 +1,4 @@
-package rule;
+package Rule;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,19 +16,15 @@ public class GameOfLifeRule extends Rule
 	public static final int DEAD = 0;
 	public static final Paint ALIVE_COLOR = Color.WHITE;
 	public static final Paint DEAD_COLOR = Color.BLACK;
-	private final Map<Integer, Paint> stateColorMap = makeStateMap();
+	private Map<Integer, Paint> stateColorMap;
 
 	public GameOfLifeRule(CellGrid myGrid)
 	{
 		super(myGrid);
-	}
+		stateColorMap = new HashMap<Integer, Paint>();
+		stateColorMap.put(DEAD, DEAD_COLOR);
+		stateColorMap.put(ALIVE, ALIVE_COLOR);
 
-	private static Map<Integer, Paint> makeStateMap()
-	{
-		Map<Integer, Paint> colorMap = new HashMap<Integer, Paint>();
-		colorMap.put(DEAD, DEAD_COLOR);
-		colorMap.put(ALIVE, ALIVE_COLOR);
-		return colorMap;
 	}
 
 	@Override

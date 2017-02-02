@@ -1,6 +1,6 @@
 package cell;
 
-import rule.Rule;
+import Rule.Rule;
 
 public class Cell
 {
