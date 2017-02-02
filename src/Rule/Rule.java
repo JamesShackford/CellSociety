@@ -1,8 +1,9 @@
 package Rule;
+
 import java.util.Map;
 
+import cell.Cell;
 import cellGrid.CellGrid;
-import javafx.scene.control.Cell;
 import javafx.scene.paint.Paint;
 
 public abstract class Rule
