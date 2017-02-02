@@ -3,13 +3,13 @@ package Rule;
 import java.util.HashMap;
 import java.util.Map;
 
-import Rule.Rule;
 import cell.Cell;
 import cellGrid.CellGrid;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
-public class GameOfLifeRule extends Rule {
+public class GameOfLifeRule extends Rule
+{
 
 	// 1 = alive, 0 = dead for state
 	public static final int ALIVE = 1;
@@ -18,7 +18,8 @@ public class GameOfLifeRule extends Rule {
 	public static final Paint DEAD_COLOR = Color.RED;
 	private Map<Integer, Paint> stateColorMap;
 
-	public GameOfLifeRule(CellGrid myGrid) {
+	public GameOfLifeRule(CellGrid myGrid)
+	{
 		super(myGrid);
 		stateColorMap = new HashMap<Integer, Paint>();
 		stateColorMap.put(DEAD, DEAD_COLOR);
@@ -26,13 +27,20 @@ public class GameOfLifeRule extends Rule {
 
 	}
 
-	public Map<Integer, Paint> getStateMap() {
+	@Override
+	public Map<Integer, Paint> getStateMap()
+	{
 		return stateColorMap;
 	}
 
-	public int getNextState(Cell cell) {
+	@Override
+	public int getNextState(Cell cell)
+	{
 		Map<String, Cell> map = getCellGrid().getNeighbors(cell.getX(), cell.getY());
 		int numAlive = 0;
+		for (String cellString : map.keySet()) {
+			System.out.println(cellString);
+		}
 		for (Cell neighborCell : map.values()) {
 			if (neighborCell != null) {
 				if (neighborCell.getState() == ALIVE) {
@@ -56,6 +64,5 @@ public class GameOfLifeRule extends Rule {
 		return cell.getState();
 
 	}
-
 
 }

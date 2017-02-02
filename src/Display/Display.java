@@ -26,8 +26,7 @@ public class Display
 	public Display(Stage stage)
 	{
 		this.stage = stage;
-		this.scene = setupScene();
-		this.stage.setScene(scene);
+		this.stage.setScene(setupScene());
 		stage.setTitle(TITLE);
 		stage.show();
 	}
@@ -35,7 +34,8 @@ public class Display
 	public Scene setupScene()
 	{
 		root = new Group();
-		return new Scene(root, DISPLAY_WIDTH, DISPLAY_HEIGHT, BACKGROUND_COLOR);
+		this.scene = new Scene(root, DISPLAY_WIDTH, DISPLAY_HEIGHT, BACKGROUND_COLOR);
+		return scene;
 	}
 
 	public void refreshDisplay()
@@ -54,12 +54,11 @@ public class Display
 		for (int i = 0; i < cellGrid.getGrid().length; i++) {
 			for (int j = 0; j < cellGrid.getGrid()[i].length; j++) {
 				Cell currCell = cellGrid.getGrid()[i][j];
-				Rectangle newCell = new Rectangle(cellWidth * j, cellHeight * i, j, i);
-				newCell.setFill(currCell.getStateMap().get(currCell.getState()));
+				Rectangle newCell = new Rectangle(cellWidth * i, cellHeight * j, cellWidth, cellHeight);
+				newCell.setFill(currCell.getRule().getStateMap().get(currCell.getState()));
 				addedCells.add(newCell);
 			}
 		}
-		refreshDisplay();
 		displayShapes(addedCells);
 	}
 

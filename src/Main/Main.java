@@ -1,4 +1,5 @@
 package Main;
+
 import Display.Display;
 import cellsociety.CellSociety;
 import javafx.animation.KeyFrame;
@@ -9,7 +10,7 @@ import javafx.util.Duration;
 
 public class Main extends Application
 {
-	public static final int FRAMES_PER_SECOND = 60;
+	public static final int FRAMES_PER_SECOND = 2;
 	public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
 	public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
@@ -19,8 +20,8 @@ public class Main extends Application
 	@Override
 	public void start(Stage stage) throws Exception
 	{
-		display = new Display(stage);
 		cellSociety = new CellSociety();
+		display = new Display(stage);
 		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
 		Timeline animation = new Timeline();
 		animation.setCycleCount(Timeline.INDEFINITE);
@@ -30,6 +31,7 @@ public class Main extends Application
 
 	public void step(double SECOND_DELAY)
 	{
+		display.refreshDisplay();
 		cellSociety.step(display);
 	}
 
