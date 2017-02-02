@@ -14,6 +14,8 @@ public class CellGrid {
 	private Cell[][] myGrid;
 	private int myHieght;
 	private int myWidth;
+	private cellGridNeighbors myCell;
+
 	
 	/**
 	 * Initalized the Cell Grid to the specified sized and 
@@ -56,11 +58,16 @@ public class CellGrid {
 	 * 
 	 */
 	public Map<String, Cell> getNeighbors(int x, int y) {
-		cellGridNeighbors cell = new cellGridNeighbors(myGrid, x, y);
-		return cell.getNeighbors();
+		myCell = new cellGridNeighbors(myGrid, x, y);
+		return myCell.getNeighbors();
 	}
+	public Map<String, Cell> getNeighborsWrap(int x, int y) {
+		myCell = new cellGridNeighbors(myGrid, x, y);
+		return myCell.getNeighborsWrap();
+	}
+	
 	/**
-	 * iterates throught the grid and updates all of the cells
+	 * iterates through the grid and updates all of the cells
 	 */
 	public void updateCellGrid(){
 		for (int i = 0; i < myGrid.length; i++){
