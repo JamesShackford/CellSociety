@@ -107,7 +107,7 @@ public class cellGridNeighbors
 	{
 		neighbors.put("Bottom", myGrid[x][y + 1]);
 		neighbors.put("Bottom Right", myGrid[x + 1][y + 1]);
-		neighbors.put("Center", myGrid[x][y]);
+		// neighbors.put("Center", myGrid[x][y]);
 		neighbors.put("Center Right", myGrid[x + 1][y]);
 	}
 
@@ -116,7 +116,7 @@ public class cellGridNeighbors
 		neighbors.put("Bottom Left", myGrid[x - 1][y + 1]);
 		neighbors.put("Bottom", myGrid[x][y + 1]);
 		neighbors.put("Center Left", myGrid[x - 1][y]);
-		neighbors.put("Center", myGrid[x][y]);
+		// neighbors.put("Center", myGrid[x][y]);
 	}
 
 	private void putTopLeft(Map<String, Cell> neighbors, int x2, int y2)
@@ -124,14 +124,14 @@ public class cellGridNeighbors
 		neighbors.put("Top Left", myGrid[x - 1][y - 1]);
 		neighbors.put("Top", myGrid[x][y - 1]);
 		neighbors.put("Center Left", myGrid[x - 1][y]);
-		neighbors.put("Center", myGrid[x][y]);
+		// neighbors.put("Center", myGrid[x][y]);
 	}
 
 	private void putTopRight(Map<String, Cell> neighbors, int x2, int y2)
 	{
 		neighbors.put("Top", myGrid[x][y - 1]);
 		neighbors.put("Top Right", myGrid[x + 1][y - 1]);
-		neighbors.put("Center", myGrid[x][y]);
+		// neighbors.put("Center", myGrid[x][y]);
 		neighbors.put("Center Right", myGrid[x + 1][y]);
 	}
 
@@ -159,7 +159,7 @@ public class cellGridNeighbors
 	private void putCenterRow(Map<String, Cell> neighbors, int x, int y)
 	{
 		neighbors.put("Center Left", myGrid[x - 1][y]);
-		neighbors.put("Center", myGrid[x][y]);
+		// neighbors.put("Center", myGrid[x][y]);
 		neighbors.put("Center Right", myGrid[x + 1][y]);
 	}
 
@@ -180,7 +180,7 @@ public class cellGridNeighbors
 	private void putCenterCol(Map<String, Cell> neighbors, int x, int y)
 	{
 		neighbors.put("Top", myGrid[x][y - 1]);
-		neighbors.put("Center", myGrid[x][y]);
+		// neighbors.put("Center", myGrid[x][y]);
 		neighbors.put("Bottom", myGrid[x][y + 1]);
 	}
 
