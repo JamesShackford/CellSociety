@@ -12,7 +12,7 @@ import cell.Cell;
  */
 public class CellGrid {
 	private Cell[][] myGrid;
-	private int myHieght;
+	private int myHeight;
 	private int myWidth;
 	private cellGridNeighbors myCell;
 
@@ -25,7 +25,7 @@ public class CellGrid {
 	 */
 	public CellGrid(int size) {
 		myGrid = new Cell[size][size];
-		myHieght = size;
+		myHeight = size;
 		myWidth = size;
 	}
 	/**
@@ -34,11 +34,9 @@ public class CellGrid {
 	public Cell[][] getGrid() {
 		return myGrid;
 	}
-	/**
-	 * @return the hieght of the 2D array
-	 */
-	public int getHieght() {
-		return myHieght;
+
+	public int getHeight() {
+		return myHeight;
 	}
 	/**
 	 * @return the width of the 2D array
