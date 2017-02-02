@@ -9,18 +9,23 @@ public class cellGridNeighbors {
 	private Cell[][] myGrid;
 	private int x;
 	private int y;
+	private boolean isCorner;
+	private boolean isEdge;
 
 	public cellGridNeighbors(Cell[][] grid, int curX, int curY) {
 		myGrid = grid;
 		x = curX;
 		y = curY;
+		isCorner = ((x - 1 < 0) && ((y - 1 < 0) || (y + 1 > myGrid[y].length))) ||
+				((x + 1 > myGrid.length) && ((y - 1 < 0) || (y + 1 > myGrid[y].length)));
+		isEdge = (x - 1 < 0) || (x + 1 > myGrid.length) || (y - 1 < 0) || (y + 1 > myGrid[y].length);
 	}
-
+	
 	public Map<String, Cell> getNeighbors() {
 		Map<String, Cell> neighbors = new HashMap<String, Cell>();
-		if (myGrid[x][y].getIsEdge()) {
+		if (isEdge) {
 			if (x - 1 < 0) {
-				if (!myGrid[x][y].getIsCorner()) {
+				if (!isCorner) {
 					putCenterRow(neighbors, x, x);
 					putBottom(neighbors, x, y);
 				} else if (y - 1 < 0) {
@@ -29,7 +34,7 @@ public class cellGridNeighbors {
 					putTopLeft(neighbors, x, y);
 				}
 			} else if (x + 1 > myGrid.length) {
-				if (!myGrid[x][y].getIsCorner()) {
+				if (!isCorner) {
 					putTop(neighbors, x, y);
 					putCenterRow(neighbors, x, x);
 				} else if (y - 1 < 0) {
@@ -38,7 +43,7 @@ public class cellGridNeighbors {
 					putBottomRight(neighbors, x, y);
 				}
 			} else if (y - 1 < 0) {
-				if (!myGrid[x][y].getIsCorner()) {
+				if (!isCorner) {
 					putCenterCol(neighbors, x, x);
 					putRight(neighbors, x, y);
 				} else if (x - 1 < 0) {
@@ -47,7 +52,7 @@ public class cellGridNeighbors {
 					putBottomRight(neighbors, x, y);
 				}
 			} else {
-				if (!myGrid[x][y].getIsCorner()) {
+				if (!isCorner) {
 					putCenterCol(neighbors, x, x);
 					putLeft(neighbors, x, y);
 				} else if (x - 1 < 0) {

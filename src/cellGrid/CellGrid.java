@@ -16,10 +16,9 @@ public class CellGrid {
 	private int myWidth;
 	private cellGridNeighbors myCell;
 
-	
 	/**
-	 * Initalized the Cell Grid to the specified sized and 
-	 * sets the hieght and width
+	 * Initialized the Cell Grid to the specified sized and 
+	 * sets the height and width
 	 * 
 	 * @param size
 	 */
@@ -28,6 +27,18 @@ public class CellGrid {
 		myHeight = size;
 		myWidth = size;
 	}
+	
+	/**
+	 * Initialized the Cell Grid to the specified sized and 
+	 * sets the height and width for a non-square grid
+	 * 
+	 * @param size
+	 */
+	public CellGrid(int height, int width) {
+		myGrid = new Cell[height][width];
+		myHeight = height;
+		myWidth = width;
+	}
 	/**
 	 * @return the 2D array of Cells 
 	 */
@@ -35,7 +46,11 @@ public class CellGrid {
 		return myGrid;
 	}
 	/**
+<<<<<<< HEAD
+	 * @return the Height of the 2D array
+=======
 	 * @return the height of the 2D array
+>>>>>>> master
 	 */
 	public int getHeight() {
 		return myHeight;
@@ -61,6 +76,18 @@ public class CellGrid {
 		myCell = new cellGridNeighbors(myGrid, x, y);
 		return myCell.getNeighbors();
 	}
+	
+	/**
+	 * Uses the cellGridNeighbors helper class to get the neighbors
+	 * of the cells wjen the neighbors can wrap around
+	 * 
+	 * @param x is the x index of the desired cell
+	 * @param y is the y index of the desired cell
+	 * @return a Hashmap consisting of the neighbor cells with the 
+	 * keys being strings representing the location and the value 
+	 * value being the cell
+	 * 
+	 */
 	public Map<String, Cell> getNeighborsWrap(int x, int y) {
 		myCell = new cellGridNeighbors(myGrid, x, y);
 		return myCell.getNeighborsWrap();
