@@ -1,9 +1,10 @@
-package cell;
+package Rule;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import Rule.Rule;
+import cell.Cell;
 import cellGrid.CellGrid;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -54,5 +55,6 @@ public class GameOfLifeRule extends Rule {
 		return cell.getState();
 
 	}
+
 
 }
