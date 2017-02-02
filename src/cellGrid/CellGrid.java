@@ -118,15 +118,14 @@ public class CellGrid
 	 */
 	public void updateCellGrid()
 	{
-		int[][] nextStates = new int[myGrid.length][myGrid[0].length];
 		for (int i = 0; i < myGrid.length; i++) {
 			for (int j = 0; j < myGrid[i].length; j++) {
-				nextStates[i][j] = myGrid[i][j].getRule().getNextState(myGrid[i][j]);
+				myGrid[i][j].setNextState(myGrid[i][j].getRule().getNextState(myGrid[i][j]));
 			}
 		}
 		for (int i = 0; i < myGrid.length; i++) {
 			for (int j = 0; j < myGrid[i].length; j++) {
-				myGrid[i][j].setState(nextStates[i][j]);
+				myGrid[i][j].updateCell();
 			}
 		}
 	}

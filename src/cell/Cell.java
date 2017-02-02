@@ -6,6 +6,7 @@ public class Cell
 {
 
 	private int state;
+	private int nextState;
 	private Rule myRule;
 	private int xPos;
 	private int yPos;
@@ -28,7 +29,7 @@ public class Cell
 	public void updateCell()
 	{
 		System.out.println(this.getState() == myRule.getNextState(this));
-		this.setState(myRule.getNextState(this));
+		this.setState(nextState);
 	}
 
 	public int getState()
@@ -36,9 +37,13 @@ public class Cell
 		return state;
 	}
 
-	public void setState(int s)
+	public void setState(int newState)
 	{
-		state = s;
+		state = newState;
+	}
+	
+	public void setNextState(int newState){
+		nextState = newState;
 	}
 
 	public int getX()
