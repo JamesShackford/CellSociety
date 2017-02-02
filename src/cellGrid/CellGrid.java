@@ -46,11 +46,7 @@ public class CellGrid {
 		return myGrid;
 	}
 	/**
-<<<<<<< HEAD
-	 * @return the Height of the 2D array
-=======
 	 * @return the height of the 2D array
->>>>>>> master
 	 */
 	public int getHeight() {
 		return myHeight;
@@ -91,6 +87,12 @@ public class CellGrid {
 	public Map<String, Cell> getNeighborsWrap(int x, int y) {
 		myCell = new cellGridNeighbors(myGrid, x, y);
 		return myCell.getNeighborsWrap();
+	}
+	
+	
+	public Map<String, Cell> getNeighborsSides(int x, int y) {
+		myCell = new cellGridNeighbors(myGrid, x, y);
+		return myCell.getNeighborsSides();
 	}
 	
 	/**
