@@ -44,12 +44,14 @@ public class CellGrid
 		myWidth = width;
 	}
 
-	/**
-	 * @return the 2D array of Cells
-	 */
-	public Cell[][] getGrid()
+	public Cell getCell(int x, int y)
 	{
-		return myGrid;
+		return myGrid[x][y];
+	}
+
+	public void setCell(int x, int y, Cell cell)
+	{
+		myGrid[x][y] = cell;
 	}
 
 	/**
