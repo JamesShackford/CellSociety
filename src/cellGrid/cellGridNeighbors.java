@@ -16,11 +16,11 @@ public class cellGridNeighbors {
 		myGrid = grid;
 		x = curX;
 		y = curY;
-		isCorner = ((x - 1 < 0) && ((y - 1 < 0) || (y + 1 > myGrid[y].length))) ||
-				((x + 1 > myGrid.length) && ((y - 1 < 0) || (y + 1 > myGrid[y].length)));
-		isEdge = (x - 1 < 0) || (x + 1 > myGrid.length) || (y - 1 < 0) || (y + 1 > myGrid[y].length);
+		isCorner = ((x - 1 < 0) && ((y - 1 < 0) || (y + 1 >= myGrid[y].length)))
+				|| ((x + 1 >= myGrid.length) && ((y - 1 < 0) || (y + 1 >= myGrid[y].length)));
+		isEdge = (x - 1 < 0) || (x + 1 >= myGrid.length) || (y - 1 < 0) || (y + 1 >= myGrid[y].length);
 	}
-	
+
 	public Map<String, Cell> getNeighbors() {
 		Map<String, Cell> neighbors = new HashMap<String, Cell>();
 		if (isEdge) {
@@ -66,24 +66,38 @@ public class cellGridNeighbors {
 		}
 		return neighbors;
 	}
-	
+
 	public Map<String, Cell> getNeighborsWrap() {
 		Map<String, Cell> neighbors = new HashMap<String, Cell>();
-		neighbors.put("Top Left", myGrid[(x - 1)%myGrid.length][(y - 1)%myGrid.length]);
-		neighbors.put("Top", myGrid[(x)%myGrid.length][(y - 1)%myGrid.length]);
-		neighbors.put("Center Left", myGrid[(x - 1)%myGrid.length][(y)%myGrid.length]);
-		neighbors.put("Center", myGrid[(x)%myGrid.length][(y)%myGrid.length]);
-		neighbors.put("Bottom Left", myGrid[(x - 1)%myGrid.length][(y + 1)%myGrid.length]);
-		neighbors.put("Bottom", myGrid[(x)%myGrid.length][(y + 1)%myGrid.length]);
-		neighbors.put("Center Left", myGrid[(x - 1)%myGrid.length][(y)%myGrid.length]);
-		neighbors.put("Center", myGrid[(x)%myGrid.length][(y)%myGrid.length]);
-		neighbors.put("Bottom", myGrid[(x)%myGrid.length][(y + 1)%myGrid.length]);
-		neighbors.put("Bottom Right", myGrid[(x + 1)%myGrid.length][(y + 1)%myGrid.length]);
-		neighbors.put("Center", myGrid[(x)%myGrid.length][(y)%myGrid.length]);
-		neighbors.put("Center Right", myGrid[(x + 1)%myGrid.length][(y)%myGrid.length]);
+		neighbors.put("Bottom Left", myGrid[(x - 1) % myGrid.length][(y + 1) % myGrid.length]);
+		neighbors.put("Bottom", myGrid[(x) % myGrid.length][(y + 1) % myGrid.length]);
+		neighbors.put("Bottom Right", myGrid[(x + 1) % myGrid.length][(y + 1) % myGrid.length]);
+		neighbors.put("Top Left", myGrid[(x - 1) % myGrid.length][(y - 1) % myGrid.length]);
+		neighbors.put("Top", myGrid[(x) % myGrid.length][(y - 1) % myGrid.length]);
+		neighbors.put("Top Right", myGrid[(x + 1) % myGrid.length][(y - 1) % myGrid.length]);
+		neighbors.put("Center Left", myGrid[(x - 1) % myGrid.length][(y) % myGrid.length]);
+		neighbors.put("Center", myGrid[(x) % myGrid.length][(y) % myGrid.length]);
+		neighbors.put("Center Right", myGrid[(x + 1) % myGrid.length][(y) % myGrid.length]);
 		return neighbors;
 	}
-	
+
+	public Map<String, Cell> getNeighborsSides() {
+		Map<String, Cell> neighbors = new HashMap<String, Cell>();
+		if (y + 1 < myGrid[y].length) {
+			neighbors.put("Bottom", myGrid[x][y + 1]);
+		}
+		if (y - 1 >= 0) {
+			neighbors.put("Top", myGrid[x][y - 1]);
+		}
+		if (x - 1 >= 0) {
+			neighbors.put("Center Left", myGrid[x - 1][y]);
+		}
+		if (x + 1 < myGrid.length) {
+			neighbors.put("Center Right", myGrid[x + 1][y]);
+		}
+		return neighbors;
+	}
+
 	private void putBottomRight(Map<String, Cell> neighbors, int x2, int y2) {
 		neighbors.put("Bottom", myGrid[x][y + 1]);
 		neighbors.put("Bottom Right", myGrid[x + 1][y + 1]);
