@@ -1,4 +1,4 @@
-package rule;
+package Rule;
 
 import java.util.Map;
 

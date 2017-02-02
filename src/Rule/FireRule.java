@@ -1,14 +1,14 @@
-package rule;
+package Rule;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import Rule.Rule;
 import cell.Cell;
 import cellGrid.CellGrid;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import rule.Rule;
 
 public class FireRule extends Rule {
 	public static final int FIRE = 2;
