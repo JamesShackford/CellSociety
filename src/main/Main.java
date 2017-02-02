@@ -1,6 +1,6 @@
-package Main;
+package main;
 
-import Display.Display;
+import display.Display;
 import cellsociety.CellSociety;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

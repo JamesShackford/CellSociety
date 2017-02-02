@@ -1,4 +1,4 @@
-package Display;
+package display;
 
 import java.util.ArrayList;
 
@@ -49,9 +49,9 @@ public class Display
 		int cellWidth = DISPLAY_WIDTH / cellGrid.getWidth();
 		ArrayList<Shape> addedCells = new ArrayList<Shape>();
 
-		for (int i = 0; i < cellGrid.getGrid().length; i++) {
-			for (int j = 0; j < cellGrid.getGrid()[i].length; j++) {
-				Cell currCell = cellGrid.getGrid()[i][j];
+		for (int i = 0; i < cellGrid.getHeight(); i++) {
+			for (int j = 0; j < cellGrid.getHeight(); j++) {
+				Cell currCell = cellGrid.getCell(i, j);
 				Rectangle newCell = new Rectangle(cellWidth * i, cellHeight * j, cellWidth, cellHeight);
 				newCell.setFill(currCell.getRule().getStateMap().get(currCell.getState()));
 				addedCells.add(newCell);
