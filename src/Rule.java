@@ -13,9 +13,9 @@ public abstract class Rule
 		this.cellGrid = cellGrid;
 	}
 
-	public Map<Integer, Paint> getStateMap();
+	public abstract Map<Integer, Paint> getStateMap();
 
-	public int getNextState(Cell cell);
+	public abstract int getNextState(Cell cell);
 
 	public CellGrid getCellGrid()
 	{
