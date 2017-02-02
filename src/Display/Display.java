@@ -45,8 +45,6 @@ public class Display
 
 	public void displayGrid(CellGrid cellGrid)
 	{
-		int height = cellGrid.getHeight();
-		int width = cellGrid.getWidth();
 		int cellHeight = DISPLAY_HEIGHT / cellGrid.getHeight();
 		int cellWidth = DISPLAY_WIDTH / cellGrid.getWidth();
 		ArrayList<Shape> addedCells = new ArrayList<Shape>();

@@ -29,6 +29,10 @@ public class CellSociety
 				}
 			}
 		}
+		// cellGrid.getGrid()[3][3] = new Cell(rule, 1, 3, 3);
+		// cellGrid.getGrid()[4][3] = new Cell(rule, 1, 4, 3);
+		// cellGrid.getGrid()[3][4] = new Cell(rule, 1, 3, 4);
+		// cellGrid.getGrid()[4][4] = new Cell(rule, 1, 4, 4);
 	}
 
 	public void setup()
@@ -38,11 +42,7 @@ public class CellSociety
 
 	public void step(Display display)
 	{
-		for (Cell[] cellRow : cellGrid.getGrid()) {
-			for (Cell currCell : cellRow) {
-				currCell.updateCell();
-			}
-		}
+		cellGrid.updateCellGrid();
 		display.displayGrid(cellGrid);
 	}
 
