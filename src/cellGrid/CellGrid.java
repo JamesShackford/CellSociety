@@ -6,12 +6,12 @@ import cell.Cell;
 
 public class CellGrid {
 	private Cell[][] myGrid;
-	private int myHieght;
+	private int myHeight;
 	private int myWidth;
 
 	public CellGrid(int size) {
 		myGrid = new Cell[size][size];
-		myHieght = size;
+		myHeight = size;
 		myWidth = size;
 	}
 
@@ -19,8 +19,8 @@ public class CellGrid {
 		return myGrid;
 	}
 
-	public int getHieght() {
-		return myHieght;
+	public int getHeight() {
+		return myHeight;
 	}
 
 	public int getWidth() {
