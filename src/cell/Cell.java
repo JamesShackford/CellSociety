@@ -51,5 +51,9 @@ public class Cell {
 	public int getY() {
 		return yPos;
 	}
+	
+	public Rule getRule(){
+		return myRule;
+	}
 
 }

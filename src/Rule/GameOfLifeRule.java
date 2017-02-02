@@ -14,23 +14,22 @@ public class GameOfLifeRule extends Rule {
 	// 1 = alive, 0 = dead for state
 	public static final int ALIVE = 1;
 	public static final int DEAD = 0;
-	private CellGrid myGrid;
 	private Map<Integer, Paint> stateColorMap;
 
 	public GameOfLifeRule(CellGrid myGrid) {
 		super(myGrid);
+		stateColorMap = new HashMap<Integer, Paint>();
+		stateColorMap.put(DEAD, Color.RED);
+		stateColorMap.put(ALIVE, Color.BLUE);
 
 	}
 
 	public Map<Integer, Paint> getStateMap() {
-		stateColorMap = new HashMap<Integer, Paint>();
-		stateColorMap.put(0, Color.RED);
-		stateColorMap.put(1, Color.BLUE);
 		return stateColorMap;
 	}
 
 	public int getNextState(Cell cell) {
-		Map<String, Cell> map = myGrid.getNeighbors(cell.getX(), cell.getY());
+		Map<String, Cell> map = getCellGrid().getNeighbors(cell.getX(), cell.getY());
 		int numAlive = 0;
 		for (Cell neighborCell : map.values()) {
 			if (neighborCell != null) {
