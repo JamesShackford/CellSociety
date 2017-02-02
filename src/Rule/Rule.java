@@ -1,3 +1,4 @@
+package Rule;
 import java.util.Map;
 
 import cellGrid.CellGrid;
