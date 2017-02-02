@@ -46,7 +46,11 @@ public class CellGrid {
 		return myGrid;
 	}
 	/**
+<<<<<<< HEAD
 	 * @return the Height of the 2D array
+=======
+	 * @return the height of the 2D array
+>>>>>>> master
 	 */
 	public int getHeight() {
 		return myHeight;
