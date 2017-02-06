@@ -80,7 +80,7 @@ public class cellGridNeighbors
 		neighbors.put("Top", myGrid[(x) % myGrid.length][(y - 1) % myGrid.length]);
 		neighbors.put("Top Right", myGrid[(x + 1) % myGrid.length][(y - 1) % myGrid.length]);
 		neighbors.put("Center Left", myGrid[(x - 1) % myGrid.length][(y) % myGrid.length]);
-		neighbors.put("Center", myGrid[(x) % myGrid.length][(y) % myGrid.length]);
+		//neighbors.put("Center", myGrid[(x) % myGrid.length][(y) % myGrid.length]);
 		neighbors.put("Center Right", myGrid[(x + 1) % myGrid.length][(y) % myGrid.length]);
 		return neighbors;
 	}
