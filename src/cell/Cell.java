@@ -7,6 +7,7 @@ import rule.Rule;
 public abstract class Cell
 {
 
+	private boolean nextStateFinalized;
 	private int state;
 	private int nextState;
 	private Rule myRule;
@@ -34,6 +35,7 @@ public abstract class Cell
 	public void updateCell()
 	{
 		this.setState(nextState);
+		nextStateFinalized = false;
 	}
 
 	public int getState()
@@ -64,6 +66,14 @@ public abstract class Cell
 	public Rule getRule()
 	{
 		return myRule;
+	}
+	
+	public boolean nextStateFinalized(){
+		return nextStateFinalized;
+	}
+	
+	public void setNextStateFinalized(boolean finalized){
+		nextStateFinalized = finalized;
 	}
 
 }

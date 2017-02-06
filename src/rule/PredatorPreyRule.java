@@ -47,7 +47,7 @@ public class PredatorPreyRule extends Rule {
 	//
 	//also this method should probably be refactored
 	@Override
-	public int getNextState(Cell cell) {
+	public void determineNextState(Cell cell) {
 		Map<String, Cell> neighbors = getCellGrid().getNeighborsWrap(cell.getX(), cell.getY());
 		if (!cell.nextStateFinalized()) {
 			List<Cell> emptyNeighbors = new ArrayList<Cell>();
@@ -145,5 +145,15 @@ public class PredatorPreyRule extends Rule {
 	private void kill(Cell cell) {
 		cell.setNextState(EMPTY);
 		cell.setNextStateFinalized(true);
+	}
+
+
+	@Override
+	public Map<Integer, Paint> makeStateMap() {
+		Map<Integer, Paint> stateMap = new HashMap<Integer, Paint>();
+		stateMap.put(FISH, FISH_COLOR);
+		stateMap.put(SHARK, SHARK_COLOR);
+		stateMap.put(EMPTY, EMPTY_COLOR);
+		return stateMap;
 	}
 }

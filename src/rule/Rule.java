@@ -25,7 +25,7 @@ public abstract class Rule
 		return stateColorMap;
 	}
 
-	public abstract int getNextState(Cell cell);
+	public abstract void determineNextState(Cell cell);
 
 	public abstract Map<Integer, Paint> makeStateMap();
 
