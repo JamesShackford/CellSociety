@@ -31,6 +31,7 @@ public class CellSociety
 				cellGrid.setCell(i, j, addedCell);
 			}
 		}
+		
 		// cellGrid.getGrid()[3][3] = new Cell(rule, 1, 3, 3);
 		// cellGrid.getGrid()[4][3] = new Cell(rule, 1, 4, 3);
 		// cellGrid.getGrid()[3][4] = new Cell(rule, 1, 3, 4);
