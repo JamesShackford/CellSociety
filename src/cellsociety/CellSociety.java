@@ -2,12 +2,11 @@ package cellsociety;
 
 import java.util.Random;
 
-import Display.Display;
-import Rule.FireRule;
-import Rule.GameOfLifeRule;
-import Rule.Rule;
 import cell.Cell;
 import cellGrid.CellGrid;
+import display.Display;
+import rule.GameOfLifeRule;
+import rule.Rule;
 
 public class CellSociety
 {
@@ -19,30 +18,17 @@ public class CellSociety
 	public CellSociety()
 	{
 		cellGrid = new CellGrid(GRID_SIZE);
-//		rule = new GameOfLifeRule(cellGrid);
-//		for (int i = 0; i < cellGrid.getGrid().length; i++) {
-//			for (int j = 0; j < cellGrid.getGrid()[i].length; j++) {
-//				Random rand = new Random();
-//				if (rand.nextDouble() < 0.5) {
-//					cellGrid.getGrid()[i][j] = new Cell(rule, 1, i, j);
-//				} else {
-//					cellGrid.getGrid()[i][j] = new Cell(rule, 0, i, j);
-//				}
-//			}
-//		}
-		
-		rule = new FireRule(cellGrid, 0.5);
-		for (int i = 0; i < cellGrid.getGrid().length; i++) {
-			for (int j = 0; j < cellGrid.getGrid()[i].length; j++) {
+		rule = new GameOfLifeRule(cellGrid);
+		for (int i = 0; i < cellGrid.getHeight(); i++) {
+			for (int j = 0; j < cellGrid.getWidth(); j++) {
 				Random rand = new Random();
-				double c = rand.nextDouble();
-				if (c < 0.2) {
-					cellGrid.getGrid()[i][j] = new Cell(rule, 2, i, j);
-				}else if (c < 0.90){
-					cellGrid.getGrid()[i][j] = new Cell(rule, 1, i, j);
-				}else{
-					cellGrid.getGrid()[i][j] = new Cell(rule, 0, i, j);
+				Cell addedCell = null;
+				if (rand.nextDouble() < 0.5) {
+					addedCell = new Cell(rule, 1, i, j);
+				} else {
+					addedCell = new Cell(rule, 0, i, j);
 				}
+				cellGrid.setCell(i, j, addedCell);
 			}
 		}
 		

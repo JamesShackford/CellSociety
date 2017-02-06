@@ -1,6 +1,6 @@
 package cell;
 
-import Rule.Rule;
+import rule.Rule;
 
 public class Cell
 {
@@ -28,7 +28,6 @@ public class Cell
 
 	public void updateCell()
 	{
-		System.out.println(this.getState() == myRule.getNextState(this));
 		this.setState(nextState);
 	}
 
@@ -41,8 +40,9 @@ public class Cell
 	{
 		state = newState;
 	}
-	
-	public void setNextState(int newState){
+
+	public void setNextState(int newState)
+	{
 		nextState = newState;
 	}
 
