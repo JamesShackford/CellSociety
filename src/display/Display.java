@@ -2,14 +2,12 @@ package display;
 
 import java.util.ArrayList;
 
-import cell.Cell;
 import cellGrid.CellGrid;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 
 public class Display
@@ -45,24 +43,19 @@ public class Display
 
 	public void displayGrid(CellGrid cellGrid)
 	{
-		int cellHeight = DISPLAY_HEIGHT / cellGrid.getHeight();
-		int cellWidth = DISPLAY_WIDTH / cellGrid.getWidth();
-		ArrayList<Shape> addedCells = new ArrayList<Shape>();
+		ArrayList<Node> addedCells = new ArrayList<Node>();
 
 		for (int i = 0; i < cellGrid.getHeight(); i++) {
 			for (int j = 0; j < cellGrid.getWidth(); j++) {
-				Cell currCell = cellGrid.getCell(i, j);
-				Rectangle newCell = new Rectangle(cellWidth * i, cellHeight * j, cellWidth, cellHeight);
-				newCell.setFill(currCell.getRule().getStateMap().get(currCell.getState()));
-				addedCells.add(newCell);
+				addedCells.add(cellGrid.getCell(i, j).getImage());
 			}
 		}
 		displayShapes(addedCells);
 	}
 
-	public void displayShapes(ArrayList<Shape> shapes)
+	public void displayShapes(ArrayList<Node> images)
 	{
-		for (Shape shape : shapes) {
+		for (Node shape : images) {
 			root.getChildren().add(shape);
 		}
 	}
