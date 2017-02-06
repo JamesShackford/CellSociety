@@ -1,8 +1,10 @@
 package cell;
 
+import cellGrid.CellGrid;
+import javafx.scene.Node;
 import rule.Rule;
 
-public class Cell
+public abstract class Cell
 {
 
 	private int state;
@@ -11,19 +13,22 @@ public class Cell
 	private int xPos;
 	private int yPos;
 
-	public Cell(Rule rule, int x, int y)
-	{
-		myRule = rule;
-		xPos = x;
-		yPos = y;
-	}
-
 	public Cell(Rule rule, int intialState, int x, int y)
 	{
 		myRule = rule;
 		state = intialState;
 		xPos = x;
 		yPos = y;
+	}
+
+	public abstract Node getImage();
+
+	public CellGrid getCellGrid()
+	{
+		if (this.getRule() != null) {
+			return this.getRule().getCellGrid();
+		}
+		return null;
 	}
 
 	public void updateCell()
