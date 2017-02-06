@@ -9,15 +9,25 @@ import javafx.scene.paint.Paint;
 public abstract class Rule
 {
 	CellGrid cellGrid;
+	private Map<Integer, Paint> stateColorMap = makeStateMap();
+
+	public Rule()
+	{
+	}
 
 	public Rule(CellGrid cellGrid)
 	{
 		this.cellGrid = cellGrid;
 	}
 
-	public abstract Map<Integer, Paint> getStateMap();
+	public Map<Integer, Paint> getStateMap()
+	{
+		return stateColorMap;
+	}
 
 	public abstract int getNextState(Cell cell);
+
+	public abstract Map<Integer, Paint> makeStateMap();
 
 	public CellGrid getCellGrid()
 	{

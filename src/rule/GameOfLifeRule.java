@@ -10,27 +10,20 @@ import javafx.scene.paint.Paint;
 
 public class GameOfLifeRule extends Rule
 {
-
 	// 1 = alive, 0 = dead for state
 	public static final int ALIVE = 1;
 	public static final int DEAD = 0;
 	public static final Paint ALIVE_COLOR = Color.WHITE;
 	public static final Paint DEAD_COLOR = Color.BLACK;
-	private Map<Integer, Paint> stateColorMap;
+
+	public GameOfLifeRule()
+	{
+		super();
+	}
 
 	public GameOfLifeRule(CellGrid myGrid)
 	{
 		super(myGrid);
-		stateColorMap = new HashMap<Integer, Paint>();
-		stateColorMap.put(DEAD, DEAD_COLOR);
-		stateColorMap.put(ALIVE, ALIVE_COLOR);
-
-	}
-
-	@Override
-	public Map<Integer, Paint> getStateMap()
-	{
-		return stateColorMap;
 	}
 
 	@Override
@@ -60,6 +53,15 @@ public class GameOfLifeRule extends Rule
 		}
 		return cell.getState();
 
+	}
+
+	@Override
+	public Map<Integer, Paint> makeStateMap()
+	{
+		Map<Integer, Paint> stateMap = new HashMap<Integer, Paint>();
+		stateMap.put(DEAD, DEAD_COLOR);
+		stateMap.put(ALIVE, ALIVE_COLOR);
+		return stateMap;
 	}
 
 }
