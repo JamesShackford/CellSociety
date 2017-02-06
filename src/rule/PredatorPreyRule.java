@@ -35,19 +35,10 @@ public class PredatorPreyRule extends Rule {
 	public static final Paint EMPTY_COLOR = Color.BLUE;
 	public static final Paint FISH_COLOR = Color.SALMON;
 	public static final Paint SHARK_COLOR = Color.GRAY;
-	private Map<Integer, Paint> stateColorMap;
 
-	public PredatorPreyRule(CellGrid cellGrid) {
+	public PredatorPreyRule(CellGrid cellGrid)
+	{
 		super(cellGrid);
-		stateColorMap = new HashMap<Integer, Paint>();
-		stateColorMap.put(EMPTY, EMPTY_COLOR);
-		stateColorMap.put(FISH, FISH_COLOR);
-		stateColorMap.put(SHARK, SHARK_COLOR);
-	}
-
-	@Override
-	public Map<Integer, Paint> getStateMap() {
-		return stateColorMap;
 	}
 	
 	
