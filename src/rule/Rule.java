@@ -38,4 +38,6 @@ public abstract class Rule
 	{
 		this.cellGrid = cellGrid;
 	}
+	
+
 }
