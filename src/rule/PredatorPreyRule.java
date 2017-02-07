@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import cell.Cell;
-import cellGrid.CellGrid;
+import cellgrid.CellGrid;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 

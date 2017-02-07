@@ -2,7 +2,7 @@ package display;
 
 import java.util.ArrayList;
 
-import cellGrid.CellGrid;
+import cellgrid.CellGrid;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
