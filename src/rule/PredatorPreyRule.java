@@ -65,7 +65,7 @@ public class PredatorPreyRule extends Rule
 	@Override
 	public void determineNextState(Cell cell)
 	{
-
+		
 		Map<String, Cell> neighbors = getCellGrid().getNeighborsWrap(cell.getX(), cell.getY());
 		if (!cell.nextStateFinalized()) {
 			List<Cell> emptyNeighbors = getNeighborsOfState(neighbors, EMPTY);
@@ -95,7 +95,7 @@ public class PredatorPreyRule extends Rule
 						movedTo = moveToRandCell(cell, emptyNeighbors);
 						resetBreedTime(movedTo);
 						resetBreedTime(cell);
-
+						
 					} else {
 						movedTo = moveToRandCell(cell, emptyNeighbors);
 						incrementBreedTime(movedTo);
@@ -134,7 +134,7 @@ public class PredatorPreyRule extends Rule
 		cell.setNextState(EMPTY);
 		timeGrid.setStarveTime(movedTo.getX(), movedTo.getY(), 0);
 		incrementBreedTime(movedTo);
-		// resetBreedTime(cell);
+		//resetBreedTime(cell);
 	}
 
 	/**
@@ -236,5 +236,5 @@ public class PredatorPreyRule extends Rule
 		stateMap.put(EMPTY, EMPTY_COLOR);
 		return stateMap;
 	}
-
+	
 }
