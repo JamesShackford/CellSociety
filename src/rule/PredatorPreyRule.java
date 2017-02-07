@@ -32,13 +32,16 @@ public class PredatorPreyRule extends Rule {
 	public static final int FISH = 1;
 	public static final int SHARK = 2;
 	public static final int STARVE_TIME = 5;
+	public static final int BREED_TIME = 5;
 	public static final Paint EMPTY_COLOR = Color.BLUE;
 	public static final Paint FISH_COLOR = Color.SALMON;
 	public static final Paint SHARK_COLOR = Color.GRAY;
+	private PredatorPreyTimeGrid timeGrid;
 
 	public PredatorPreyRule(CellGrid cellGrid)
 	{
 		super(cellGrid);
+		timeGrid = new PredatorPreyTimeGrid(cellGrid.getWidth(), cellGrid.getHeight());
 	}
 	
 	
@@ -54,28 +57,30 @@ public class PredatorPreyRule extends Rule {
 			if (cell.getState() == FISH) {
 				emptyNeighbors = getNeighborsOfState(neighbors, EMPTY);
 				if (emptyNeighbors.size() != 0) {
-					if (cell.readyToReproduce()) {
-						moveToRandCell(emptyNeighbors, cell.getState());
+					if (readyToReproduce(cell)) {
+						moveToRandCell(emptyNeighbors, cell);
 					} else {
-						moveToRandCell(emptyNeighbors, cell.getState());
+						moveToRandCell(emptyNeighbors, cell);
 						cell.setNextState(EMPTY);
 					}
 				}
+				incrementBreedTime(cell);
 			} else if (cell.getState() == SHARK) {
 				List<Cell> fishNeighbors = new ArrayList<Cell>();
 				fishNeighbors = getNeighborsOfState(neighbors, FISH);
-				if (cell.getStarveTime() == STARVE_TIME) {
+				if (readyToStarve(cell)) {
 					kill(cell);
 				} else if (fishNeighbors.size() != 0) {
 					eat(fishNeighbors, cell);
 				} else if (emptyNeighbors.size() != 0) {
-					if (cell.readyToReproduce()) {
-						moveToRandCell(emptyNeighbors, cell.getState());
+					if (readyToReproduce(cell)) {
+						moveToRandCell(emptyNeighbors, cell);
 					} else {
-						moveToRandCell(emptyNeighbors, SHARK);
+						moveToRandCell(emptyNeighbors, cell);
 						cell.setNextState(EMPTY);
 					}
 				}
+				incrementBreedTime(cell);
 			}
 		}
 	}
@@ -91,9 +96,10 @@ public class PredatorPreyRule extends Rule {
 	 * @param cell       current shark cell
 	 */
 	private void eat(List<Cell> fishList, Cell cell) {
-		Cell movedTo = moveToRandCell(fishList, SHARK);
+		Cell movedTo = moveToRandCell(fishList, cell);
 		cell.setNextState(EMPTY);
-		movedTo.resetStarveTime();
+		timeGrid.setStarveTime(movedTo.getX(), movedTo.getY(), 0);
+		resetTimes(cell);
 	}
 
 	/**
@@ -119,10 +125,11 @@ public class PredatorPreyRule extends Rule {
 	 * @param cellList	list of cells where one is randomly chosen for the current cell to move to
 	 * @param state		state to be moved
 	 */
-	private Cell moveToRandCell(List<Cell> cellList, int state) {
+	private Cell moveToRandCell(List<Cell> cellList, Cell cell) {
 		int index = randIndex(cellList.size());
-		cellList.get(index).setNextState(state);
+		cellList.get(index).setNextState(cell.getState());
 		cellList.get(index).setNextStateFinalized(true);
+		moveStats(cell, cellList.get(index));
 		return cellList.get(index);
 
 	}
@@ -145,8 +152,34 @@ public class PredatorPreyRule extends Rule {
 	private void kill(Cell cell) {
 		cell.setNextState(EMPTY);
 		cell.setNextStateFinalized(true);
+		resetTimes(cell);
 	}
 
+
+	private void resetTimes(Cell cell) {
+		timeGrid.setBreedTime(cell.getX(), cell.getY(), 0);
+		timeGrid.setStarveTime(cell.getX(), cell.getY(), 0);
+	}
+	
+	private boolean readyToReproduce(Cell cell){
+		return timeGrid.getBreedTime(cell.getX(), cell.getY()) >= BREED_TIME;
+	}
+	
+	private boolean readyToStarve(Cell cell){
+		return timeGrid.getStarveTime(cell.getX(), cell.getY()) >= STARVE_TIME;
+	}
+	
+	
+	private void incrementBreedTime(Cell cell){
+		timeGrid.incrementBreedTime(cell.getX(), cell.getY());
+	}
+	
+	
+	private void moveStats(Cell current, Cell moveTo){
+		timeGrid.setBreedTime(moveTo.getX(), moveTo.getY(), timeGrid.getBreedTime(current.getX(), current.getY()));
+		timeGrid.setStarveTime(moveTo.getX(), moveTo.getY(), timeGrid.getStarveTime(current.getX(), current.getY()));
+		resetTimes(current);
+	}
 
 	@Override
 	public Map<Integer, Paint> makeStateMap() {
