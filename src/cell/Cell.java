@@ -16,10 +16,11 @@ public abstract class Cell
 
 	public Cell(Rule rule, int intialState, int x, int y)
 	{
-		myRule = rule;
-		state = intialState;
-		xPos = x;
-		yPos = y;
+		this.myRule = rule;
+		this.state = intialState;
+		this.nextState = state;
+		this.xPos = x;
+		this.yPos = y;
 	}
 
 	public abstract Node getImage();
@@ -30,6 +31,11 @@ public abstract class Cell
 			return this.getRule().getCellGrid();
 		}
 		return null;
+	}
+
+	public int getNextState()
+	{
+		return nextState;
 	}
 
 	public void updateCell()
@@ -67,12 +73,14 @@ public abstract class Cell
 	{
 		return myRule;
 	}
-	
-	public boolean nextStateFinalized(){
+
+	public boolean nextStateFinalized()
+	{
 		return nextStateFinalized;
 	}
-	
-	public void setNextStateFinalized(boolean finalized){
+
+	public void setNextStateFinalized(boolean finalized)
+	{
 		nextStateFinalized = finalized;
 	}
 
