@@ -20,33 +20,33 @@ public class PredatorPreyTimeGrid
 
 	private class PredatorPreyData
 	{
-		private List<Integer> data;
+		int breedTime;
+		int starveTime;
 
 		private PredatorPreyData(int breedTime, int starveTime)
 		{
-			data = new ArrayList<Integer>();
-			data.add(breedTime);
-			data.add(starveTime);
+			this.breedTime = breedTime;
+			this.starveTime = starveTime;
 		}
 
 		private int getBreedTime()
 		{
-			return data.get(0);
+			return breedTime;
 		}
 
 		private int getStarveTime()
 		{
-			return data.get(1);
+			return starveTime;
 		}
 
 		private void setStarveTime(int newStarveTime)
 		{
-			data.set(1, newStarveTime);
+			this.starveTime = newStarveTime;
 		}
 
 		private void setBreedTime(int newBreedTime)
 		{
-			data.set(0, newBreedTime);
+			this.breedTime = newBreedTime;
 		}
 	}
 
@@ -73,5 +73,20 @@ public class PredatorPreyTimeGrid
 	public void incrementBreedTime(int x, int y)
 	{
 		myGrid[x][y].setBreedTime(myGrid[x][y].getBreedTime() + 1);
+	}
+	
+	public void incrementStarveTime(int x, int y)
+	{
+		myGrid[x][y].setStarveTime(myGrid[x][y].getStarveTime() + 1);
+	}
+	
+	
+	public void print(){
+		for (int i = 0; i < myGrid.length; i++) {
+			for (int j = 0; j < myGrid[0].length; j++) {
+				System.out.print(myGrid[i][j].getBreedTime());
+			}
+			System.out.println();
+		}
 	}
 }
