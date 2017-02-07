@@ -1,6 +1,7 @@
 package display;
 
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import cellgrid.CellGrid;
 import javafx.scene.Group;
@@ -12,20 +13,24 @@ import javafx.stage.Stage;
 
 public class Display
 {
+    public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
+	public static final String LANGUAGE = "English";
+
 	public static final int DISPLAY_HEIGHT = 600;
 	public static final int DISPLAY_WIDTH = 600;
 	public static final Paint BACKGROUND_COLOR = Color.BLACK;
-	public static final String TITLE = "CellSociety";
 
 	private Stage stage;
 	private Group root;
 	private Scene scene;
+    private ResourceBundle myResources;
 
 	public Display(Stage stage)
 	{
+        myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + LANGUAGE);
 		this.stage = stage;
 		this.stage.setScene(setupScene());
-		stage.setTitle(TITLE);
+		stage.setTitle(myResources.getString("DisplayTitle"));
 		stage.show();
 	}
 
