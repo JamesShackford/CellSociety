@@ -3,7 +3,7 @@ package rule;
 import java.util.Map;
 
 import cell.Cell;
-import cellGrid.CellGrid;
+import cellgrid.CellGrid;
 import javafx.scene.paint.Paint;
 
 public abstract class Rule

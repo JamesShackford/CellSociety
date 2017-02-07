@@ -1,6 +1,6 @@
 package cell;
 
-import cellGrid.CellGrid;
+import cellgrid.CellGrid;
 import javafx.scene.Node;
 import rule.Rule;
 

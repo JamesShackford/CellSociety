@@ -1,4 +1,4 @@
-package cellGrid;
+package cellgrid;
 
 import java.util.Map;
 

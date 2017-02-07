@@ -4,7 +4,7 @@ import java.util.Random;
 
 import cell.Cell;
 import cell.RectangularCell;
-import cellGrid.CellGrid;
+import cellgrid.CellGrid;
 import display.Display;
 import rule.Rule;
 
