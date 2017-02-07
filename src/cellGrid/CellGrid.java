@@ -120,7 +120,7 @@ public class CellGrid
 	{
 		for (int i = 0; i < myGrid.length; i++) {
 			for (int j = 0; j < myGrid[i].length; j++) {
-				myGrid[i][j].setNextState(myGrid[i][j].getRule().getNextState(myGrid[i][j]));
+				myGrid[i][j].getRule().determineNextState(myGrid[i][j]);
 			}
 		}
 		for (int i = 0; i < myGrid.length; i++) {

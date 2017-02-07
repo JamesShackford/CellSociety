@@ -17,24 +17,8 @@ public class CellSociety
 
 	public CellSociety(Rule rule)
 	{
-		cellGrid = new CellGrid(GRID_SIZE);
-		rule.setCellGrid(cellGrid);
 		this.rule = rule;
-		for (int i = 0; i < cellGrid.getHeight(); i++) {
-			for (int j = 0; j < cellGrid.getWidth(); j++) {
-				Random rand = new Random();
-				Cell addedCell = null;
-				double randDouble = rand.nextDouble();
-				if (randDouble < 0.4) {
-					addedCell = new RectangularCell(rule, 1, i, j);
-				} else if (randDouble < 0.7) {
-					addedCell = new RectangularCell(rule, 0, i, j);
-				} else {
-					addedCell = new RectangularCell(rule, 2, i, j);
-				}
-				cellGrid.setCell(i, j, addedCell);
-			}
-		}
+		this.setup();
 
 		// cellGrid.getGrid()[3][3] = new Cell(rule, 1, 3, 3);
 		// cellGrid.getGrid()[4][3] = new Cell(rule, 1, 4, 3);
@@ -44,7 +28,24 @@ public class CellSociety
 
 	public void setup()
 	{
+		cellGrid = new CellGrid(GRID_SIZE);
+		rule.setCellGrid(cellGrid);
+		for (int i = 0; i < cellGrid.getHeight(); i++) {
+			for (int j = 0; j < cellGrid.getWidth(); j++) {
+				Cell addedCell = new RectangularCell(rule, getRandomState(), i, j);
+				cellGrid.setCell(i, j, addedCell);
+			}
+		}
+	}
 
+	public int getRandomState()
+	{
+		int numPossibleStates = rule.getStateMap().size();
+		Random rand = new Random();
+		int randStateNumber = rand.nextInt(numPossibleStates);
+		Integer[] possibleStates = new Integer[numPossibleStates];
+		possibleStates = rule.getStateMap().keySet().toArray(possibleStates);
+		return possibleStates[randStateNumber];
 	}
 
 	public void step(Display display)
