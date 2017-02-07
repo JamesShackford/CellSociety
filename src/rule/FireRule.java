@@ -40,11 +40,10 @@ public class FireRule extends Rule
 		} else {
 			Random catchFire = new Random();
 			for (Cell neighborCell : neighbors.values()) {
-				if (neighborCell != null && neighborCell.getState() == FIRE && catchFire.nextDouble() < myProbFire) {
+				if (neighborCell != null && neighborCell.getState() == FIRE
+						&& catchFire.nextDouble() <= myProbFire) {
 					cell.setNextState(FIRE);
-				} else {
-					cell.setNextState(cell.getState());
-				}
+				} 
 			}
 		}
 	}
