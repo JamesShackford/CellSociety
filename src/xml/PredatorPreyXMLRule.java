@@ -17,8 +17,8 @@ public class PredatorPreyXMLRule implements XMLRule
 	@Override
 	public Rule makeRule(Map<String, String> dataValues)
 	{
-		double starveTime = Double.parseDouble(dataValues.get(DATA_FIELDS.get(0)));
-		double breedTime = Double.parseDouble(dataValues.get(DATA_FIELDS.get(1)));
+		int starveTime = Integer.parseInt(dataValues.get(DATA_FIELDS.get(0)));
+		int breedTime = Integer.parseInt(dataValues.get(DATA_FIELDS.get(1)));
 		return new PredatorPreyRule(starveTime, breedTime);
 	}
 

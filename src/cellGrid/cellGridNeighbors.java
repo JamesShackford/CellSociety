@@ -73,15 +73,14 @@ public class cellGridNeighbors
 	public Map<String, Cell> getNeighborsWrap()
 	{
 		Map<String, Cell> neighbors = new HashMap<String, Cell>();
-		neighbors.put("Bottom Left", myGrid[(x - 1) % myGrid.length][(y + 1) % myGrid.length]);
-		neighbors.put("Bottom", myGrid[(x) % myGrid.length][(y + 1) % myGrid.length]);
-		neighbors.put("Bottom Right", myGrid[(x + 1) % myGrid.length][(y + 1) % myGrid.length]);
-		neighbors.put("Top Left", myGrid[(x - 1) % myGrid.length][(y - 1) % myGrid.length]);
-		neighbors.put("Top", myGrid[(x) % myGrid.length][(y - 1) % myGrid.length]);
-		neighbors.put("Top Right", myGrid[(x + 1) % myGrid.length][(y - 1) % myGrid.length]);
-		neighbors.put("Center Left", myGrid[(x - 1) % myGrid.length][(y) % myGrid.length]);
-		//neighbors.put("Center", myGrid[(x) % myGrid.length][(y) % myGrid.length]);
-		neighbors.put("Center Right", myGrid[(x + 1) % myGrid.length][(y) % myGrid.length]);
+		neighbors.put("Bottom Left", myGrid[Math.floorMod(x - 1, myGrid.length)][Math.floorMod(y + 1, myGrid.length)]);
+		neighbors.put("Bottom", myGrid[Math.floorMod(x, myGrid.length)][Math.floorMod(y + 1, myGrid.length)]);
+		neighbors.put("Bottom Right", myGrid[Math.floorMod(x + 1, myGrid.length)][Math.floorMod(y + 1, myGrid.length)]);
+		neighbors.put("Top Left", myGrid[Math.floorMod(x - 1, myGrid.length)][Math.floorMod(y - 1, myGrid.length)]);
+		neighbors.put("Top", myGrid[Math.floorMod(x, myGrid.length)][Math.floorMod(y - 1, myGrid.length)]);
+		neighbors.put("Top Right", myGrid[Math.floorMod(x + 1, myGrid.length)][Math.floorMod(y - 1, myGrid.length)]);
+		neighbors.put("Center Left", myGrid[Math.floorMod(x - 1, myGrid.length)][Math.floorMod(y, myGrid.length)]);
+		neighbors.put("Bottom Right", myGrid[Math.floorMod(x + 1, myGrid.length)][Math.floorMod(y, myGrid.length)]);
 		return neighbors;
 	}
 
