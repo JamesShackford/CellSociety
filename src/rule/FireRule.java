@@ -32,19 +32,21 @@ public class FireRule extends Rule
 	}
 
 	@Override
-	public int getNextState(Cell cell)
+	public void determineNextState(Cell cell)
 	{
 		Map<String, Cell> neighbors = getCellGrid().getNeighborsSides(cell.getX(), cell.getY());
 		if (cell.getState() == FIRE || cell.getState() == DEAD) {
-			return DEAD;
-		}
-		Random catchFire = new Random();
-		for (Cell neighborCell : neighbors.values()) {
-			if (neighborCell != null && neighborCell.getState() == FIRE && catchFire.nextDouble() < myProbFire) {
-				return FIRE;
+			cell.setNextState(DEAD);
+		} else {
+			Random catchFire = new Random();
+			for (Cell neighborCell : neighbors.values()) {
+				if (neighborCell != null && neighborCell.getState() == FIRE && catchFire.nextDouble() < myProbFire) {
+					cell.setNextState(FIRE);
+				} else {
+					cell.setNextState(cell.getState());
+				}
 			}
 		}
-		return cell.getState();
 	}
 
 	@Override

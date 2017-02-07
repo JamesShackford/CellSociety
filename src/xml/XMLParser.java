@@ -102,6 +102,8 @@ public class XMLParser
 		Map<String, XMLRule> ruleMap = new HashMap<String, XMLRule>();
 		ruleMap.put(GameOfLifeXMLRule.DATA_TYPE, new GameOfLifeXMLRule());
 		ruleMap.put(FireXMLRule.DATA_TYPE, new FireXMLRule());
+		ruleMap.put(PredatorPreyXMLRule.DATA_TYPE, new PredatorPreyXMLRule());
+		ruleMap.put(SegregationXMLRule.DATA_TYPE, new SegregationXMLRule());
 		return ruleMap;
 	}
 
@@ -110,6 +112,8 @@ public class XMLParser
 		Map<String, List<String>> fieldMap = new HashMap<String, List<String>>();
 		fieldMap.put(GameOfLifeXMLRule.DATA_TYPE, GameOfLifeXMLRule.DATA_FIELDS);
 		fieldMap.put(FireXMLRule.DATA_TYPE, FireXMLRule.DATA_FIELDS);
+		fieldMap.put(PredatorPreyXMLRule.DATA_TYPE, PredatorPreyXMLRule.DATA_FIELDS);
+		fieldMap.put(SegregationXMLRule.DATA_TYPE, SegregationXMLRule.DATA_FIELDS);
 		return fieldMap;
 	}
 }

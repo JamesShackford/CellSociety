@@ -27,7 +27,7 @@ public class GameOfLifeRule extends Rule
 	}
 
 	@Override
-	public int getNextState(Cell cell)
+	public void determineNextState(Cell cell)
 	{
 		Map<String, Cell> map = getCellGrid().getNeighbors(cell.getX(), cell.getY());
 		int numAlive = 0;
@@ -43,15 +43,14 @@ public class GameOfLifeRule extends Rule
 		// need to simplify this if statement structure
 		if (cell.getState() == ALIVE) {
 			if (numAlive < 2 || numAlive > 3) {
-				return DEAD;
+				cell.setNextState(DEAD);
 			} else if (numAlive == 2 || numAlive == 3) {
-				return ALIVE;
+				cell.setNextState(ALIVE);
 			}
 
 		} else if (numAlive == 3) {
-			return ALIVE;
+			cell.setNextState(ALIVE);
 		}
-		return cell.getState();
 
 	}
 
