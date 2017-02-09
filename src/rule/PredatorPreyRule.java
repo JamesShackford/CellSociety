@@ -9,6 +9,8 @@ import cell.Cell;
 import cellgrid.CellGrid;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import parameters.Parameter;
+import parameters.PredatorPreyParameter;
 
 /**
  * Things that still need to be determined: How to keep track of if a cell is
@@ -30,27 +32,25 @@ import javafx.scene.paint.Paint;
  * @author Derek
  *
  */
-public class PredatorPreyRule extends Rule
-{
+public class PredatorPreyRule extends Rule {
 	public static final int EMPTY = 0;
 	public static final int FISH = 1;
 	public static final int SHARK = 2;
 	public static final Paint EMPTY_COLOR = Color.BLUE;
 	public static final Paint FISH_COLOR = Color.YELLOW;
 	public static final Paint SHARK_COLOR = Color.GRAY;
-	private PredatorPreyTimeGrid timeGrid;
+	//private List<Integer> cellParameters;
 
 	private int starveTime;
 	private int breedTime;
 
-	public PredatorPreyRule(int starveTime, int breedTime)
-	{
+	public PredatorPreyRule(int starveTime, int breedTime) {
 		this.starveTime = starveTime;
 		this.breedTime = breedTime;
+		makeStateMap();
 	}
 
-	public PredatorPreyRule(CellGrid cellGrid, int starveTime, int breedTime)
-	{
+	public PredatorPreyRule(CellGrid cellGrid, int starveTime, int breedTime) {
 		super(cellGrid);
 		this.starveTime = starveTime;
 		this.breedTime = breedTime;
@@ -63,9 +63,7 @@ public class PredatorPreyRule extends Rule
 	//
 	// also this method should probably be refactored
 	@Override
-	public void determineNextState(Cell cell)
-	{
-		
+	public void determineNextState(Cell cell) {
 		Map<String, Cell> neighbors = getCellGrid().getNeighborsWrap(cell.getX(), cell.getY());
 		if (!cell.nextStateFinalized()) {
 			List<Cell> emptyNeighbors = getNeighborsOfState(neighbors, EMPTY);
@@ -95,7 +93,7 @@ public class PredatorPreyRule extends Rule
 						movedTo = moveToRandCell(cell, emptyNeighbors);
 						resetBreedTime(movedTo);
 						resetBreedTime(cell);
-						
+
 					} else {
 						movedTo = moveToRandCell(cell, emptyNeighbors);
 						incrementBreedTime(movedTo);
@@ -105,15 +103,15 @@ public class PredatorPreyRule extends Rule
 				}
 				incrementBreedTime(cell);
 				timeGrid.incrementStarveTime(cell.getX(), cell.getY());
-			}
+			} 
+
 		}
 	}
 
 	@Override
-	public void setCellGrid(CellGrid cellGrid)
-	{
+	public void setCellGrid(CellGrid cellGrid) {
 		this.cellGrid = cellGrid;
-		this.timeGrid = new PredatorPreyTimeGrid(cellGrid.getWidth(), cellGrid.getHeight());
+		this.timeGrid = new PredatorPreyGrid(cellGrid.getWidth(), cellGrid.getHeight());
 	}
 
 	/**
@@ -128,13 +126,12 @@ public class PredatorPreyRule extends Rule
 	 * @param cell
 	 *            current shark cell
 	 */
-	private void eat(List<Cell> fishList, Cell cell)
-	{
+	private void eat(List<Cell> fishList, Cell cell) {
 		Cell movedTo = moveToRandCell(cell, fishList);
 		cell.setNextState(EMPTY);
-		timeGrid.setStarveTime(movedTo.getX(), movedTo.getY(), 0);
+		timeGrid.resetStarveTime(movedTo.getX(), movedTo.getY());
 		incrementBreedTime(movedTo);
-		//resetBreedTime(cell);
+		// resetBreedTime(cell);
 	}
 
 	/**
@@ -145,8 +142,7 @@ public class PredatorPreyRule extends Rule
 	 *            state to match return list to
 	 * @return list of cells in neighbors of given state
 	 */
-	private List<Cell> getNeighborsOfState(Map<String, Cell> neighbors, int state)
-	{
+	private List<Cell> getNeighborsOfState(Map<String, Cell> neighbors, int state) {
 		List<Cell> cellList = new ArrayList<Cell>();
 		for (Cell cell : neighbors.values()) {
 			if (cell.getState() == state) {
@@ -166,8 +162,7 @@ public class PredatorPreyRule extends Rule
 	 * @param state
 	 *            state to be moved
 	 */
-	private Cell moveToRandCell(Cell cell, List<Cell> cellList)
-	{
+	private Cell moveToRandCell(Cell cell, List<Cell> cellList) {
 		int index = randIndex(cellList.size());
 		cellList.get(index).setNextState(cell.getState());
 		cellList.get(index).setNextStateFinalized(true);
@@ -183,8 +178,7 @@ public class PredatorPreyRule extends Rule
 	 *            topBound of random num generation non-inclusive
 	 * @return random num between 0 and topBound-1 inclusive
 	 */
-	private int randIndex(int topBound)
-	{
+	private int randIndex(int topBound) {
 		return (int) (Math.random() * topBound);
 	}
 
@@ -194,47 +188,51 @@ public class PredatorPreyRule extends Rule
 	 * @param cell
 	 *            cell to be killed
 	 */
-	private void kill(Cell cell)
-	{
+	private void kill(Cell cell) {
 		cell.setNextState(EMPTY);
 		cell.setNextStateFinalized(true);
 	}
 
-	private void resetBreedTime(Cell cell)
-	{
-		timeGrid.setBreedTime(cell.getX(), cell.getY(), 0);
+	private void resetBreedTime(Cell cell) {
+		cell.getParameters().set(PredatorPreyParameter.NEXT_BREED_INDEX, 0);
 	}
 
-	private boolean readyToReproduce(Cell cell)
-	{
-		return timeGrid.getBreedTime(cell.getX(), cell.getY()) >= breedTime;
+	private boolean readyToReproduce(Cell cell) {
+		return cell.getParameters().get(PredatorPreyParameter.BREED_INDEX) >= breedTime;
 	}
 
-	private boolean readyToStarve(Cell cell)
-	{
-		return timeGrid.getStarveTime(cell.getX(), cell.getY()) >= starveTime;
+	private boolean readyToStarve(Cell cell) {
+		return cell.getParameters().get(PredatorPreyParameter.STARVE_INDEX) >= starveTime;
 	}
 
-	private void incrementBreedTime(Cell cell)
-	{
-		timeGrid.incrementBreedTime(cell.getX(), cell.getY());
+	private void incrementBreedTime(Cell cell) {
+		cell.getParameters().incrementParameter(PredatorPreyParameter.NEXT_BREED_INDEX);
 	}
 
-	private void moveStats(Cell current, Cell moveTo)
-	{
+	private void moveStats(Cell current, Cell moveTo) {
 		timeGrid.setBreedTime(moveTo.getX(), moveTo.getY(), timeGrid.getBreedTime(current.getX(), current.getY()));
 		timeGrid.setStarveTime(moveTo.getX(), moveTo.getY(), timeGrid.getStarveTime(current.getX(), current.getY()));
 		resetBreedTime(current);
 	}
 
 	@Override
-	public Map<Integer, Paint> makeStateMap()
-	{
+	public Map<Integer, Paint> makeStateMap() {
 		Map<Integer, Paint> stateMap = new HashMap<Integer, Paint>();
 		stateMap.put(FISH, FISH_COLOR);
 		stateMap.put(SHARK, SHARK_COLOR);
 		stateMap.put(EMPTY, EMPTY_COLOR);
 		return stateMap;
 	}
-	
+
+	public void printGrid() {
+		timeGrid.print();
+		System.out.println();
+	}
+
+	@Override
+	public Parameter getParameterType() {
+		Parameter newParameter = new PredatorPreyParameter();
+		return newParameter;
+		
+	}
 }
