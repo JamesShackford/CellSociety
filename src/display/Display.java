@@ -1,33 +1,47 @@
 package display;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import cellgrid.CellGrid;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.TabPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 public class Display
 {
-    public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
+	public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
 	public static final String LANGUAGE = "English";
 
-	public static final int DISPLAY_HEIGHT = 600;
-	public static final int DISPLAY_WIDTH = 600;
-	public static final Paint BACKGROUND_COLOR = Color.BLACK;
+	public static final int X_BOUNDARY = 25;
+	public static final int Y_BOUNDARY = 25;
+	public static final int DISPLAY_HEIGHT = CellGrid.GUI_HEIGHT + 200;
+	public static final int DISPLAY_WIDTH = CellGrid.GUI_WIDTH + 50;
+
+	public static final Paint BACKGROUND_COLOR = Color.WHITE;
 
 	private Stage stage;
 	private Group root;
 	private Scene scene;
-    private ResourceBundle myResources;
+	private List<AbstractTab> abstractTabs;
+	TabPane tabs;
+	private ResourceBundle myResources;
 
 	public Display(Stage stage)
 	{
-        myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + LANGUAGE);
+		tabs = new TabPane();
+		abstractTabs = new ArrayList<AbstractTab>();
+		SimulationTab simulation = new SimulationTab();
+		abstractTabs.add(simulation);
+		GraphTab graph = new GraphTab();
+		abstractTabs.add(graph);
+		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + LANGUAGE);
 		this.stage = stage;
 		this.stage.setScene(setupScene());
 		stage.setTitle(myResources.getString("DisplayTitle"));
@@ -37,25 +51,16 @@ public class Display
 	public Scene setupScene()
 	{
 		root = new Group();
-		this.scene = new Scene(root, DISPLAY_WIDTH, DISPLAY_HEIGHT, BACKGROUND_COLOR);
+		this.scene = new Scene(tabs, DISPLAY_WIDTH, DISPLAY_HEIGHT);
 		return scene;
-	}
-
-	public void refreshDisplay()
-	{
-		root.getChildren().clear();
 	}
 
 	public void displayGrid(CellGrid cellGrid)
 	{
-		ArrayList<Node> addedCells = new ArrayList<Node>();
-
-		for (int i = 0; i < cellGrid.getHeight(); i++) {
-			for (int j = 0; j < cellGrid.getWidth(); j++) {
-				addedCells.add(cellGrid.getCell(i, j).getImage());
-			}
+		for (AbstractTab abstractTab : abstractTabs) {
+			List<CellGrid> myGrids = Arrays.asList(new CellGrid[] { cellGrid });
+			tabs.getTabs().add(abstractTab.updateTab(myGrids));
 		}
-		displayShapes(addedCells);
 	}
 
 	public void displayShapes(ArrayList<Node> images)
