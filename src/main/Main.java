@@ -20,8 +20,8 @@ import xml.XMLParser;
 
 public class Main extends Application
 {
-    public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
-	
+	public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
+
 	public static final int FRAMES_PER_SECOND = 4;
 	public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
 	public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
@@ -34,15 +34,14 @@ public class Main extends Application
 
 	// it is generally accepted behavior that the chooser remembers where user
 	// left it last
-    private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + LANGUAGE);;
+	private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + LANGUAGE);;
 	private FileChooser myChooser = makeChooser(DATA_FILE_EXTENSION);
-	private Stage myStage; 
+	private Stage myStage;
 	private Animation myAnimation;
-	
-	
+
 	@Override
 	public void start(Stage stage) throws Exception
-	{	
+	{
 		myStage = stage;
 		File dataFile = myChooser.showOpenDialog(stage);
 		if (dataFile != null) {
@@ -76,7 +75,7 @@ public class Main extends Application
 	}
 
 	public void step(double SECOND_DELAY)
-	{	
+	{
 		myStage.getScene().setOnKeyReleased(e -> {
 			try {
 				handleKeyReleased(e.getCode());
@@ -84,32 +83,33 @@ public class Main extends Application
 				e1.printStackTrace();
 			}
 		});
-		display.refreshDisplay();
+		// display.refreshDisplay();
 		cellSociety.step(display);
 	}
 
-	private void handleKeyReleased(KeyCode code) throws Exception {
+	private void handleKeyReleased(KeyCode code) throws Exception
+	{
 		if (code == KeyCode.S) {
 			myAnimation.stop();
 		}
-		if (code == KeyCode.P){
+		if (code == KeyCode.P) {
 			myAnimation.pause();
 		}
-		if (code == KeyCode.B){
+		if (code == KeyCode.B) {
 			myAnimation.play();
 		}
-		if (code == KeyCode.F){
-			myAnimation.setRate(myAnimation.getCurrentRate()+0.25);
+		if (code == KeyCode.F) {
+			myAnimation.setRate(myAnimation.getCurrentRate() + 0.25);
 		}
-		if (code == KeyCode.D){
-			if (myAnimation.getCurrentRate() > 0){
-				myAnimation.setRate(myAnimation.getCurrentRate()-0.25);
+		if (code == KeyCode.D) {
+			if (myAnimation.getCurrentRate() > 0) {
+				myAnimation.setRate(myAnimation.getCurrentRate() - 0.25);
 			}
 		}
-		if (code == KeyCode.Q){
+		if (code == KeyCode.Q) {
 			step(SECOND_DELAY);
 		}
-		if (code == KeyCode.N){
+		if (code == KeyCode.N) {
 			myAnimation.stop();
 			start(myStage);
 		}
