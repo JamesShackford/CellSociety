@@ -1,5 +1,7 @@
 package cell;
 
+import java.util.Map;
+
 import cellgrid.CellGrid;
 import javafx.scene.Node;
 import rule.Rule;
@@ -83,5 +85,5 @@ public abstract class Cell
 	{
 		nextStateFinalized = finalized;
 	}
-
+	public abstract Map<String, Cell> getNeighbors();
 }

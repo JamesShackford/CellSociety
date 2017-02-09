@@ -1,5 +1,7 @@
 package cellgrid;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import cell.Cell;
@@ -13,7 +15,7 @@ import cell.Cell;
  */
 public class CellGrid
 {
-	private Cell[][] myGrid;
+	private List<List<Cell>> myGrid;
 	private int myHeight;
 	private int myWidth;
 	private cellGridNeighbors myCell;
@@ -26,7 +28,7 @@ public class CellGrid
 	 */
 	public CellGrid(int size)
 	{
-		myGrid = new Cell[size][size];
+		myGrid = new ArrayList<List<Cell>>();
 		myHeight = size;
 		myWidth = size;
 	}
@@ -39,21 +41,21 @@ public class CellGrid
 	 */
 	public CellGrid(int height, int width)
 	{
-		myGrid = new Cell[height][width];
+		myGrid = new ArrayList<List<Cell>>();
 		myHeight = height;
 		myWidth = width;
 	}
 
 	public Cell getCell(int x, int y)
 	{
-		return myGrid[x][y];
+		return myGrid.get(x).get(y);
 	}
 
 	public void setCell(int x, int y, Cell cell)
 	{
-		myGrid[x][y] = cell;
+		myGrid.get(x).set(y, cell);
 	}
-
+	
 	/**
 	 * @return the height of the 2D array
 	 */
@@ -118,15 +120,15 @@ public class CellGrid
 	 */
 	public void updateCellGrid()
 	{
-		for (int i = 0; i < myGrid.length; i++) {
-			for (int j = 0; j < myGrid[i].length; j++) {
-				myGrid[i][j].getRule().determineNextState(myGrid[i][j]);
+		for (int i = 0; i < myGrid.size(); i++) {
+			for (int j = 0; j < myGrid.get(i).size(); j++) {
+				myGrid.get(i).get(j).getRule().determineNextState(myGrid.get(i).get(j));
 			}
 		}
-		for (int i = 0; i < myGrid.length; i++) {
-			for (int j = 0; j < myGrid[i].length; j++) {
-				myGrid[i][j].updateCell();
+		for (int i = 0; i < myGrid.size(); i++) {
+			for (int j = 0; j < myGrid.get(i).size(); j++) {
+				myGrid.get(i).get(j).updateCell();
 			}
 		}
-	}
+	}	
 }
