@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import cell.Cell;
+import cell.HexagonCell;
 import cell.RectangularCell;
 import cellgrid.CellGrid;
 import rule.Rule;

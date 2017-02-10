@@ -86,4 +86,5 @@ public abstract class Cell
 		nextStateFinalized = finalized;
 	}
 	public abstract Map<String, Cell> getNeighbors();
+	public abstract Map<String, Cell> getNeighborsSides();
 }

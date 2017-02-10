@@ -16,9 +16,10 @@ public class TriangleCell extends Cell {
 
 	@Override
 	public Node getImage() {
-		double cellHeight = Display.DISPLAY_HEIGHT / this.getCellGrid().getHeight();
 		double cellWidth = Display.DISPLAY_WIDTH / this.getCellGrid().getWidth();
-		double sideLength = cellWidth/2.0;
+		double sideLength = cellWidth;
+		double cellHeight = Math.tan(Math.toRadians(60))*sideLength/2.0;
+
 		Polygon image = new Polygon();
 		image.getPoints().addAll(sideLength/2.0, 0.0,
 								2*sideLength, cellHeight,

@@ -29,7 +29,7 @@ public class GameOfLifeRule extends Rule
 	@Override
 	public void determineNextState(Cell cell)
 	{
-		Map<String, Cell> map = getCellGrid().getNeighbors(cell.getX(), cell.getY());
+		Map<String, Cell> map = cell.getNeighbors();
 		int numAlive = 0;
 		for (Cell neighborCell : map.values()) {
 			if (neighborCell != null) {

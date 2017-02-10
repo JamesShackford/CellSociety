@@ -22,13 +22,13 @@ public class HexagonCell extends Cell {
 		double sideLength = cellWidth/2;
 		double cellHeight = 2.0*Math.sin(Math.toRadians(60))*sideLength;
 		Polygon image = new Polygon();
-		image.getPoints().addAll(sideLength/2.0, 0.0,
-				sideLength/2.0 + sideLength, 0.0,
-				2*sideLength, cellHeight/2.0,
-				sideLength/2.0 + sideLength, cellHeight,
-				sideLength/2.0, cellHeight,
-				0.0, cellHeight/2.0,
-				sideLength/2.0, 0.0);
+		image.getPoints().addAll((this.getX()+0.25)*cellWidth,(cellHeight/2.0)*(this.getY()+((this.getY()+1)%2)),
+				(this.getX()+0.25)*cellWidth+sideLength,(cellHeight/2.0)*(this.getY()+((this.getY()+1)%2)),
+				this.getX()*cellWidth, (cellHeight)*(this.getY()+((this.getY()+1)%2)),
+				(this.getX()+0.25)*cellWidth+sideLength,(3.0*cellHeight/2.0)*(this.getY()+((this.getY()+1)%2)),
+				(this.getX()+0.25)*cellWidth,(3.0*cellHeight/2.0)*(this.getY()+((this.getY()+1)%2)),
+				(double)this.getX(), (cellHeight)*(this.getY()+((this.getY()+1)%2)),
+				(this.getX()+0.25)*cellWidth,(cellHeight/2)*(this.getY()+((this.getY()+1)%2)));
 		image.setFill(this.getRule().getStateMap().get(this.getState()));
 		return image;
 	}
