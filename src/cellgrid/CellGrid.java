@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 /**
- * Hold a 2D array pf cell objects where given a specific index can return the
+ * Hold a 2D array of cell objects where given a specific index can return the
  * neighbors of that cell and also updates the cells
  * 
  * @author Jonathan Rub
@@ -96,7 +96,7 @@ public class CellGrid
 
 	/**
 	 * Uses the cellGridNeighbors helper class to get the neighbors of the cells
-	 * wjen the neighbors can wrap around
+	 * when the neighbors can wrap around
 	 * 
 	 * @param x
 	 *            is the x index of the desired cell

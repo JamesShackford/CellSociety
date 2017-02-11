@@ -5,6 +5,12 @@ import java.util.Map;
 
 import cell.Cell;
 
+/**
+ * 
+ * 
+ * @author Jonathan
+ *
+ */
 public class cellGridNeighbors
 {
 	private Cell[][] myGrid;
@@ -23,6 +29,12 @@ public class cellGridNeighbors
 		isEdge = (x - 1 < 0) || (x + 1 >= myGrid.length) || (y - 1 < 0) || (y + 1 >= myGrid[y].length);
 	}
 
+	/**
+	 * returns a map of all neighbors of current cell, checks to see 
+	 * if cell is corner or edge and populates map with appropriate neighbors
+	 * 
+	 * @return a map with String location description mapped to a cell
+	 */
 	public Map<String, Cell> getNeighbors()
 	{
 		Map<String, Cell> neighbors = new HashMap<String, Cell>();
@@ -70,6 +82,10 @@ public class cellGridNeighbors
 		return neighbors;
 	}
 
+	/**
+	 * 
+	 * @return map of neighbors that wraps to other side at edges and corners
+	 */
 	public Map<String, Cell> getNeighborsWrap()
 	{
 		Map<String, Cell> neighbors = new HashMap<String, Cell>();
@@ -84,6 +100,9 @@ public class cellGridNeighbors
 		return neighbors;
 	}
 
+	/**
+	 * @return a map of neighbor cells that are adjacent but excludes diagonal neighbors
+	 */
 	public Map<String, Cell> getNeighborsSides()
 	{
 		Map<String, Cell> neighbors = new HashMap<String, Cell>();
@@ -102,6 +121,12 @@ public class cellGridNeighbors
 		return neighbors;
 	}
 
+	/**
+	 * @param neighbors
+	 * 	
+	 * @param x2
+	 * @param y2
+	 */
 	private void putBottomRight(Map<String, Cell> neighbors, int x2, int y2)
 	{
 		neighbors.put("Bottom", myGrid[x][y + 1]);
