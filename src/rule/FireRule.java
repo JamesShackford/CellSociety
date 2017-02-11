@@ -57,4 +57,5 @@ public class FireRule extends Rule
 		stateColorMap.put(0, COLOR_OF_DEAD);
 		return stateColorMap;
 	}
+
 }

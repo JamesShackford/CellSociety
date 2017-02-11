@@ -63,4 +63,5 @@ public class GameOfLifeRule extends Rule
 		return stateMap;
 	}
 
+
 }
