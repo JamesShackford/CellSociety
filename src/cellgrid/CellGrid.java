@@ -3,6 +3,8 @@ package cellgrid;
 import java.util.Map;
 
 import cell.Cell;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 /**
  * Hold a 2D array of cell objects where given a specific index can return the
@@ -13,6 +15,10 @@ import cell.Cell;
  */
 public class CellGrid
 {
+	public static final int GUI_WIDTH = 600;
+	public static final int GUI_HEIGHT = 600;
+	public static final Paint BORDER_COLOR = Color.BLACK;
+
 	private Cell[][] myGrid;
 	private int myHeight;
 	private int myWidth;
