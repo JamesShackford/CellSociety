@@ -32,7 +32,7 @@ public abstract class Cell
 		this.nextState = state;
 		this.xPos = x;
 		this.yPos = y;
-		myParameters = rule.getParameterType();
+		myParameters = rule.getParameterType(intialState);
 	}
 
 	public abstract Node getImage();

@@ -50,7 +50,7 @@ public abstract class Rule
 		newCell.getParameters().replaceParameters(current.getParameters().getParameterClone());
 	}
 	
-	public Parameter getParameterType(){
+	public Parameter getParameterType(int intialState){
 		return new Parameter();
 	}
 

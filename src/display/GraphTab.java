@@ -77,7 +77,8 @@ public class GraphTab extends AbstractTab
 			for (int j = 0; j < grid.getWidth(); j++) {
 				Cell currCell = grid.getCell(i, j);
 				int currState = currCell.getState();
-				Paint stateColor = currCell.getRule().getStateMap().get(currState);
+				//Paint stateColor = currCell.getRule().getStateMap().get(currState);
+				Paint stateColor = currCell.getRule().getColor(currState);
 				if (stateNumberMap.get(stateColor) == null) {
 					List<Integer> stateNumberList = new ArrayList<Integer>();
 					for (int k = 0; k < time; k++) {

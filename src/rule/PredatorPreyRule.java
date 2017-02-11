@@ -39,12 +39,7 @@ public class PredatorPreyRule extends Rule {
 		this.breedTime = breedTime;
 	}
 
-	// I think it might be a good idea to make getNextState() a void method
-	// called determineNextState() or something
-	// like that since in this sim sometimes needs to change the state of
-	// adjacent cells and not just its own cell
-	//
-	// also this method should probably be refactored
+	//this method should probably be refactored
 	@Override
 	public void determineNextState(Cell cell) {
 		Map<String, Cell> neighbors = getCellGrid().getNeighborsWrap(cell.getX(), cell.getY());
@@ -181,27 +176,27 @@ public class PredatorPreyRule extends Rule {
 	}
 
 	private void resetBreedTime(Cell cell) {
-		cell.getParameters().set(PredatorPreyParameter.NEXT_BREED_INDEX, 0);
+		cell.getParameters().set(PredatorPreyParameter.NEXT_BREED, 0);
 	}
 	
 	private void resetStarveTime(Cell cell) {
-		cell.getParameters().set(PredatorPreyParameter.NEXT_STARVE_INDEX, 0);
+		cell.getParameters().set(PredatorPreyParameter.NEXT_STARVE, 0);
 	}
 
 	private boolean readyToReproduce(Cell cell) {
-		return cell.getParameters().get(PredatorPreyParameter.BREED_INDEX) >= breedTime;
+		return cell.getParameters().get(PredatorPreyParameter.BREED) >= breedTime;
 	}
 
 	private boolean readyToStarve(Cell cell) {
-		return cell.getParameters().get(PredatorPreyParameter.STARVE_INDEX) >= starveTime;
+		return cell.getParameters().get(PredatorPreyParameter.STARVE) >= starveTime;
 	}
 
 	private void incrementBreedTime(Cell cell) {
-		cell.getParameters().incrementParameter(PredatorPreyParameter.NEXT_BREED_INDEX, PredatorPreyParameter.BREED_INDEX);
+		cell.getParameters().incrementParameter(PredatorPreyParameter.NEXT_BREED, PredatorPreyParameter.BREED);
 	}
 	
 	private void incrementStarveTime(Cell cell) {
-		cell.getParameters().incrementParameter(PredatorPreyParameter.NEXT_STARVE_INDEX, PredatorPreyParameter.STARVE_INDEX);
+		cell.getParameters().incrementParameter(PredatorPreyParameter.NEXT_STARVE, PredatorPreyParameter.STARVE);
 	}
 
 	@Override
@@ -214,7 +209,7 @@ public class PredatorPreyRule extends Rule {
 	}
 
 	@Override
-	public Parameter getParameterType() {
+	public Parameter getParameterType(int intialState) {
 		Parameter newParameter = new PredatorPreyParameter();
 		return newParameter;
 		

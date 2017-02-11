@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data type="Sugar">
+	<sugar_grow_back_rate>2</sugar_grow_back_rate>
+	<sugar_grow_back_interval>5</sugar_grow_back_interval>
+	<upper_met_limit>4</upper_met_limit>
+	<lower_met_limit>1</lower_met_limit>
+	<upper_vision_limit>3</upper_vision_limit>
+	<lower_vision_limit>1</lower_vision_limit>
+	<upper_agent_start_sugar>25</upper_agent_start_sugar>
+	<lower_agent_start_sugar>5</lower_agent_start_sugar>
+	<width>20</width>
+	<height>20</height>
+<initial_states>-1 1 1 1 2 2 2 2 3 3 3 2 2 2 1 1 1 1 1 1
+1 1 1 1 2 2 2 2 3 3 3 2 2 2 1 1 1 1 1 1
+1 1 1 1 2 2 2 2 3 3 3 2 2 2 1 1 1 1 1 1
+1 1 1 1 2 2 2 2 3 3 3 2 2 2 1 1 1 1 1 1
+1 1 1 1 2 2 2 2 3 3 3 2 2 2 1 1 -1 1 1 1
+1 1 1 1 2 2 2 2 3 3 3 2 2 2 1 1 1 1 1 1
+1 1 1 1 2 2 2 3 4 4 4 3 2 2 1 1 1 1 1 1
+1 1 1 1 2 2 3 4 5 5 5 4 3 2 1 1 1 1 1 1
+1 1 1 1 2 3 4 5 6 6 6 5 4 3 1 1 1 1 1 1
+1 1 1 1 2 3 4 5 6 7 6 5 4 3 1 1 1 1 1 1
+1 1 1 1 2 3 4 5 6 6 6 5 4 3 1 1 1 1 1 1
+1 1 1 1 2 2 3 4 5 5 5 4 3 2 1 1 1 1 1 1
+1 -1 1 1 2 2 2 3 4 4 4 3 2 2 1 1 1 1 1 1
+1 1 1 1 2 2 2 2 3 3 3 2 2 2 1 1 1 1 1 1
+1 1 1 1 2 2 2 2 3 3 3 2 2 2 1 1 1 1 1 1
+1 1 1 1 2 2 2 2 3 3 3 2 2 2 1 1 1 1 1 1
+1 1 1 1 2 2 2 2 3 3 3 2 2 2 1 1 1 1 1 1
+1 1 1 1 2 2 2 2 3 3 3 2 2 2 1 1 1 1 1 1
+1 1 1 1 2 2 2 2 3 3 3 2 2 2 -1 1 1 1 1 1
+1 1 1 1 2 2 2 2 3 3 3 2 2 2 1 1 1 1 1 1</initial_states>
+</data>
