@@ -34,7 +34,7 @@ public class RectangularCell extends Cell
 		Map<String, Cell> neighbors = new HashMap<String, Cell>();
 		for (int i = this.getX() - 1; i <= this.getX() + 1; i++){
 			for (int j = this.getY() - 1; j <= this.getY() + 1; j++){
-				if (i != this.getX() && j != this.getY() && isValid(i,j)){
+				if (!(i == this.getX() && j == this.getY()) && isValid(i,j)){
 					neighbors.put(i + " " + j, this.getCellGrid().getCell(i, j));
 				}
 			}
