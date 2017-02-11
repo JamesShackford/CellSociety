@@ -6,7 +6,9 @@ import javafx.scene.Node;
 
 public class CellGridMaker
 {
-	public static Group makeGridImage(CellGrid cellGrid)
+	public static int numRows = 2;
+
+	public static Group makeGridImage(CellGrid cellGrid, int gridNumber, int totalGrids)
 	{
 		Group group = new Group();
 
@@ -16,6 +18,8 @@ public class CellGridMaker
 				group.getChildren().add(addedCell);
 			}
 		}
+		// group.setScaleX(group.getScaleX() * resizeFactor);
+		// group.setScaleY(group.getScaleY() * resizeFactor);
 		return group;
 	}
 }

@@ -1,13 +1,13 @@
 package display;
 
-import java.util.List;
+import java.util.Collection;
 
 import cellgrid.CellGrid;
 import javafx.scene.control.Tab;
 
 public abstract class AbstractTab
 {
-	Tab tab;
+	private Tab tab;
 
 	public AbstractTab()
 	{
@@ -24,5 +24,5 @@ public abstract class AbstractTab
 		this.tab = tab;
 	}
 
-	public abstract Tab updateTab(List<CellGrid> grids);
+	public abstract Tab updateTab(Collection<CellGrid> grids);
 }

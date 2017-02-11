@@ -1,6 +1,7 @@
 package display;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Tab;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
 
 public class GraphTab extends AbstractTab
 {
@@ -30,7 +32,7 @@ public class GraphTab extends AbstractTab
 	}
 
 	@Override
-	public Tab updateTab(List<CellGrid> grids)
+	public Tab updateTab(Collection<CellGrid> grids)
 	{
 		Group graphs = new Group();
 
@@ -39,11 +41,6 @@ public class GraphTab extends AbstractTab
 		xAxis.setLabel("Time");
 		yAxis.setLabel("Number of Cells");
 		final LineChart<Number, Number> lineChart = new LineChart<Number, Number>(xAxis, yAxis);
-		int i = 0;
-		for (Paint currColor : stateNumberMap.keySet()) {
-			lineChart.setStyle("-fx-stroke: #00FF00; ");
-			i++;
-		}
 
 		lineChart.setTitle("Number of Cells vs. Time");
 		updateTime();
@@ -51,6 +48,16 @@ public class GraphTab extends AbstractTab
 		for (CellGrid grid : grids) {
 			lineChart.getData().addAll(makeGraph(grid));
 		}
+		int i = 0;
+		for (Paint color : stateNumberMap.keySet()) {
+			XYChart.Series<Number, Number> series = lineChart.getData().get(i);
+			series.getNode().setStyle(String.format("-fx-stroke: #%s;", color.toString().replace("0x", "")));
+			i++;
+		}
+
+		// for (XYChart.Series<Number, Number> series : lineChart.getData()) {
+		// series.getNode().setStyle(String.format("-fx-stroke: #%s;"), );
+		// }
 		tab.setContent(lineChart);
 		return tab;
 	}
@@ -87,7 +94,12 @@ public class GraphTab extends AbstractTab
 		for (Paint color : stateNumberMap.keySet()) {
 			XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>();
 			for (int t = 0; t < stateNumberMap.get(color).size(); t++) {
-				series.getData().add(new XYChart.Data<Number, Number>(t, stateNumberMap.get(color).get(t)));
+				XYChart.Data<Number, Number> currData = new XYChart.Data<Number, Number>(t,
+						stateNumberMap.get(color).get(t));
+				Rectangle dataNode = new Rectangle(5, 5);
+				dataNode.setFill(color);
+				currData.setNode(dataNode);
+				series.getData().add(currData);
 			}
 			allSeries.add(series);
 		}
