@@ -18,7 +18,7 @@ public class RectangularCell extends Cell
 		int cellHeight = CellGrid.GUI_HEIGHT / this.getCellGrid().getHeight();
 		int cellWidth = CellGrid.GUI_WIDTH / this.getCellGrid().getWidth();
 		Rectangle image = new Rectangle(cellWidth * this.getX(), cellHeight * this.getY(), cellWidth, cellHeight);
-		image.setFill(this.getRule().getStateMap().get(this.getState()));
+		image.setFill(this.getRule().getColor(this.getState()));
 		return image;
 	}
 }
