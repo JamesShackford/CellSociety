@@ -66,7 +66,7 @@ public class PredatorPreyRule extends Rule
 	public void determineNextState(Cell cell)
 	{
 
-		Map<String, Cell> neighbors = getCellGrid().getNeighborsWrap(cell.getX(), cell.getY());
+		Map<String, Cell> neighbors = cell.getNeighborsWrap();
 		if (!cell.nextStateFinalized()) {
 			List<Cell> emptyNeighbors = getNeighborsOfState(neighbors, EMPTY);
 			Cell movedTo;

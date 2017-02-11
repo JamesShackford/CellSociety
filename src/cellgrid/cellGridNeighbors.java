@@ -42,7 +42,7 @@ public class cellGridNeighbors {
 		Map<String, Cell> neighbors = new HashMap<String, Cell>();
 		for (int i = x - 1; i <= x + 1; i++){
 			for (int j = y - 1; j <= y + 1; j++){
-				if (i != x && j != y){
+				if (!(i == x && j == y)){
 					neighbors.put(i + " " + j, myGrid.get(Math.floorMod(i, myGrid.size())).get(Math.floorMod(j, myGrid.size())));				}
 			}
 		}

@@ -86,49 +86,6 @@ public class CellGrid
 	}
 
 	/**
-	 * Uses the cellGridNeighbors helper class to get the neighbors of the cells
-	 * 
-	 * @param x
-	 *            is the x index of the desired cell
-	 * @param y
-	 *            is the y index of the desired cell
-	 * @return a Hashmap consisting of the neighbor cells with the keys being
-	 *         strings representing the location and the value value being the
-	 *         cell
-	 * 
-	 */
-	public Map<String, Cell> getNeighbors(int x, int y)
-	{
-		myCell = new cellGridNeighbors(myGrid, x, y);
-		return myCell.getNeighbors();
-	}
-
-	/**
-	 * Uses the cellGridNeighbors helper class to get the neighbors of the cells
-	 * wjen the neighbors can wrap around
-	 * 
-	 * @param x
-	 *            is the x index of the desired cell
-	 * @param y
-	 *            is the y index of the desired cell
-	 * @return a Hashmap consisting of the neighbor cells with the keys being
-	 *         strings representing the location and the value value being the
-	 *         cell
-	 * 
-	 */
-	public Map<String, Cell> getNeighborsWrap(int x, int y)
-	{
-		myCell = new cellGridNeighbors(myGrid, x, y);
-		return myCell.getNeighborsWrap();
-	}
-
-	public Map<String, Cell> getNeighborsSides(int x, int y)
-	{
-		myCell = new cellGridNeighbors(myGrid, x, y);
-		return myCell.getNeighborsSides();
-	}
-
-	/**
 	 * iterates through the grid and updates all of the cells
 	 */
 	public void updateCellGrid()

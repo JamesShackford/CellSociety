@@ -7,6 +7,7 @@ import java.util.Map;
 import cell.Cell;
 import cell.HexagonCell;
 import cell.RectangularCell;
+import cell.TriangleCell;
 import cellgrid.CellGrid;
 import rule.Rule;
 
@@ -27,7 +28,7 @@ public abstract class XMLRule
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 				int currState = Integer.parseInt(initialValues[i].split(" ")[j]);
-				Cell addedCell = new RectangularCell(myRule, currState, i, j);
+				Cell addedCell = new HexagonCell(myRule, currState, i, j);
 				myGrid.setCell(i, j, addedCell);
 			}
 		}

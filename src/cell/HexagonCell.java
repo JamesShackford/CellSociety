@@ -5,6 +5,7 @@ import java.util.Map;
 
 import display.Display;
 import javafx.scene.Node;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import rule.Rule;
@@ -13,7 +14,6 @@ public class HexagonCell extends Cell {
 
 	public HexagonCell(Rule rule, int intialState, int x, int y) {
 		super(rule, intialState, x, y);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -21,14 +21,18 @@ public class HexagonCell extends Cell {
 		double cellWidth = Display.DISPLAY_WIDTH / this.getCellGrid().getWidth();
 		double sideLength = cellWidth/2;
 		double cellHeight = 2.0*Math.sin(Math.toRadians(60))*sideLength;
+		double xCor = ((this.getY()*3.0)/4.0)*cellWidth;
+		double yCor = ((this.getX()+1.0)-((this.getY()%2)/2.0))*cellHeight;
 		Polygon image = new Polygon();
-		image.getPoints().addAll((this.getX()+0.25)*cellWidth,(cellHeight/2.0)*(this.getY()+((this.getY()+1)%2)),
-				(this.getX()+0.25)*cellWidth+sideLength,(cellHeight/2.0)*(this.getY()+((this.getY()+1)%2)),
-				this.getX()*cellWidth, (cellHeight)*(this.getY()+((this.getY()+1)%2)),
-				(this.getX()+0.25)*cellWidth+sideLength,(3.0*cellHeight/2.0)*(this.getY()+((this.getY()+1)%2)),
-				(this.getX()+0.25)*cellWidth,(3.0*cellHeight/2.0)*(this.getY()+((this.getY()+1)%2)),
-				(double)this.getX(), (cellHeight)*(this.getY()+((this.getY()+1)%2)),
-				(this.getX()+0.25)*cellWidth,(cellHeight/2)*(this.getY()+((this.getY()+1)%2)));
+		image.getPoints().addAll(
+				xCor, 						yCor,
+				xCor+ sideLength/2.0, 		yCor - cellHeight/2.0,
+				xCor+ 3.0*sideLength/2.0, 	yCor - cellHeight/2.0,
+				xCor+ 2.0*sideLength, 		yCor,
+				xCor+ 3.0*sideLength/2.0, 	yCor + cellHeight/2.0,					
+				xCor+ sideLength/2.0, 		yCor + cellHeight/2.0,
+				xCor, 						yCor);
+		image.setStroke(Color.LIGHTBLUE);
 		image.setFill(this.getRule().getStateMap().get(this.getState()));
 		return image;
 	}
@@ -87,6 +91,17 @@ public class HexagonCell extends Cell {
 			}
 		}
 		return neighbors;
+	}
+
+	@Override
+	public Map<String, Cell> getNeighborsSides() {
+		return getNeighbors();
+	}
+
+	@Override
+	public Map<String, Cell> getNeighborsWrap() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
