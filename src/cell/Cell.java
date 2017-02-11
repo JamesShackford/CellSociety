@@ -2,8 +2,18 @@ package cell;
 
 import cellgrid.CellGrid;
 import javafx.scene.Node;
+import parameters.Parameter;
 import rule.Rule;
 
+/**
+ * Abstract class for Cell, provides essential methods and parameters
+ * for a Cell in the simulation grid
+ * 
+ * All types of cells to be represented in a simulation must extend this class
+ * 
+ * @author Derek, Jimmy
+ *
+ */
 public abstract class Cell
 {
 
@@ -13,6 +23,7 @@ public abstract class Cell
 	private Rule myRule;
 	private int xPos;
 	private int yPos;
+	private Parameter myParameters;
 
 	public Cell(Rule rule, int intialState, int x, int y)
 	{
@@ -21,10 +32,14 @@ public abstract class Cell
 		this.nextState = state;
 		this.xPos = x;
 		this.yPos = y;
+		myParameters = rule.getParameterType();
 	}
 
 	public abstract Node getImage();
 
+	/**
+	 * @return   CellGrid that this cell is in
+	 */
 	public CellGrid getCellGrid()
 	{
 		if (this.getRule() != null) {
@@ -42,6 +57,7 @@ public abstract class Cell
 	{
 		this.setState(nextState);
 		nextStateFinalized = false;
+		myParameters.updateParameters();
 	}
 
 	public int getState()
@@ -84,4 +100,8 @@ public abstract class Cell
 		nextStateFinalized = finalized;
 	}
 
+	
+	public Parameter getParameters(){
+		return myParameters;
+	}
 }
