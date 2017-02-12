@@ -40,10 +40,9 @@ public class FireRule extends Rule
 		} else {
 			Random catchFire = new Random();
 			for (Cell neighborCell : neighbors.values()) {
-				if (neighborCell != null && neighborCell.getState() == FIRE
-						&& catchFire.nextDouble() <= myProbFire) {
+				if (neighborCell != null && neighborCell.getState() == FIRE && catchFire.nextDouble() <= myProbFire) {
 					cell.setNextState(FIRE);
-				} 
+				}
 			}
 		}
 	}
@@ -57,4 +56,5 @@ public class FireRule extends Rule
 		stateColorMap.put(0, COLOR_OF_DEAD);
 		return stateColorMap;
 	}
+
 }

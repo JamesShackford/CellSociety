@@ -1,0 +1,3 @@
+Derek Hill (dsh38) Elliot Bolzan (eab91)
+I added a getColor(int state) method to the Rule class that eliminates the need for the state color map to be accessed outside of the rule class. I also refactored the heirarchical structure of the simulation implementation by eliminating a separate grid used to store sim parameters and creating a parameter class that is held by each cell in the over all grid.
+My other group member jr286 fixed the cellGridNeighbors class.

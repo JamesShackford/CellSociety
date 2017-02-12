@@ -104,6 +104,7 @@ public class XMLParser
 		ruleMap.put(FireXMLRule.DATA_TYPE, new FireXMLRule());
 		ruleMap.put(PredatorPreyXMLRule.DATA_TYPE, new PredatorPreyXMLRule());
 		ruleMap.put(SegregationXMLRule.DATA_TYPE, new SegregationXMLRule());
+		ruleMap.put(SugarXMLRule.DATA_TYPE, new SugarXMLRule());
 		return ruleMap;
 	}
 
@@ -114,6 +115,7 @@ public class XMLParser
 		fieldMap.put(FireXMLRule.DATA_TYPE, FireXMLRule.DATA_FIELDS);
 		fieldMap.put(PredatorPreyXMLRule.DATA_TYPE, PredatorPreyXMLRule.DATA_FIELDS);
 		fieldMap.put(SegregationXMLRule.DATA_TYPE, SegregationXMLRule.DATA_FIELDS);
+		fieldMap.put(SugarXMLRule.DATA_TYPE, SugarXMLRule.DATA_FIELDS);
 		return fieldMap;
 	}
 }

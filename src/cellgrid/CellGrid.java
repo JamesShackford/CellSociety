@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 import cell.Cell;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 /**
- * Hold a 2D array pf cell objects where given a specific index can return the
+ * Hold a 2D array of cell objects where given a specific index can return the
  * neighbors of that cell and also updates the cells
  * 
  * @author Jonathan Rub
@@ -16,9 +18,11 @@ import cell.Cell;
 public class CellGrid
 {
 	private List<List<Cell>> myGrid;
+	public static final int GUI_WIDTH = 600;
+	public static final int GUI_HEIGHT = 600;
+	public static final Paint BORDER_COLOR = Color.BLACK;
 	private int myHeight;
 	private int myWidth;
-	private cellGridNeighbors myCell;
 
 	/**
 	 * Initialized the Cell Grid to the specified sized and sets the height and

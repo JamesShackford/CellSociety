@@ -1,5 +1,8 @@
 package cellsociety;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import cellgrid.CellGrid;
@@ -8,22 +11,20 @@ import rule.Rule;
 
 public class CellSociety
 {
-
-	private CellGrid cellGrid;
-	private Rule rule;
+	private Map<Rule, CellGrid> grids;
 
 	public CellSociety(Rule rule)
 	{
-		this.rule = rule;
-		cellGrid = rule.getCellGrid();
-
-		// cellGrid.getGrid()[3][3] = new Cell(rule, 1, 3, 3);
-		// cellGrid.getGrid()[4][3] = new Cell(rule, 1, 4, 3);
-		// cellGrid.getGrid()[3][4] = new Cell(rule, 1, 3, 4);
-		// cellGrid.getGrid()[4][4] = new Cell(rule, 1, 4, 4);
+		grids = new HashMap<Rule, CellGrid>();
+		grids.put(rule, rule.getCellGrid());
 	}
 
-	public int getRandomState()
+	public void addRule(Rule rule)
+	{
+		grids.put(rule, rule.getCellGrid());
+	}
+
+	public int getRandomState(Rule rule)
 	{
 		int numPossibleStates = rule.getStateMap().size();
 		Random rand = new Random();
@@ -35,8 +36,13 @@ public class CellSociety
 
 	public void step(Display display)
 	{
-		cellGrid.updateCellGrid();
-		display.displayGrid(cellGrid);
+		Collection<CellGrid> gridCollection = grids.values();
+
+		for (CellGrid cellGrid : gridCollection) {
+			cellGrid.updateCellGrid();
+		}
+
+		display.displayGrids(gridCollection);
 	}
 
 }
