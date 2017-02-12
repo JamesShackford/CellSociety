@@ -1,5 +1,8 @@
 package cell;
 
+import java.util.HashMap;
+import java.util.Map;
+import display.Display;
 import cellgrid.CellGrid;
 import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
@@ -20,5 +23,18 @@ public class RectangularCell extends Cell
 		Rectangle image = new Rectangle(cellWidth * this.getX(), cellHeight * this.getY(), cellWidth, cellHeight);
 		image.setFill(this.getRule().getColor(this.getState()));
 		return image;
+	}
+	
+	@Override
+	public Map<String, Cell> getNeighbors() {
+		return getAround();
+	}
+	
+	public Map<String, Cell> getNeighborsSides() {
+		return getSides();
+	}
+	
+	public Map<String, Cell> getNeighborsWrap() {
+		return getAllAround();
 	}
 }

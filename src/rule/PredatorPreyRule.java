@@ -41,8 +41,9 @@ public class PredatorPreyRule extends Rule {
 
 	//this method should probably be refactored
 	@Override
-	public void determineNextState(Cell cell) {
-		Map<String, Cell> neighbors = getCellGrid().getNeighborsWrap(cell.getX(), cell.getY());
+	public void determineNextState(Cell cell)
+	{
+		Map<String, Cell> neighbors = cell.getNeighborsWrap();
 		if (!cell.nextStateFinalized()) {
 			List<Cell> emptyNeighbors = getEligibleNeighborsOfState(neighbors, EMPTY);
 			if (cell.getState() == FISH) {

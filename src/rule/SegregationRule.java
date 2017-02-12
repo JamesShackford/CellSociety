@@ -38,7 +38,7 @@ public class SegregationRule extends Rule
 	@Override
 	public void determineNextState(Cell cell)
 	{
-		Map<String, Cell> map = getCellGrid().getNeighbors(cell.getX(), cell.getY());
+		Map<String, Cell> map = cell.getNeighbors();
 		List<Cell> emptyCells = new ArrayList<Cell>();
 		int numNeighbors = 0;
 		int numSimilar = 0;

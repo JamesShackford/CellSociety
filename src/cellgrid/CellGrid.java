@@ -1,5 +1,7 @@
 package cellgrid;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import cell.Cell;
@@ -15,14 +17,12 @@ import javafx.scene.paint.Paint;
  */
 public class CellGrid
 {
+	private List<List<Cell>> myGrid;
 	public static final int GUI_WIDTH = 600;
 	public static final int GUI_HEIGHT = 600;
 	public static final Paint BORDER_COLOR = Color.BLACK;
-
-	private Cell[][] myGrid;
 	private int myHeight;
 	private int myWidth;
-	private cellGridNeighbors myCell;
 
 	/**
 	 * Initialized the Cell Grid to the specified sized and sets the height and
@@ -32,7 +32,14 @@ public class CellGrid
 	 */
 	public CellGrid(int size)
 	{
-		myGrid = new Cell[size][size];
+		myGrid = new ArrayList<List<Cell>>();
+		for (int i = 0; i < size; i++){
+			myGrid.add(i, new ArrayList<Cell>());
+			for (int j = 0; j < size; j++){
+				myGrid.get(i).add(j, null);
+			}
+		}
+		
 		myHeight = size;
 		myWidth = size;
 	}
@@ -45,21 +52,27 @@ public class CellGrid
 	 */
 	public CellGrid(int height, int width)
 	{
-		myGrid = new Cell[height][width];
+		myGrid = new ArrayList<List<Cell>>();
+		for (int i = 0; i < height; i++){
+			myGrid.add(i, new ArrayList<Cell>());
+			for (int j = 0; j < width; j++){
+				myGrid.get(i).add(j, null);
+			}
+		}
 		myHeight = height;
 		myWidth = width;
 	}
 
 	public Cell getCell(int x, int y)
 	{
-		return myGrid[x][y];
+		return myGrid.get(x).get(y);
 	}
 
 	public void setCell(int x, int y, Cell cell)
 	{
-		myGrid[x][y] = cell;
+		myGrid.get(x).set(y, cell);
 	}
-
+	
 	/**
 	 * @return the height of the 2D array
 	 */
@@ -77,62 +90,19 @@ public class CellGrid
 	}
 
 	/**
-	 * Uses the cellGridNeighbors helper class to get the neighbors of the cells
-	 * 
-	 * @param x
-	 *            is the x index of the desired cell
-	 * @param y
-	 *            is the y index of the desired cell
-	 * @return a Hashmap consisting of the neighbor cells with the keys being
-	 *         strings representing the location and the value value being the
-	 *         cell
-	 * 
-	 */
-	public Map<String, Cell> getNeighbors(int x, int y)
-	{
-		myCell = new cellGridNeighbors(myGrid, x, y);
-		return myCell.getNeighbors();
-	}
-
-	/**
-	 * Uses the cellGridNeighbors helper class to get the neighbors of the cells
-	 * when the neighbors can wrap around
-	 * 
-	 * @param x
-	 *            is the x index of the desired cell
-	 * @param y
-	 *            is the y index of the desired cell
-	 * @return a Hashmap consisting of the neighbor cells with the keys being
-	 *         strings representing the location and the value value being the
-	 *         cell
-	 * 
-	 */
-	public Map<String, Cell> getNeighborsWrap(int x, int y)
-	{
-		myCell = new cellGridNeighbors(myGrid, x, y);
-		return myCell.getNeighborsWrap();
-	}
-
-	public Map<String, Cell> getNeighborsSides(int x, int y)
-	{
-		myCell = new cellGridNeighbors(myGrid, x, y);
-		return myCell.getNeighborsSides();
-	}
-
-	/**
 	 * iterates through the grid and updates all of the cells
 	 */
 	public void updateCellGrid()
 	{
-		for (int i = 0; i < myGrid.length; i++) {
-			for (int j = 0; j < myGrid[i].length; j++) {
-				myGrid[i][j].getRule().determineNextState(myGrid[i][j]);
+		for (int i = 0; i < myGrid.size(); i++) {
+			for (int j = 0; j < myGrid.get(i).size(); j++) {
+				myGrid.get(i).get(j).getRule().determineNextState(myGrid.get(i).get(j));
 			}
 		}
-		for (int i = 0; i < myGrid.length; i++) {
-			for (int j = 0; j < myGrid[i].length; j++) {
-				myGrid[i][j].updateCell();
+		for (int i = 0; i < myGrid.size(); i++) {
+			for (int j = 0; j < myGrid.get(i).size(); j++) {
+				myGrid.get(i).get(j).updateCell();
 			}
 		}
-	}
+	}	
 }

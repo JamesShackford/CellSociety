@@ -34,7 +34,7 @@ public class FireRule extends Rule
 	@Override
 	public void determineNextState(Cell cell)
 	{
-		Map<String, Cell> neighbors = getCellGrid().getNeighborsSides(cell.getX(), cell.getY());
+		Map<String, Cell> neighbors = cell.getNeighborsSides();
 		if (cell.getState() == FIRE || cell.getState() == DEAD) {
 			cell.setNextState(DEAD);
 		} else {
