@@ -31,7 +31,7 @@ public class TriangleCell extends Cell {
 		} else {
 			makeDownTri(image, xCor, yCor, sideLength, cellHeight);
 		}
-		image.setFill(this.getRule().getStateMap().get(this.getState()));
+		image.setFill(this.getRule().getColor(this.getState()));
 		return image;
 	}
 	

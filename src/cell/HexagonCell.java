@@ -29,7 +29,7 @@ public class HexagonCell extends Cell {
 				xCor + 3.0 * sideLength / 2.0, yCor + cellHeight / 2.0, xCor + sideLength / 2.0,
 				yCor + cellHeight / 2.0, xCor, yCor);
 		image.setStroke(Color.LIGHTBLUE);
-		image.setFill(this.getRule().getStateMap().get(this.getState()));
+		image.setFill(this.getRule().getColor(this.getState()));
 		return image;
 	}
 

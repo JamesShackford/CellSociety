@@ -172,11 +172,11 @@ public class SugarRule extends Rule {
 
 	private Collection<Cell> getNeighbors(Cell cell) {
 		int vision = cell.getParameters().get(SugarParameter.VISION);
-		Map<String, Cell> neighbors = cellGrid.getNeighborsSides(cell.getX(), cell.getY());
+		Map<String, Cell> neighbors = cell.getNeighborsSides();
 		for (String position : neighbors.keySet()) {
 			Cell neighbor = neighbors.get(position);
 			for (int i = 0; i < vision; i++) {
-				Map<String, Cell> nextNeighbors = cellGrid.getNeighbors(neighbor.getX(), neighbor.getY());
+				Map<String, Cell> nextNeighbors = neighbor.getNeighborsSides();
 				if (nextNeighbors.get(position) != null) {
 					neighbors.put(position, nextNeighbors.get(position));
 					neighbor = nextNeighbors.get(position);
