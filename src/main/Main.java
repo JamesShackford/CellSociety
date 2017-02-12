@@ -1,14 +1,11 @@
 package main;
 
-import java.io.File;
-import java.util.ResourceBundle;
+import java.util.ArrayList;
+import java.util.List;
 
 import cellsociety.CellSociety;
 import display.Display;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import rule.Rule;
 import xml.XMLParser;
@@ -23,35 +20,27 @@ public class Main extends Application
 	public static final String DATA_FILE_EXTENSION = "*.xml";
 	public static final String LANGUAGE = "English";
 
-	// it is generally accepted behavior that the chooser remembers where user
-	// left it last
-	private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + LANGUAGE);
-	private FileChooser myChooser = makeChooser(DATA_FILE_EXTENSION);
-
 	@Override
 	public void start(Stage stage) throws Exception
 	{
-		File dataFile = myChooser.showOpenDialog(stage);
-		if (dataFile != null) {
-			Rule rule = new XMLParser().getRule(dataFile);
+		String ruleName = (String) XMLParser.RULE_MAP.keySet().toArray()[0];
+		Rule rule = new XMLParser().getRule(XMLParser.FILE_MAP.get(ruleName));
 
-			cellSociety = new CellSociety(rule);
-			display = new Display(stage, cellSociety);
-		} else {
-			// nothing selected, so quit the application
-			Platform.exit();
-		}
-	}
+		cellSociety = new CellSociety(rule);
+		List<CellSociety> cellSocieties = new ArrayList<CellSociety>();
+		cellSocieties.add(cellSociety);
 
-	// set some sensible defaults when the FileChooser is created
-	private FileChooser makeChooser(String extensionAccepted)
-	{
-		FileChooser result = new FileChooser();
-		result.setTitle(myResources.getString("OpenFileTitle"));
-		// pick a reasonable place to start searching for files
-		result.setInitialDirectory(new File(System.getProperty("user.dir")));
-		result.getExtensionFilters().setAll(new ExtensionFilter("Text Files", extensionAccepted));
-		return result;
+		ruleName = (String) XMLParser.RULE_MAP.keySet().toArray()[1];
+		rule = new XMLParser().getRule(XMLParser.FILE_MAP.get(ruleName));
+		cellSociety = new CellSociety(rule);
+		cellSocieties.add(cellSociety);
+
+		ruleName = (String) XMLParser.RULE_MAP.keySet().toArray()[2];
+		rule = new XMLParser().getRule(XMLParser.FILE_MAP.get(ruleName));
+		cellSociety = new CellSociety(rule);
+		cellSocieties.add(cellSociety);
+
+		display = new Display(stage, cellSocieties);
 	}
 
 	// private void handleKeyReleased(KeyCode code) throws Exception

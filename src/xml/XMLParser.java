@@ -21,13 +21,13 @@ public class XMLParser
 {
 	// name of root attribute that notes the type of file expecting to parse
 	public static final String TYPE_ATTRIBUTE = "type";
+	public static final Map<String, List<String>> FIELD_MAP = makeFieldMap();
+	public static final Map<String, XMLRule> RULE_MAP = makeRuleMap();
+	public static final Map<String, File> FILE_MAP = makeFileMap();
 
 	// keep only one documentBuilder because it is expensive to make and can
 	// reset it before parsing
 	private static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();
-
-	private final Map<String, List<String>> fieldMap = makeFieldMap();
-	private final Map<String, XMLRule> ruleMap = makeRuleMap();
 
 	/**
 	 * Get the data contained in this XML file as an object
@@ -43,10 +43,10 @@ public class XMLParser
 		// }
 		// read data associated with the fields given by the object
 		Map<String, String> results = new HashMap<>();
-		for (String field : fieldMap.get(dataType)) {
+		for (String field : FIELD_MAP.get(dataType)) {
 			results.put(field, getTextValue(root, field));
 		}
-		return ruleMap.get(dataType).makeRule(results);
+		return RULE_MAP.get(dataType).makeRule(results);
 	}
 
 	// Returns if this is a valid XML file for the specified object type
@@ -117,5 +117,16 @@ public class XMLParser
 		fieldMap.put(SegregationXMLRule.DATA_TYPE, SegregationXMLRule.DATA_FIELDS);
 		fieldMap.put(SugarXMLRule.DATA_TYPE, SugarXMLRule.DATA_FIELDS);
 		return fieldMap;
+	}
+
+	private static Map<String, File> makeFileMap()
+	{
+		Map<String, File> fileMap = new HashMap<String, File>();
+		fileMap.put(GameOfLifeXMLRule.DATA_TYPE, new File("./data/GameOfLife.xml"));
+		fileMap.put(FireXMLRule.DATA_TYPE, new File("./data/Fire.xml"));
+		fileMap.put(PredatorPreyXMLRule.DATA_TYPE, new File("./data/WaTor.xml"));
+		fileMap.put(SegregationXMLRule.DATA_TYPE, new File("./data/Segregation.xml"));
+		fileMap.put(SugarXMLRule.DATA_TYPE, new File("./data/Sugar.xml"));
+		return fileMap;
 	}
 }

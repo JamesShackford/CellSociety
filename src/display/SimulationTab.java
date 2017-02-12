@@ -1,55 +1,72 @@
 package display;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
-import cellgrid.CellGrid;
+import cellsociety.CellSociety;
 import javafx.animation.Animation;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tab;
+import rule.Rule;
+import xml.XMLParser;
 
 public class SimulationTab extends AbstractTab
 {
+	public static final int SIMULATIONS_HEIGHT = Display.DISPLAY_HEIGHT - 200;
+	public static final int SIMULATIONS_WIDTH = Display.DISPLAY_WIDTH - 100;
+
 	private final String TAB_NAME = "Simulation";
 	private Animation animation;
-	private Button pauseButton = makePauseButton(CellGrid.GUI_WIDTH / 2, CellGrid.GUI_HEIGHT + 50);
-	private Button startButton = makeStartButton(CellGrid.GUI_WIDTH / 2, CellGrid.GUI_HEIGHT + 75);
-	private Button stepButton = makeStepButton(CellGrid.GUI_WIDTH / 2, CellGrid.GUI_HEIGHT + 100);
-	private Slider speedSlider = makeSpeedSlider(CellGrid.GUI_WIDTH / 2, CellGrid.GUI_HEIGHT + 125);
+	private Button pauseButton = makePauseButton(Display.DISPLAY_WIDTH / 2, Display.DISPLAY_HEIGHT - 150);
+	private Button startButton = makeStartButton(Display.DISPLAY_WIDTH / 2, Display.DISPLAY_HEIGHT - 125);
+	private Button stepButton = makeStepButton(Display.DISPLAY_WIDTH / 2, Display.DISPLAY_HEIGHT - 100);
+	private Slider speedSlider = makeSpeedSlider(Display.DISPLAY_WIDTH / 2, Display.DISPLAY_HEIGHT - 75);
+	private Slider numSimulationsSlider = makeNumSimulationsSlider(Display.DISPLAY_WIDTH - 100,
+			Display.DISPLAY_HEIGHT - 50);
+	private List<SimulationGroup> cellGroups;
+	private List<CellSociety> cellSocieties;
 	private double defaultAnimationRate;
 
-	public SimulationTab(Animation animation)
+	public SimulationTab(Animation animation, List<CellSociety> cellSocieties)
 	{
+		super(cellSocieties);
 		this.setTab(new Tab());
 		this.getTab().setText(TAB_NAME);
 		this.animation = animation;
 		defaultAnimationRate = animation.getCurrentRate();
+		this.cellSocieties = cellSocieties;
+		cellGroups = makeCellGroups(animation, cellSocieties);
+	}
+
+	private List<SimulationGroup> makeCellGroups(Animation animation, List<CellSociety> societies)
+	{
+		List<SimulationGroup> simulationGroups = new ArrayList<SimulationGroup>();
+		for (int i = 0; i < societies.size(); i++) {
+			simulationGroups.add(new SimulationGroup(societies.get(i), animation, i, societies.size()));
+		}
+		return simulationGroups;
 	}
 
 	@Override
-	public Tab updateTab(Collection<CellGrid> grids)
+	public Tab updateTab()
 	{
-		this.getTab().setContent(makeSimulation(grids));
+		this.getTab().setContent(makeSimulation());
 		return this.getTab();
 	}
 
-	private Group makeSimulation(Collection<CellGrid> grids)
+	private Group makeSimulation()
 	{
 		Group simulation = new Group();
-		int i = 0;
-		for (CellGrid grid : grids) {
-			Group gridImage = CellGridMaker.makeGridImage(grid, i, grids.size());
-			// gridImage.setLayoutX(gridImage.getLayoutX() +
-			// Display.X_BOUNDARY);
-			// gridImage.setLayoutY(gridImage.getLayoutY() +
-			// Display.Y_BOUNDARY);
-			simulation.getChildren().add(gridImage);
+		for (SimulationGroup simulationGroup : cellGroups) {
+			simulation.getChildren().add(simulationGroup.getSimulationImage());
 		}
 		simulation.getChildren().add(pauseButton);
 		simulation.getChildren().add(startButton);
 		simulation.getChildren().add(stepButton);
 		simulation.getChildren().add(speedSlider);
+		simulation.getChildren().add(numSimulationsSlider);
 		// simulation.setScaleX(simulation.getScaleX() * 0.5);
 		// simulation.setScaleY(simulation.getScaleY() * 0.5);
 		return simulation;
@@ -109,6 +126,40 @@ public class SimulationTab extends AbstractTab
 		slider.setOnMouseReleased((event) -> {
 			animation.play();
 			animation.setRate(defaultAnimationRate * slider.getValue());
+		});
+		return slider;
+	}
+
+	private Slider makeNumSimulationsSlider(int xPos, int yPos)
+	{
+		Slider slider = new Slider();
+		slider.setMin(1);
+		slider.setMax(4);
+		slider.setValue(1);
+		slider.setShowTickLabels(true);
+		slider.setMajorTickUnit(1);
+		slider.setMinorTickCount(5);
+		slider.setLayoutX(xPos);
+		slider.setLayoutY(yPos);
+		slider.valueProperty().addListener((obs, oldval, newVal) -> slider.setValue(newVal.intValue()));
+		slider.setOnDragDetected((event) -> {
+			animation.pause();
+		});
+		slider.setOnMouseReleased((event) -> {
+
+			while (cellSocieties.size() < (int) slider.getValue()) {
+				String defaultRuleName = (String) XMLParser.RULE_MAP.keySet().toArray()[0];
+				Rule rule = new XMLParser().getRule(XMLParser.FILE_MAP.get(defaultRuleName));
+				cellSocieties.add(new CellSociety(rule));
+			}
+
+			while (cellSocieties.size() > (int) slider.getValue()) {
+				cellSocieties.remove(cellSocieties.size() - 1);
+			}
+
+			cellGroups = makeCellGroups(animation, cellSocieties);
+
+			animation.play();
 		});
 		return slider;
 	}

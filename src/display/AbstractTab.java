@@ -1,17 +1,19 @@
 package display;
 
-import java.util.Collection;
+import java.util.List;
 
-import cellgrid.CellGrid;
+import cellsociety.CellSociety;
 import javafx.scene.control.Tab;
 
 public abstract class AbstractTab
 {
 	private Tab tab;
+	private List<CellSociety> cellSocieties;
 
-	public AbstractTab()
+	public AbstractTab(List<CellSociety> cellSocieties)
 	{
 		this.tab = new Tab();
+		this.cellSocieties = cellSocieties;
 	}
 
 	public Tab getTab()
@@ -19,10 +21,15 @@ public abstract class AbstractTab
 		return tab;
 	}
 
+	public List<CellSociety> getSocieties()
+	{
+		return this.cellSocieties;
+	}
+
 	public void setTab(Tab tab)
 	{
 		this.tab = tab;
 	}
 
-	public abstract Tab updateTab(Collection<CellGrid> grids);
+	public abstract Tab updateTab();
 }

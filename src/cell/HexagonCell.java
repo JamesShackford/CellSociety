@@ -3,22 +3,24 @@ package cell;
 import java.util.HashMap;
 import java.util.Map;
 
-import display.Display;
+import display.SimulationTab;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 import rule.Rule;
 
-public class HexagonCell extends Cell {
+public class HexagonCell extends Cell
+{
 
-	public HexagonCell(Rule rule, int intialState, int x, int y) {
+	public HexagonCell(Rule rule, int intialState, int x, int y)
+	{
 		super(rule, intialState, x, y);
 	}
 
 	@Override
-	public Node getImage() {
-		double cellWidth = Display.DISPLAY_WIDTH / this.getCellGrid().getWidth();
+	public Node getImage()
+	{
+		double cellWidth = SimulationTab.SIMULATIONS_WIDTH / this.getCellGrid().getWidth();
 		double sideLength = cellWidth / 2;
 		double cellHeight = 2.0 * Math.sin(Math.toRadians(60)) * sideLength;
 		double xCor = ((this.getY() * 3.0) / 4.0) * cellWidth;
@@ -34,7 +36,8 @@ public class HexagonCell extends Cell {
 	}
 
 	@Override
-	public Map<String, Cell> getNeighbors() {
+	public Map<String, Cell> getNeighbors()
+	{
 		Map<String, Cell> neighbors = new HashMap<String, Cell>();
 		neighbors.putAll(getSides());
 		if (this.getX() % 2 == 1) {
@@ -60,12 +63,14 @@ public class HexagonCell extends Cell {
 	}
 
 	@Override
-	public Map<String, Cell> getNeighborsSides() {
+	public Map<String, Cell> getNeighborsSides()
+	{
 		return getNeighbors();
 	}
 
 	@Override
-	public Map<String, Cell> getNeighborsWrap() {
+	public Map<String, Cell> getNeighborsWrap()
+	{
 		Map<String, Cell> neighbors = new HashMap<String, Cell>();
 		neighbors.putAll(getAllAround());
 		if (this.getY() % 2 == 0) {
