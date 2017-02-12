@@ -1,27 +1,17 @@
 package cellsociety;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 import cellgrid.CellGrid;
-import display.Display;
 import rule.Rule;
 
 public class CellSociety
 {
-	private Map<Rule, CellGrid> grids;
+	private Rule rule;
 
 	public CellSociety(Rule rule)
 	{
-		grids = new HashMap<Rule, CellGrid>();
-		grids.put(rule, rule.getCellGrid());
-	}
-
-	public void addRule(Rule rule)
-	{
-		grids.put(rule, rule.getCellGrid());
+		this.rule = rule;
 	}
 
 	public int getRandomState(Rule rule)
@@ -34,15 +24,19 @@ public class CellSociety
 		return possibleStates[randStateNumber];
 	}
 
-	public void step(Display display)
+	// public void step(Display display)
+	// {
+	// display.displayGrids(this);
+	// }
+
+	public CellGrid getCellGrid()
 	{
-		Collection<CellGrid> gridCollection = grids.values();
+		return rule.getCellGrid();
+	}
 
-		for (CellGrid cellGrid : gridCollection) {
-			cellGrid.updateCellGrid();
-		}
-
-		display.displayGrids(gridCollection);
+	public void setRule(Rule rule)
+	{
+		this.rule = rule;
 	}
 
 }

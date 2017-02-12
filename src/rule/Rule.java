@@ -23,10 +23,10 @@ public abstract class Rule
 		stateColorMap = makeStateMap();
 	}
 
-	public Paint getColor(int state){
+	public Paint getColor(int state)
+	{
 		return stateColorMap.get(state);
 	}
-	
 
 	public abstract void determineNextState(Cell cell);
 
@@ -41,17 +41,19 @@ public abstract class Rule
 	{
 		this.cellGrid = cellGrid;
 	}
-	
-	public Map<Integer, Paint> getStateMap(){
+
+	public Map<Integer, Paint> getStateMap()
+	{
 		return stateColorMap;
 	}
-	
-	public void duplicateStats(Cell current, Cell newCell){
+
+	public void duplicateStats(Cell current, Cell newCell)
+	{
 		newCell.getParameters().replaceParameters(current.getParameters().getParameterClone());
 	}
-	
-	public Parameter getParameterType(int intialState){
+
+	public Parameter getParameterType(int intialState)
+	{
 		return new Parameter();
 	}
-
 }

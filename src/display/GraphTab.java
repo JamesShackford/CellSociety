@@ -1,13 +1,13 @@
 package display;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import cell.Cell;
 import cellgrid.CellGrid;
+import cellsociety.CellSociety;
 import javafx.scene.Group;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -23,8 +23,9 @@ public class GraphTab extends AbstractTab
 	Tab tab;
 	int time;
 
-	public GraphTab()
+	public GraphTab(List<CellSociety> cellSocieties)
 	{
+		super(cellSocieties);
 		this.tab = new Tab();
 		time = -1;
 		tab.setText(TAB_NAME);
@@ -32,7 +33,7 @@ public class GraphTab extends AbstractTab
 	}
 
 	@Override
-	public Tab updateTab(Collection<CellGrid> grids)
+	public Tab updateTab()
 	{
 		Group graphs = new Group();
 
@@ -45,8 +46,8 @@ public class GraphTab extends AbstractTab
 		lineChart.setTitle("Number of Cells vs. Time");
 		updateTime();
 
-		for (CellGrid grid : grids) {
-			lineChart.getData().addAll(makeGraph(grid));
+		for (CellSociety society : this.getSocieties()) {
+			lineChart.getData().addAll(makeGraph(society.getCellGrid()));
 		}
 		int i = 0;
 		for (Paint color : stateNumberMap.keySet()) {
@@ -77,7 +78,8 @@ public class GraphTab extends AbstractTab
 			for (int j = 0; j < grid.getWidth(); j++) {
 				Cell currCell = grid.getCell(i, j);
 				int currState = currCell.getState();
-				//Paint stateColor = currCell.getRule().getStateMap().get(currState);
+				// Paint stateColor =
+				// currCell.getRule().getStateMap().get(currState);
 				Paint stateColor = currCell.getRule().getColor(currState);
 				if (stateNumberMap.get(stateColor) == null) {
 					List<Integer> stateNumberList = new ArrayList<Integer>();

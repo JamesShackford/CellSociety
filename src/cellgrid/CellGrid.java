@@ -2,7 +2,6 @@ package cellgrid;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import cell.Cell;
 import javafx.scene.paint.Color;
@@ -18,8 +17,6 @@ import javafx.scene.paint.Paint;
 public class CellGrid
 {
 	private List<List<Cell>> myGrid;
-	public static final int GUI_WIDTH = 600;
-	public static final int GUI_HEIGHT = 600;
 	public static final Paint BORDER_COLOR = Color.BLACK;
 	private int myHeight;
 	private int myWidth;
@@ -33,13 +30,13 @@ public class CellGrid
 	public CellGrid(int size)
 	{
 		myGrid = new ArrayList<List<Cell>>();
-		for (int i = 0; i < size; i++){
+		for (int i = 0; i < size; i++) {
 			myGrid.add(i, new ArrayList<Cell>());
-			for (int j = 0; j < size; j++){
+			for (int j = 0; j < size; j++) {
 				myGrid.get(i).add(j, null);
 			}
 		}
-		
+
 		myHeight = size;
 		myWidth = size;
 	}
@@ -53,9 +50,9 @@ public class CellGrid
 	public CellGrid(int height, int width)
 	{
 		myGrid = new ArrayList<List<Cell>>();
-		for (int i = 0; i < height; i++){
+		for (int i = 0; i < height; i++) {
 			myGrid.add(i, new ArrayList<Cell>());
-			for (int j = 0; j < width; j++){
+			for (int j = 0; j < width; j++) {
 				myGrid.get(i).add(j, null);
 			}
 		}
@@ -72,7 +69,7 @@ public class CellGrid
 	{
 		myGrid.get(x).set(y, cell);
 	}
-	
+
 	/**
 	 * @return the height of the 2D array
 	 */
@@ -104,5 +101,5 @@ public class CellGrid
 				myGrid.get(i).get(j).updateCell();
 			}
 		}
-	}	
+	}
 }

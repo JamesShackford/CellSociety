@@ -1,11 +1,9 @@
 package display;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import cellgrid.CellGrid;
 import cellsociety.CellSociety;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -30,8 +28,8 @@ public class Display
 
 	public static final int X_BOUNDARY = 25;
 	public static final int Y_BOUNDARY = 25;
-	public static final int DISPLAY_HEIGHT = CellGrid.GUI_HEIGHT + 200;
-	public static final int DISPLAY_WIDTH = CellGrid.GUI_WIDTH + 50;
+	public static final int DISPLAY_HEIGHT = 800;
+	public static final int DISPLAY_WIDTH = 700;
 
 	public static final Paint BACKGROUND_COLOR = Color.WHITE;
 
@@ -40,14 +38,16 @@ public class Display
 	private Scene scene;
 	private List<AbstractTab> abstractTabs;
 	private TabPane tabs;
-	private CellSociety cellSociety;
+	private List<CellSociety> cellSocieties;
 	private ResourceBundle myResources;
 	private Animation animation;
 
-	public Display(Stage stage, CellSociety cellSociety)
+	public Display(Stage stage, List<CellSociety> cellSocieties)
 	{
 		tabs = new TabPane();
-		this.cellSociety = cellSociety;
+		this.cellSocieties = cellSocieties;
+		// cellSocieties = new ArrayList<CellSociety>();
+		// cellSocieties.add(cellSociety);
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + LANGUAGE);
 		this.stage = stage;
 		this.stage.setScene(setupScene());
@@ -58,23 +58,18 @@ public class Display
 		animation.play();
 
 		abstractTabs = new ArrayList<AbstractTab>();
-		SimulationTab simulation = new SimulationTab(animation);
+		SimulationTab simulation = new SimulationTab(animation, cellSocieties);
 		abstractTabs.add(simulation);
-		GraphTab graph = new GraphTab();
+		GraphTab graph = new GraphTab(cellSocieties);
 		abstractTabs.add(graph);
 	}
 
 	public void step(double SECOND_DELAY)
 	{
-		// myStage.getScene().setOnKeyReleased(e -> {
-		// try {
-		// handleKeyReleased(e.getCode());
-		// } catch (Exception e1) {
-		// e1.printStackTrace();
-		// }
-		// });
-		// display.refreshDisplay();
-		cellSociety.step(this);
+		for (CellSociety society : cellSocieties) {
+			society.getCellGrid().updateCellGrid();
+		}
+		displaySocieties();
 	}
 
 	private Animation setupAnimation(KeyFrame frame)
@@ -92,10 +87,10 @@ public class Display
 		return scene;
 	}
 
-	public void displayGrids(Collection<CellGrid> cellGrids)
+	public void displaySocieties()
 	{
 		for (AbstractTab abstractTab : abstractTabs) {
-			tabs.getTabs().add(abstractTab.updateTab(cellGrids));
+			tabs.getTabs().add(abstractTab.updateTab());
 		}
 	}
 
