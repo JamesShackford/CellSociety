@@ -2,7 +2,6 @@ package cell;
 
 import java.util.Map;
 
-import display.SimulationTab;
 import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
 import rule.Rule;
@@ -15,10 +14,10 @@ public class RectangularCell extends Cell
 	}
 
 	@Override
-	public Node getImage()
+	public Node getImage(double gridWidth, double gridHeight)
 	{
-		int cellHeight = SimulationTab.SIMULATIONS_HEIGHT / this.getCellGrid().getHeight();
-		int cellWidth = SimulationTab.SIMULATIONS_WIDTH / this.getCellGrid().getWidth();
+		double cellHeight = gridHeight / this.getCellGrid().getHeight();
+		double cellWidth = gridWidth / this.getCellGrid().getWidth();
 		Rectangle image = new Rectangle(cellWidth * this.getX(), cellHeight * this.getY(), cellWidth, cellHeight);
 		image.setFill(this.getRule().getColor(this.getState()));
 		return image;

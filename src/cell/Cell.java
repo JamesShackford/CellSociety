@@ -9,8 +9,8 @@ import parameters.Parameter;
 import rule.Rule;
 
 /**
- * Abstract class for Cell, provides essential methods and parameters
- * for a Cell in the simulation grid
+ * Abstract class for Cell, provides essential methods and parameters for a Cell
+ * in the simulation grid
  * 
  * All types of cells to be represented in a simulation must extend this class
  * 
@@ -38,10 +38,10 @@ public abstract class Cell
 		myParameters = rule.getParameterType(intialState);
 	}
 
-	public abstract Node getImage();
+	public abstract Node getImage(double gridWidth, double gridHeight);
 
 	/**
-	 * @return   CellGrid that this cell is in
+	 * @return CellGrid that this cell is in
 	 */
 	public CellGrid getCellGrid()
 	{
@@ -102,24 +102,27 @@ public abstract class Cell
 	{
 		nextStateFinalized = finalized;
 	}
-	
-	public boolean isValid(int i, int j){
+
+	public boolean isValid(int i, int j)
+	{
 		return (i >= 0 && i < this.getCellGrid().getHeight()) && (j >= 0 && j < this.getCellGrid().getWidth());
 	}
-	
-	public Map<String, Cell> getAround() {
+
+	public Map<String, Cell> getAround()
+	{
 		Map<String, Cell> neighbors = new HashMap<String, Cell>();
-		for (int i = this.getX() - 1; i <= this.getX() + 1; i++){
-			for (int j = this.getY() - 1; j <= this.getY() + 1; j++){
-				if (!(i == this.getX() && j == this.getY()) && isValid(i,j)){
+		for (int i = this.getX() - 1; i <= this.getX() + 1; i++) {
+			for (int j = this.getY() - 1; j <= this.getY() + 1; j++) {
+				if (!(i == this.getX() && j == this.getY()) && isValid(i, j)) {
 					neighbors.put(i + " " + j, this.getCellGrid().getCell(i, j));
 				}
 			}
 		}
 		return neighbors;
 	}
-	
-	public Map<String, Cell> getSides() {
+
+	public Map<String, Cell> getSides()
+	{
 		Map<String, Cell> neighbors = new HashMap<String, Cell>();
 		if (this.getY() + 1 < this.getCellGrid().getWidth()) {
 			neighbors.put("Center Right", this.getCellGrid().getCell(this.getX(), this.getY() + 1));
@@ -135,23 +138,30 @@ public abstract class Cell
 		}
 		return neighbors;
 	}
-	
-	public Map<String, Cell> getAllAround() {
+
+	public Map<String, Cell> getAllAround()
+	{
 		Map<String, Cell> neighbors = new HashMap<String, Cell>();
-		for (int i = this.getX() - 1; i <= this.getX() + 1; i++){
-			for (int j = this.getY() - 1; j <= this.getY() + 1; j++){
-				if (!(i == this.getX() && j == this.getY())){
-					neighbors.put(i + " " + j, this.getCellGrid().getCell(Math.floorMod(i, this.getCellGrid().getHeight()), Math.floorMod(j, this.getCellGrid().getWidth())));				}
+		for (int i = this.getX() - 1; i <= this.getX() + 1; i++) {
+			for (int j = this.getY() - 1; j <= this.getY() + 1; j++) {
+				if (!(i == this.getX() && j == this.getY())) {
+					neighbors.put(i + " " + j,
+							this.getCellGrid().getCell(Math.floorMod(i, this.getCellGrid().getHeight()),
+									Math.floorMod(j, this.getCellGrid().getWidth())));
+				}
 			}
 		}
 		return neighbors;
 	}
-	
+
 	public abstract Map<String, Cell> getNeighbors();
+
 	public abstract Map<String, Cell> getNeighborsSides();
+
 	public abstract Map<String, Cell> getNeighborsWrap();
-	
-	public Parameter getParameters(){
+
+	public Parameter getParameters()
+	{
 		return myParameters;
 	}
 
