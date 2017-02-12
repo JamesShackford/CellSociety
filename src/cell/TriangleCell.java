@@ -9,7 +9,10 @@ import javafx.scene.shape.Polygon;
 import rule.Rule;
 
 public class TriangleCell extends Cell {
+	
+	private int mySum = this.getX() + this.getY();
 
+	
 	public TriangleCell(Rule rule, int intialState, int x, int y) {
 		super(rule, intialState, x, y);
 		// TODO Auto-generated constructor stub
@@ -52,20 +55,22 @@ public class TriangleCell extends Cell {
 	public Map<String, Cell> getNeighbors() {
 		Map<String, Cell> neighbors = new HashMap<String, Cell>();
 		neighbors.putAll(getAround());
-		if (this.getX() - 2 >= 0) {
-			neighbors.put("Center 2 Left", this.getCellGrid().getCell(this.getX() - 2, this.getY()));
-			if (this.getY() - 1 >= 0) {
-				neighbors.put("Lower Center 2 Left", this.getCellGrid().getCell(this.getX() - 2, this.getY()-1));
-			}else if(this.getY() + 1 < this.getCellGrid().getWidth() && this.getY()%2 == 1 ){
-				neighbors.put("Upper Center 2 Left", this.getCellGrid().getCell(this.getX() - 2, this.getY()+1));
+		if (isValid(this.getX(), this.getY() - 2)) {
+			neighbors.put("Center 2 Left", this.getCellGrid().getCell(this.getX(), this.getY() - 2));
+			if (isValid(this.getX() - 1,this.getY()-2) && mySum%2 == 1) {
+				neighbors.put("Upper 2 Left", this.getCellGrid().getCell(this.getX() - 1, this.getY() - 2));
+			}
+			if(isValid(this.getX()+1,this.getY()-2) && mySum%2 == 0){
+				neighbors.put("Upper 2 Right", this.getCellGrid().getCell(this.getX()+1, this.getY() - 2));
 			}
 		}
-		if (this.getX() + 2 < this.getCellGrid().getHeight()) {
-			neighbors.put("Center 2 Right", this.getCellGrid().getCell(this.getX() + 2, this.getY()));
-			if (this.getY() - 1 >= 0) {
-				neighbors.put("Lower Center 2 Right", this.getCellGrid().getCell(this.getX() + 2, this.getY()-1));
-			}else if(this.getY() + 1 < this.getCellGrid().getWidth() && this.getY()%2 == 1 ){
-				neighbors.put("Upper Center 2 Left", this.getCellGrid().getCell(this.getX() + 2, this.getY()+1));
+		if (isValid(this.getX(), this.getY()+2)) {
+			neighbors.put("Center 2 Right", this.getCellGrid().getCell(this.getX(), this.getY()+2));
+			if (isValid(this.getX() - 1,this.getY()+2) && mySum%2 == 1) {
+				neighbors.put("Lower 2 Right", this.getCellGrid().getCell(this.getX() -1, this.getY() + 2));
+			}
+			if(isValid(this.getX() + 1,this.getY()+2) && mySum%2 == 0){
+				neighbors.put("Upper 2 Left", this.getCellGrid().getCell(this.getX() +1, this.getY() + 2));
 			}
 		}
 		return neighbors;
@@ -73,14 +78,29 @@ public class TriangleCell extends Cell {
 
 	@Override
 	public Map<String, Cell> getNeighborsSides() {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, Cell> neighbors = new HashMap<String, Cell>();
+		neighbors.putAll(getSides());
+		if ((this.getX() + this.getY())%2 == 0){
+			neighbors.remove("Top");
+		}else{
+			neighbors.remove("Bottom");
+		}
+		return neighbors;
 	}
 
 	@Override
 	public Map<String, Cell> getNeighborsWrap() {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, Cell> neighbors = new HashMap<String, Cell>();
+		neighbors.putAll(getAllAround());
+		neighbors.put("Center 2 Left", this.getCellGrid().getCell(Math.floorMod(this.getX(), this.getCellGrid().getHeight()), Math.floorMod(this.getY() - 2, this.getCellGrid().getWidth())));
+		neighbors.put("Center 2 Right", this.getCellGrid().getCell(Math.floorMod(this.getX(), this.getCellGrid().getHeight()), Math.floorMod(this.getY()+2, this.getCellGrid().getWidth())));
+		if (mySum%2 == 1) {
+			neighbors.put("Upper 2 Left", this.getCellGrid().getCell(Math.floorMod(this.getX() - 1, this.getCellGrid().getHeight()), Math.floorMod(this.getY() - 2, this.getCellGrid().getWidth())));
+			neighbors.put("Lower 2 Right", this.getCellGrid().getCell(Math.floorMod(this.getX() -1, this.getCellGrid().getHeight()), Math.floorMod(this.getY() + 2, this.getCellGrid().getWidth())));
+		}else{
+			neighbors.put("Upper 2 Right", this.getCellGrid().getCell(Math.floorMod(this.getX()+1, this.getCellGrid().getHeight()), Math.floorMod(this.getY() - 2, this.getCellGrid().getWidth())));
+			neighbors.put("Upper 2 Left", this.getCellGrid().getCell(Math.floorMod(this.getX() +1, this.getCellGrid().getHeight()), Math.floorMod(this.getY() + 2, this.getCellGrid().getWidth())));
+		}
+		return neighbors;
 	}
-
 }

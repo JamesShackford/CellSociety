@@ -106,16 +106,16 @@ public abstract class Cell
 	public Map<String, Cell> getSides() {
 		Map<String, Cell> neighbors = new HashMap<String, Cell>();
 		if (this.getY() + 1 < this.getCellGrid().getWidth()) {
-			neighbors.put("Bottom", this.getCellGrid().getCell(this.getX(), this.getY() + 1));
+			neighbors.put("Center Right", this.getCellGrid().getCell(this.getX(), this.getY() + 1));
 		}
 		if (this.getY() - 1 >= 0) {
-			neighbors.put("Top", this.getCellGrid().getCell(this.getX(), this.getY() - 1));
+			neighbors.put("Center Left", this.getCellGrid().getCell(this.getX(), this.getY() - 1));
 		}
 		if (this.getX() - 1 >= 0) {
-			neighbors.put("Center Left", this.getCellGrid().getCell(this.getX() - 1, this.getY()));
+			neighbors.put("Top", this.getCellGrid().getCell(this.getX() - 1, this.getY()));
 		}
 		if (this.getX() + 1 < this.getCellGrid().getHeight()) {
-			neighbors.put("Center Right", this.getCellGrid().getCell(this.getX() + 1, this.getY()));
+			neighbors.put("Bottom", this.getCellGrid().getCell(this.getX() + 1, this.getY()));
 		}
 		return neighbors;
 	}
