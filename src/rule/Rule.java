@@ -16,6 +16,7 @@ import cell.Cell;
 import cellgrid.CellGrid;
 import javafx.scene.paint.Paint;
 import parameters.Parameter;
+import property.CellTypeProperty;
 import property.IntArrayProperty;
 import property.IntProperty;
 import property.Property;
@@ -24,10 +25,11 @@ public abstract class Rule {
 	CellGrid cellGrid;
 	private Map<Integer, Paint> stateColorMap;
 	public static final List<String> GLOBAL_DATA_FIELDS = Arrays
-			.asList(new String[] { "initial_states", "width", "height" });
+			.asList(new String[] { "initial_states", "width", "height", "cell_type" });
 	private IntArrayProperty startingConfiguration = new IntArrayProperty("initial_states");
 	private IntProperty width = new IntProperty("width");
 	private IntProperty height = new IntProperty("height");
+	private CellTypeProperty cellType = new CellTypeProperty("cell_type");
 
 	public Rule(Map<String, String> dataValues) {
 		// for (Property<?> currProperty : this.getProperties()) {
@@ -82,6 +84,7 @@ public abstract class Rule {
 		globalProperties.add(startingConfiguration);
 		globalProperties.add(width);
 		globalProperties.add(height);
+		globalProperties.add(cellType);
 		return globalProperties;
 	}
 
@@ -158,5 +161,10 @@ public abstract class Rule {
 	{
 		return height;
 
+	}
+
+	public CellTypeProperty getCellType()
+	{
+		return cellType;
 	}
 }

@@ -26,7 +26,8 @@ public class GameOfLifeRule extends Rule
 			currProperty.setValue(dataValues.get(currProperty.getName()));
 		}
 		CellGrid grid = new CellGrid(this.getStartingConfiguration().getValue(), this,
-				this.getHeight().getValue().intValue(), this.getWidth().getValue().intValue());
+				this.getHeight().getValue().intValue(), this.getWidth().getValue().intValue(),
+				this.getCellType().getValue());
 		this.setCellGrid(grid);
 	}
 

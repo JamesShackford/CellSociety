@@ -10,6 +10,7 @@
 	<lower_agent_start_sugar>5</lower_agent_start_sugar>
 	<width>20</width>
 	<height>20</height>
+	<cell_type>rectangle</cell_type>
 <initial_states>1 2 2 2 2 2 2 2 3 3 3 2 2 2 1 2 2 2 2 2
 2 2 2 2 2 2 2 2 3 3 3 2 2 2 2 2 2 2 2 2
 2 2 2 2 2 2 2 2 3 3 3 2 2 2 2 2 2 2 2 2
