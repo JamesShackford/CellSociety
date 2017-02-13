@@ -21,7 +21,13 @@ public class SegregationRule extends Rule
 	public static final Paint O_COLOR = Color.RED;
 	public static final Paint EMPTY_COLOR = Color.WHITE;
 
+	// private DoubleProperty threshold = new DoubleProperty("threshold");
 	private double threshold;
+
+	public SegregationRule(Map<String, String> dataValues)
+	{
+
+	}
 
 	public SegregationRule(double threshold)
 	{

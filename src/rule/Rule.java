@@ -56,4 +56,5 @@ public abstract class Rule
 	{
 		return new Parameter();
 	}
+
 }
