@@ -1,10 +1,12 @@
 package cellgrid;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 import cell.Cell;
-import cell.RectangularCell;
+import exceptions.ShowExceptions;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import rule.Rule;
@@ -43,21 +45,27 @@ public class CellGrid
 		myWidth = size;
 	}
 
-	public CellGrid(List<List<Integer>> initialConfiguration, Rule rule, int height, int width)
+	public CellGrid(List<List<Integer>> initialConfiguration, Rule rule, int height, int width,
+			Class<? extends Cell> cellClass)
 	{
-		this(initialConfiguration.size());
-		rule.setCellGrid(this);
-		System.out.println(initialConfiguration);
+		this(height);
+		try {
+			Constructor<? extends Cell> cellConstructor = cellClass.getConstructor(Rule.class, Integer.TYPE,
+					Integer.TYPE, Integer.TYPE);
+			rule.setCellGrid(this);
 
-		for (int i = 0; i < height; i++) {
-			for (int j = 0; j < width; j++) {
-				System.out.println(initialConfiguration.get(i).get(j));
-
-				int currState = (initialConfiguration.get(i).get(j));
-
-				Cell addedCell = new RectangularCell(rule, currState, i, j);
-				this.setCell(i, j, addedCell);
+			for (int i = 0; i < height; i++) {
+				for (int j = 0; j < width; j++) {
+					int currState = (initialConfiguration.get(i).get(j));
+					Cell addedCell = cellConstructor.newInstance(rule, currState, i, j);
+					this.setCell(i, j, addedCell);
+				}
 			}
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException e) {
+			ShowExceptions alert = new ShowExceptions();
+			// alert.getAlert("INVALICELLCREATION");
+			e.printStackTrace();
 		}
 	}
 

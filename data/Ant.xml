@@ -7,6 +7,7 @@
 	<max_pher>1000</max_pher>
 	<width>20</width>
 	<height>20</height>
+	<cell_type>rectangle</cell_type>
 <initial_states>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0

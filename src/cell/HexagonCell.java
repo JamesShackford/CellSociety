@@ -3,7 +3,6 @@ package cell;
 import java.util.HashMap;
 import java.util.Map;
 
-import display.SimulationTab;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
@@ -18,9 +17,9 @@ public class HexagonCell extends Cell
 	}
 
 	@Override
-	public Node getImage()
+	public Node getImage(double gridWidth, double gridHeight)
 	{
-		double cellWidth = SimulationTab.SIMULATIONS_WIDTH / this.getCellGrid().getWidth();
+		double cellWidth = gridWidth / this.getCellGrid().getWidth();
 		double sideLength = cellWidth / 2;
 		double cellHeight = 2.0 * Math.sin(Math.toRadians(60)) * sideLength;
 		double xCor = ((this.getY() * 3.0) / 4.0) * cellWidth;

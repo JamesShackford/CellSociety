@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import parameters.Parameter;
 import parameters.PredatorPreyParameter;
-import property.DoubleProperty;
+import property.IntProperty;
 import property.Property;
 
 /**
@@ -28,8 +28,8 @@ public class PredatorPreyRule extends Rule
 	public static final Paint FISH_COLOR = Color.YELLOW;
 	public static final Paint SHARK_COLOR = Color.GRAY;
 
-	private DoubleProperty starveTime = new DoubleProperty("starve_time");
-	private DoubleProperty breedTime = new DoubleProperty("breed_time");
+	private IntProperty starveTime = new IntProperty("starve_time");
+	private IntProperty breedTime = new IntProperty("breed_time");
 	public static final List<String> DATA_FIELDS = makeDataFields();
 
 	public PredatorPreyRule(Map<String, String> dataValues)
@@ -38,7 +38,8 @@ public class PredatorPreyRule extends Rule
 			currProperty.setValue(dataValues.get(currProperty.getName()));
 		}
 		CellGrid grid = new CellGrid(this.getStartingConfiguration().getValue(), this,
-				this.getHeight().getValue().intValue(), this.getHeight().getValue().intValue());
+				this.getHeight().getValue().intValue(), this.getHeight().getValue().intValue(),
+				this.getCellType().getValue());
 		this.setCellGrid(grid);
 	}
 
