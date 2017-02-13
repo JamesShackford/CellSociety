@@ -9,7 +9,6 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -24,7 +23,6 @@ public class SimulationGroup
 	private ComboBox<String> selectionBox;
 	private VBox dynamicUpdaters;
 	private int societyNumber;
-	private Button saveButton = makeSaveButton();
 	private double width;
 	private double height;
 	private int numCols;
@@ -100,7 +98,6 @@ public class SimulationGroup
 			}
 		}
 		vbox.getChildren().add(selectionBox);
-		vbox.getChildren().add(saveButton);
 		vbox.setAlignment(Pos.CENTER);
 		return vbox;
 	}
@@ -129,17 +126,6 @@ public class SimulationGroup
 
 		});
 		return selectionBox;
-	}
-	
-	private Button makeSaveButton(){
-		Button button = new Button();
-		button.setText("Save");
-		button.setOnAction((event) -> {
-			cellSociety.getRule().saveConfiguration();
-		});
-		button.setLayoutX(width/4);
-		button.setLayoutY(height);
-		return button;
 	}
 
 }

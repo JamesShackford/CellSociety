@@ -25,5 +25,4 @@ public abstract class XMLRule
 	}
 
 	public abstract Rule getRule(Map<String, String> dataValues);
-
 }

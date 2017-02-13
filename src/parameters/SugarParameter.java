@@ -2,12 +2,6 @@ package parameters;
 
 import rule.SugarRule;
 
-/**
- * Stores relevant parameters for SugarScape simulation
- * 
- * @author Derek
- *
- */
 public class SugarParameter extends Parameter {
 
 	public static final int GROWTH = 0;
@@ -37,13 +31,6 @@ public class SugarParameter extends Parameter {
 		set(GROWTH, get(NEXT_GROWTH));
 	}
 
-	/**
-	 * 
-	 * @param state
-	 * @param high
-	 * @param low
-	 * @return
-	 */
 	private int determineAgentStat(int state, int high, int low) {
 		if (state == SugarRule.AGENT) {
 			return randInt(high, low);

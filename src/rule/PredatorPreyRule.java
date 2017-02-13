@@ -255,16 +255,4 @@ public class PredatorPreyRule extends Rule
 		fields.add("breed_time");
 		return fields;
 	}
-
-	@Override
-	public String getSimTypeCopy() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Property<?>> getPropertiesNewConfig() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
