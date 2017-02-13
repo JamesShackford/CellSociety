@@ -71,7 +71,7 @@ public class Parameter {
 	/**
 	 * generic decrement method that can be called to increment any parameter
 	 * @param incrementIndex
-	 * @param referenceIndex
+	 * @param referenceIndex is reference index
 	 */
 	public void decrementParameter(int incrementIndex, int referenceIndex) {
 		set(incrementIndex, get(referenceIndex) - 1);
