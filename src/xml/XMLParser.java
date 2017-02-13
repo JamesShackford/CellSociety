@@ -113,6 +113,7 @@ public class XMLParser
 		ruleMap.put(PredatorPreyXMLRule.DATA_TYPE, new PredatorPreyXMLRule());
 		ruleMap.put(SegregationXMLRule.DATA_TYPE, new SegregationXMLRule());
 		ruleMap.put(SugarXMLRule.DATA_TYPE, new SugarXMLRule());
+		ruleMap.put(AntXMLRule.DATA_TYPE, new AntXMLRule());
 		return ruleMap;
 	}
 
@@ -124,6 +125,7 @@ public class XMLParser
 		fieldMap.put(PredatorPreyXMLRule.DATA_TYPE, PredatorPreyXMLRule.DATA_FIELDS);
 		fieldMap.put(SegregationXMLRule.DATA_TYPE, SegregationXMLRule.DATA_FIELDS);
 		fieldMap.put(SugarXMLRule.DATA_TYPE, SugarXMLRule.DATA_FIELDS);
+		fieldMap.put(AntXMLRule.DATA_TYPE, AntXMLRule.DATA_FIELDS);
 		return fieldMap;
 	}
 
@@ -135,6 +137,7 @@ public class XMLParser
 		fileMap.put(PredatorPreyXMLRule.DATA_TYPE, new File("./data/WaTor.xml"));
 		fileMap.put(SegregationXMLRule.DATA_TYPE, new File("./data/Segregation.xml"));
 		fileMap.put(SugarXMLRule.DATA_TYPE, new File("./data/Sugar.xml"));
+		fileMap.put(AntXMLRule.DATA_TYPE, new File("./data/Ant.xml"));
 		return fileMap;
 	}
 }
