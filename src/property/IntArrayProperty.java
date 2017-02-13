@@ -5,7 +5,7 @@ import java.util.List;
 
 import javafx.scene.Node;
 
-public class IntArrayProperty extends Property<List<ArrayList<Integer>>>
+public class IntArrayProperty extends Property<List<List<Integer>>>
 {
 	public IntArrayProperty(String name)
 	{
@@ -19,7 +19,7 @@ public class IntArrayProperty extends Property<List<ArrayList<Integer>>>
 		int height = values.length;
 		int width = values[0].split(" ").length;
 
-		List<ArrayList<Integer>> states = new ArrayList<ArrayList<Integer>>();
+		List<List<Integer>> states = new ArrayList<List<Integer>>();
 
 		for (int i = 0; i < height; i++) {
 			states.add(new ArrayList<Integer>());

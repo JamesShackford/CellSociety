@@ -6,7 +6,6 @@ import java.util.List;
 import cellsociety.CellSociety;
 import javafx.animation.Animation;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -66,7 +65,7 @@ public class SimulationTab extends AbstractTab
 		BorderPane simulation = new BorderPane();
 		GridPane gridSimulations = new GridPane();
 		for (int i = 0; i < cellGroups.size(); i++) {
-			Group simulationImage = cellGroups.get(i).getSimulationImage();
+			BorderPane simulationImage = cellGroups.get(i).getSimulationImage();
 			gridSimulations.add(simulationImage, cellGroups.get(i).getColNumber(), cellGroups.get(i).getRowNumber());
 		}
 		simulation.setCenter(gridSimulations);

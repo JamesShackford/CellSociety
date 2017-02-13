@@ -1,24 +1,22 @@
 package property;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
 
-public class DoubleProperty extends Property<Double>
+public class IntProperty extends Property<Integer>
 {
 
-	private double minValue = 0;
-	private double maxValue = 1;
+	private int minValue = 0;
+	private int maxValue = 1;
 
-	public DoubleProperty(String name)
+	public IntProperty(String name)
 	{
 		super(name);
 	}
 
-	public void setBounds(double minValue, double maxValue)
+	public void setBounds(int minValue, int maxValue)
 	{
 		this.minValue = minValue;
 		this.maxValue = maxValue;
@@ -27,7 +25,7 @@ public class DoubleProperty extends Property<Double>
 	@Override
 	public void setValue(String stringValue)
 	{
-		this.setValue(Double.valueOf(stringValue));
+		this.setValue(Integer.valueOf(stringValue));
 	}
 
 	@Override
@@ -44,16 +42,13 @@ public class DoubleProperty extends Property<Double>
 		slider.setShowTickLabels(true);
 		slider.setMajorTickUnit(1);
 		slider.setMinorTickCount(5);
-		slider.valueProperty().addListener(new ChangeListener<Number>()
-		{
-			@Override
-			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val)
-			{
-				setValue((double) new_val);
-			}
+		slider.setOnMouseReleased((event) -> {
+			this.setValue((int) slider.getValue());
 		});
+
 		vbox.getChildren().add(label);
 		vbox.getChildren().add(slider);
+
 		return vbox;
 	}
 

@@ -16,24 +16,6 @@ public class SegregationXMLRule extends XMLRule
 	public Rule getRule(Map<String, String> dataValues)
 	{
 		return new SegregationRule(dataValues);
-		// double threshold = 0.0;
-		// Exception invalidThresholdException = new Exception();
-		// try {
-		// threshold = Double.parseDouble(dataValues.get(DATA_FIELDS.get(0)));
-		// if (threshold < 0 || threshold > 1) {
-		// throw invalidThresholdException;
-		// }
-		// } catch (Exception e) {
-		// alert("INVALIDTHRESHOLD");
-		// }
-		// return new SegregationRule(threshold);
 	}
-	//
-	// private static List<String> makeDataFields() {
-	// List<String> dataFields = new ArrayList<String>();
-	// dataFields.add("threshold");
-	// dataFields.addAll(XMLRule.DATA_FIELDS);
-	// return dataFields;
-	// }
 
 }
