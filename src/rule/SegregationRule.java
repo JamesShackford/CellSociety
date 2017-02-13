@@ -32,7 +32,8 @@ public class SegregationRule extends Rule
 		for (Property<?> currProperty : this.getProperties()) {
 			currProperty.setValue(dataValues.get(currProperty.getName()));
 		}
-		CellGrid grid = new CellGrid(this.getStartingConfiguration().getValue(), this);
+		CellGrid grid = new CellGrid(this.getStartingConfiguration().getValue(), this,
+				this.getHeight().getValue().intValue(), this.getWidth().getValue().intValue());
 		this.setCellGrid(grid);
 	}
 

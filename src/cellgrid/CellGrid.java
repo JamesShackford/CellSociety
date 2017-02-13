@@ -43,11 +43,9 @@ public class CellGrid
 		myWidth = size;
 	}
 
-	public CellGrid(List<ArrayList<Integer>> initialConfiguration, Rule rule)
+	public CellGrid(List<List<Integer>> initialConfiguration, Rule rule, int height, int width)
 	{
 		this(initialConfiguration.size());
-		int height = initialConfiguration.size();
-		int width = initialConfiguration.get(0).size();
 		rule.setCellGrid(this);
 		System.out.println(initialConfiguration);
 
