@@ -4,7 +4,7 @@
 	<breed_time>5</breed_time>
 	<width>20</width>
 	<height>20</height>
-	<cell_type>rectangle</cell_type>
+	<cell_type>triangle</cell_type>
 <initial_states>0 2 2 1 2 1 1 0 1 0 1 1 2 2 0 1 0 2 1 0
 0 0 1 2 2 0 1 1 1 1 0 0 0 0 0 2 2 1 0 0
 0 0 0 2 0 2 2 0 0 0 1 0 2 2 0 0 2 0 1 0
