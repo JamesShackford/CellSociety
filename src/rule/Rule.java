@@ -60,6 +60,11 @@ public abstract class Rule
 		return cellGrid;
 	}
 
+	public int randIndex(int tb)
+	{
+		return (int) (Math.random() * tb);
+	}
+
 	public void setCellGrid(CellGrid cellGrid)
 	{
 		this.cellGrid = cellGrid;
