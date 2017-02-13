@@ -11,7 +11,7 @@ Finished: 2/12
 Hours: 240
 
 
-Roles:
+##Roles:
 
 Derek - Simulation implementation, generic cell structure
 
@@ -22,25 +22,27 @@ Jimmy - GUI, Segregation Rule, XML
 We all additonally helped each other with other parts as needed.
 
 
-Sources:
+##Sources:
 
 JavaWorld.com - exception research
 
 
-Files used to start the project (the class(es) containing main):
+##Files used to start the project (the class(es) containing main):
 
 Main is used to start project
 
 
-Files used to test the project:
+##Files used to test the project:
 
 XML files are in data folder
 
 
-Any data or resource files required by the project (including format of non-standard files):
+##Any data or resource files required by the project (including format of non-standard files):
+
 English.properties - language resource file
 
-Any information about using the program (i.e., command-line/applet arguments, key inputs, interesting example data files, or easter eggs):
+
+##Any information about using the program (i.e., command-line/applet arguments, key inputs, interesting example data files, or easter eggs):
 
 
 Any known bugs, crashes, or problems with the project's functionality:
