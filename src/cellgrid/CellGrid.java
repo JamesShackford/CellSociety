@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cell.Cell;
+import cell.RectangularCell;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import rule.Rule;
 
 /**
  * Hold a 2D array of cell objects where given a specific index can return the
@@ -39,6 +41,26 @@ public class CellGrid
 
 		myHeight = size;
 		myWidth = size;
+	}
+
+	public CellGrid(List<ArrayList<Integer>> initialConfiguration, Rule rule)
+	{
+		this(initialConfiguration.size());
+		int height = initialConfiguration.size();
+		int width = initialConfiguration.get(0).size();
+		rule.setCellGrid(this);
+		System.out.println(initialConfiguration);
+
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				System.out.println(initialConfiguration.get(i).get(j));
+
+				int currState = (initialConfiguration.get(i).get(j));
+
+				Cell addedCell = new RectangularCell(rule, currState, i, j);
+				this.setCell(i, j, addedCell);
+			}
+		}
 	}
 
 	/**

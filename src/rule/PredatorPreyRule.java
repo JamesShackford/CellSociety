@@ -11,13 +11,16 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import parameters.Parameter;
 import parameters.PredatorPreyParameter;
+import property.DoubleProperty;
+import property.Property;
 
 /**
  * 
  * @author Derek
  *
  */
-public class PredatorPreyRule extends Rule {
+public class PredatorPreyRule extends Rule
+{
 	public static final int EMPTY = 0;
 	public static final int FISH = 1;
 	public static final int SHARK = 2;
@@ -25,21 +28,20 @@ public class PredatorPreyRule extends Rule {
 	public static final Paint FISH_COLOR = Color.YELLOW;
 	public static final Paint SHARK_COLOR = Color.GRAY;
 
-	private int starveTime;
-	private int breedTime;
+	private DoubleProperty starveTime = new DoubleProperty("starve_time");
+	private DoubleProperty breedTime = new DoubleProperty("breed_time");
+	public static final List<String> DATA_FIELDS = makeDataFields();
 
-	public PredatorPreyRule(int starveTime, int breedTime) {
-		this.starveTime = starveTime;
-		this.breedTime = breedTime;
+	public PredatorPreyRule(Map<String, String> dataValues)
+	{
+		for (Property<?> currProperty : this.getProperties()) {
+			currProperty.setValue(dataValues.get(currProperty.getName()));
+		}
+		CellGrid grid = new CellGrid(this.getStartingConfiguration().getValue(), this);
+		this.setCellGrid(grid);
 	}
 
-	public PredatorPreyRule(CellGrid cellGrid, int starveTime, int breedTime) {
-		super(cellGrid);
-		this.starveTime = starveTime;
-		this.breedTime = breedTime;
-	}
-
-	//this method should probably be refactored
+	// this method should probably be refactored
 	@Override
 	public void determineNextState(Cell cell)
 	{
@@ -72,30 +74,34 @@ public class PredatorPreyRule extends Rule {
 						incrementStarveTime(movedTo);
 					}
 				}
-			} 
+			}
 		}
 	}
 
-	private void updateGenericSpeciesTraits(Cell cell) {
+	private void updateGenericSpeciesTraits(Cell cell)
+	{
 		cell.setNextStateFinalized(true);
 		incrementBreedTime(cell);
 	}
 
-	private Cell move(Cell cell, List<Cell> emptyNeighbors) {
+	private Cell move(Cell cell, List<Cell> emptyNeighbors)
+	{
 		Cell movedTo = duplicateToRandCell(cell, emptyNeighbors);
 		incrementBreedTime(movedTo);
 		kill(cell);
 		return movedTo;
 	}
 
-	private void reproduce(Cell cell, List<Cell> emptyNeighbors) {
+	private void reproduce(Cell cell, List<Cell> emptyNeighbors)
+	{
 		Cell movedTo = duplicateToRandCell(cell, emptyNeighbors);
 		resetBreedTime(movedTo);
 		resetBreedTime(cell);
 	}
 
 	@Override
-	public void setCellGrid(CellGrid cellGrid) {
+	public void setCellGrid(CellGrid cellGrid)
+	{
 		this.cellGrid = cellGrid;
 	}
 
@@ -111,7 +117,8 @@ public class PredatorPreyRule extends Rule {
 	 * @param cell
 	 *            current shark cell
 	 */
-	private void eat(List<Cell> fishList, Cell cell) {
+	private void eat(List<Cell> fishList, Cell cell)
+	{
 		Cell movedTo = duplicateToRandCell(cell, fishList);
 		kill(cell);
 		resetStarveTime(movedTo);
@@ -125,7 +132,8 @@ public class PredatorPreyRule extends Rule {
 	 *            state to match return list to
 	 * @return list of cells in neighbors of given state
 	 */
-	private List<Cell> getEligibleNeighborsOfState(Map<String, Cell> neighbors, int state) {
+	private List<Cell> getEligibleNeighborsOfState(Map<String, Cell> neighbors, int state)
+	{
 		List<Cell> cellList = new ArrayList<Cell>();
 		for (Cell cell : neighbors.values()) {
 			if (cell.getState() == state && !cell.nextStateFinalized()) {
@@ -145,7 +153,8 @@ public class PredatorPreyRule extends Rule {
 	 * @param state
 	 *            state to be moved
 	 */
-	private Cell duplicateToRandCell(Cell cell, List<Cell> cellList) {
+	private Cell duplicateToRandCell(Cell cell, List<Cell> cellList)
+	{
 		int index = randIndex(cellList.size());
 		cellList.get(index).setNextState(cell.getState());
 		cellList.get(index).setNextStateFinalized(true);
@@ -160,7 +169,8 @@ public class PredatorPreyRule extends Rule {
 	 *            topBound of random num generation non-inclusive
 	 * @return random num between 0 and topBound-1 inclusive
 	 */
-	private int randIndex(int topBound) {
+	private int randIndex(int topBound)
+	{
 		return (int) (Math.random() * topBound);
 	}
 
@@ -170,38 +180,46 @@ public class PredatorPreyRule extends Rule {
 	 * @param cell
 	 *            cell to be killed
 	 */
-	private void kill(Cell cell) {
+	private void kill(Cell cell)
+	{
 		cell.setNextState(EMPTY);
 		resetBreedTime(cell);
 		resetStarveTime(cell);
 	}
 
-	private void resetBreedTime(Cell cell) {
+	private void resetBreedTime(Cell cell)
+	{
 		cell.getParameters().set(PredatorPreyParameter.NEXT_BREED, 0);
 	}
-	
-	private void resetStarveTime(Cell cell) {
+
+	private void resetStarveTime(Cell cell)
+	{
 		cell.getParameters().set(PredatorPreyParameter.NEXT_STARVE, 0);
 	}
 
-	private boolean readyToReproduce(Cell cell) {
-		return cell.getParameters().get(PredatorPreyParameter.BREED) >= breedTime;
+	private boolean readyToReproduce(Cell cell)
+	{
+		return cell.getParameters().get(PredatorPreyParameter.BREED) >= breedTime.getValue();
 	}
 
-	private boolean readyToStarve(Cell cell) {
-		return cell.getParameters().get(PredatorPreyParameter.STARVE) >= starveTime;
+	private boolean readyToStarve(Cell cell)
+	{
+		return cell.getParameters().get(PredatorPreyParameter.STARVE) >= starveTime.getValue();
 	}
 
-	private void incrementBreedTime(Cell cell) {
+	private void incrementBreedTime(Cell cell)
+	{
 		cell.getParameters().incrementParameter(PredatorPreyParameter.NEXT_BREED, PredatorPreyParameter.BREED);
 	}
-	
-	private void incrementStarveTime(Cell cell) {
+
+	private void incrementStarveTime(Cell cell)
+	{
 		cell.getParameters().incrementParameter(PredatorPreyParameter.NEXT_STARVE, PredatorPreyParameter.STARVE);
 	}
 
 	@Override
-	public Map<Integer, Paint> makeStateMap() {
+	public Map<Integer, Paint> makeStateMap()
+	{
 		Map<Integer, Paint> stateMap = new HashMap<Integer, Paint>();
 		stateMap.put(FISH, FISH_COLOR);
 		stateMap.put(SHARK, SHARK_COLOR);
@@ -210,9 +228,29 @@ public class PredatorPreyRule extends Rule {
 	}
 
 	@Override
-	public Parameter getParameterType(int intialState) {
+	public Parameter getParameterType(int intialState)
+	{
 		Parameter newParameter = new PredatorPreyParameter();
 		return newParameter;
-		
+
+	}
+
+	@Override
+	public List<Property<?>> getProperties()
+	{
+		List<Property<?>> properties = new ArrayList<Property<?>>();
+		properties.addAll(this.getGlobalProperties());
+		properties.add(starveTime);
+		properties.add(breedTime);
+		return properties;
+	}
+
+	private static List<String> makeDataFields()
+	{
+		List<String> fields = new ArrayList<String>();
+		fields.addAll(GLOBAL_DATA_FIELDS);
+		fields.add("starve_time");
+		fields.add("breed_time");
+		return fields;
 	}
 }

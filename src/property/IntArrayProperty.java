@@ -1,19 +1,15 @@
 package property;
 
-import cell.Cell;
-import cell.RectangularCell;
-import cellgrid.CellGrid;
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.scene.Node;
-import rule.Rule;
 
-public class CellGridProperty extends Property<CellGrid>
+public class IntArrayProperty extends Property<List<ArrayList<Integer>>>
 {
-	Rule rule;
-
-	public CellGridProperty(String name, Rule rule)
+	public IntArrayProperty(String name)
 	{
 		super(name);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -23,17 +19,18 @@ public class CellGridProperty extends Property<CellGrid>
 		int height = values.length;
 		int width = values[0].split(" ").length;
 
-		CellGrid myGrid = new CellGrid(width, height);
+		List<ArrayList<Integer>> states = new ArrayList<ArrayList<Integer>>();
 
 		for (int i = 0; i < height; i++) {
+			states.add(new ArrayList<Integer>());
+
 			for (int j = 0; j < width; j++) {
 				int currState = Integer.parseInt(values[i].split(" ")[j]);
-				Cell addedCell = new RectangularCell(rule, currState, i, j);
-				myGrid.setCell(i, j, addedCell);
+				states.get(i).add(currState);
 			}
 		}
 
-		this.setValue(myGrid);
+		this.setValue(states);
 	}
 
 	@Override

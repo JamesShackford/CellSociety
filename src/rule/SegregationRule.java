@@ -10,6 +10,8 @@ import cell.Cell;
 import cellgrid.CellGrid;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import property.DoubleProperty;
+import property.Property;
 
 public class SegregationRule extends Rule
 {
@@ -21,24 +23,17 @@ public class SegregationRule extends Rule
 	public static final Paint O_COLOR = Color.RED;
 	public static final Paint EMPTY_COLOR = Color.WHITE;
 
-	// private DoubleProperty threshold = new DoubleProperty("threshold");
-	private double threshold;
+	public static final List<String> DATA_FIELDS = makeDataFields();
+
+	private DoubleProperty threshold = new DoubleProperty("threshold");
 
 	public SegregationRule(Map<String, String> dataValues)
 	{
-
-	}
-
-	public SegregationRule(double threshold)
-	{
-		super();
-		this.threshold = threshold;
-	}
-
-	public SegregationRule(CellGrid myGrid, double threshold)
-	{
-		super(myGrid);
-		this.threshold = threshold;
+		for (Property<?> currProperty : this.getProperties()) {
+			currProperty.setValue(dataValues.get(currProperty.getName()));
+		}
+		CellGrid grid = new CellGrid(this.getStartingConfiguration().getValue(), this);
+		this.setCellGrid(grid);
 	}
 
 	@Override
@@ -65,7 +60,7 @@ public class SegregationRule extends Rule
 			}
 		}
 		double percentSame = ((double) numSimilar) / ((double) numNeighbors);
-		if (percentSame <= threshold) {
+		if (percentSame <= threshold.getValue()) {
 			Random rand = new Random();
 			int randEmptyCell = rand.nextInt(emptyCells.size());
 			emptyCells.get(randEmptyCell).setNextState(cell.getState());
@@ -84,6 +79,23 @@ public class SegregationRule extends Rule
 		stateMap.put(O, O_COLOR);
 		stateMap.put(EMPTY, EMPTY_COLOR);
 		return stateMap;
+	}
+
+	@Override
+	public List<Property<?>> getProperties()
+	{
+		List<Property<?>> properties = new ArrayList<Property<?>>();
+		properties.addAll(this.getGlobalProperties());
+		properties.add(threshold);
+		return properties;
+	}
+
+	private static List<String> makeDataFields()
+	{
+		List<String> fields = new ArrayList<String>();
+		fields.addAll(GLOBAL_DATA_FIELDS);
+		fields.add("threshold");
+		return fields;
 	}
 
 }
