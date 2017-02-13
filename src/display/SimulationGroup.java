@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import xml.XMLParser;
 
@@ -18,6 +19,7 @@ public class SimulationGroup
 	private CellSociety cellSociety;
 	private ComboBox<String> selectionBox;
 	private int societyNumber;
+	private Button saveButton = makeSaveButton();
 	private double width;
 	private double height;
 	private int numCols;
@@ -60,6 +62,7 @@ public class SimulationGroup
 		// societyGroup.setScaleY(societyGroup.getScaleY() * getYScaleFactor());
 
 		societyGroup.getChildren().add(selectionBox);
+		societyGroup.getChildren().add(saveButton);
 		return societyGroup;
 	}
 
@@ -108,6 +111,17 @@ public class SimulationGroup
 
 		});
 		return selectionBox;
+	}
+	
+	private Button makeSaveButton(){
+		Button button = new Button();
+		button.setText("Save");
+		button.setOnAction((event) -> {
+			cellSociety.getRule().saveConfiguration();
+		});
+		button.setLayoutX(width/4);
+		button.setLayoutY(height);
+		return button;
 	}
 
 }
