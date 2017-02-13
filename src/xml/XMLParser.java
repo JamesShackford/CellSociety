@@ -16,10 +16,13 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import exceptions.ShowExceptions;
+import rule.AntRule;
 import rule.FireRule;
+import rule.GameOfLifeRule;
 import rule.PredatorPreyRule;
 import rule.Rule;
 import rule.SegregationRule;
+import rule.SugarRule;
 
 public class XMLParser
 {
@@ -122,12 +125,12 @@ public class XMLParser
 	private static Map<String, List<String>> makeFieldMap()
 	{
 		Map<String, List<String>> fieldMap = new HashMap<String, List<String>>();
-		fieldMap.put(GameOfLifeXMLRule.DATA_TYPE, GameOfLifeXMLRule.DATA_FIELDS);
+		fieldMap.put(GameOfLifeXMLRule.DATA_TYPE, GameOfLifeRule.DATA_FIELDS);
 		fieldMap.put(FireXMLRule.DATA_TYPE, FireRule.DATA_FIELDS);
 		fieldMap.put(PredatorPreyXMLRule.DATA_TYPE, PredatorPreyRule.DATA_FIELDS);
 		fieldMap.put(SegregationXMLRule.DATA_TYPE, SegregationRule.DATA_FIELDS);
-		fieldMap.put(SugarXMLRule.DATA_TYPE, SugarXMLRule.DATA_FIELDS);
-		fieldMap.put(AntXMLRule.DATA_TYPE, AntXMLRule.DATA_FIELDS);
+		fieldMap.put(SugarXMLRule.DATA_TYPE, SugarRule.DATA_FIELDS);
+		fieldMap.put(AntXMLRule.DATA_TYPE, AntRule.DATA_FIELDS);
 		return fieldMap;
 	}
 

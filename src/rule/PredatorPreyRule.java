@@ -171,7 +171,8 @@ public class PredatorPreyRule extends Rule
 	 *            topBound of random num generation non-inclusive
 	 * @return random num between 0 and topBound-1 inclusive
 	 */
-	private int randIndex(int topBound)
+	@Override
+	public int randIndex(int topBound)
 	{
 		return (int) (Math.random() * topBound);
 	}
