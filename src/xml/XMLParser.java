@@ -16,7 +16,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import exeptions.ShowExceptions;
+import exceptions.ShowExceptions;
 import rule.Rule;
 
 public class XMLParser
