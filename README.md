@@ -44,12 +44,14 @@ English.properties - language resource file
 
 ##Any information about using the program (i.e., command-line/applet arguments, key inputs, interesting example data files, or easter eggs):
 
-
-Any known bugs, crashes, or problems with the project's functionality:
-
-
-Any extra features included in the project:
+Once the program is run, the user can select from a number of different simulations through a drop down menu. The user can also display multiple simulations on the display and adjust certain parameters of the simulation dynamically using sliders. The simulations available are Fire, Game of Life, Wa Tor, SugarScape, Ant Foraging, and Segregation.
 
 
-Your impressions of the assignment to help improve it in the future:
+##Any known bugs, crashes, or problems with the project's functionality:
+
+
+##Any extra features included in the project:
+
+
+##Your impressions of the assignment to help improve it in the future:
 
