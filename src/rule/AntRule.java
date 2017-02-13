@@ -29,11 +29,12 @@ public class AntRule extends Rule {
 	private int startingAnts;
 	private int maxPher;
 
-	public AntRule(int maxAntsPerCell, int startFoodLevel, int startingAnts, int maxPher) {
+	public AntRule(int maxAntsPerCell, int startFoodLevel, int startingAnts, int maxPher, double evapRate) {
 		this.maxAntsPerCell = maxAntsPerCell;
 		this.startFoodLevel = startFoodLevel;
 		this.startingAnts = startingAnts;
 		this.maxPher = maxPher;
+		this.evapRate = evapRate;
 	}
 
 	@Override
@@ -54,6 +55,7 @@ public class AntRule extends Rule {
 		}
 		if (cell.getState() != NEST && cell.getState() != FOOD) {
 			evapPher(cell);
+			cell.setNextState(cell.getParameters().get(AntParameter.NEXT_NUM_ANTS));
 		}
 
 	}
@@ -150,6 +152,27 @@ public class AntRule extends Rule {
 		if (weightedList.size() > 0) {
 			int randIndex = randIndex(weightedList.size());
 			return weightedList.get(randIndex);
+		}
+		return ant;
+
+	}
+	
+	private Cell determineNextCellNonRandom(Cell ant, int pheromoneType) {
+		Map<String, Cell> neighborsMap = ant.getNeighbors();
+		Collection<Cell> neighbors = neighborsMap.values();
+		removeIneligible(neighbors);
+		int maxPher = 0;
+		for (Cell neighbor : neighbors) {
+			if(maxPher < neighbor.getParameters().get(pheromoneType)) {
+				maxPher = neighbor.getParameters().get(pheromoneType);
+			}
+		}
+		if (neighbors.size() > 0) {
+			for(Cell neighbor : neighbors){
+				if(maxPher < neighbor.getParameters().get(pheromoneType)) {
+					return neighbor;
+				}
+			}
 		}
 		return ant;
 
