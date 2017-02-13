@@ -116,7 +116,6 @@ public class XMLParser
 		ruleMap.put(SegregationXMLRule.DATA_TYPE, new SegregationXMLRule());
 		ruleMap.put(SugarXMLRule.DATA_TYPE, new SugarXMLRule());
 		ruleMap.put(AntXMLRule.DATA_TYPE, new AntXMLRule());
-		//ruleMap.put(FireXMLRule.DATA_TYPE_COPY, new FireXMLRule());
 		return ruleMap;
 	}
 
@@ -129,7 +128,6 @@ public class XMLParser
 		fieldMap.put(SegregationXMLRule.DATA_TYPE, SegregationRule.DATA_FIELDS);
 		fieldMap.put(SugarXMLRule.DATA_TYPE, SugarXMLRule.DATA_FIELDS);
 		fieldMap.put(AntXMLRule.DATA_TYPE, AntXMLRule.DATA_FIELDS);
-		fieldMap.put(FireXMLRule.DATA_TYPE_COPY, FireXMLRule.DATA_FIELDS);
 		return fieldMap;
 	}
 
@@ -142,7 +140,6 @@ public class XMLParser
 		fileMap.put(SegregationXMLRule.DATA_TYPE, new File("./data/Segregation.xml"));
 		fileMap.put(SugarXMLRule.DATA_TYPE, new File("./data/Sugar.xml"));
 		fileMap.put(AntXMLRule.DATA_TYPE, new File("./data/Ant.xml"));
-		fileMap.put(FireXMLRule.DATA_TYPE_COPY, new File("./data/SaveConfiguration.xml"));
 		return fileMap;
 	}
 }

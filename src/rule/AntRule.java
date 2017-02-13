@@ -3,7 +3,6 @@ package rule;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import cell.Cell;
@@ -11,7 +10,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import parameters.AntParameter;
 import parameters.Parameter;
-import property.Property;
 
 public class AntRule extends Rule {
 
@@ -156,12 +154,7 @@ public class AntRule extends Rule {
 			return weightedList.get(randIndex);
 		}
 		return ant;
-		
-		
 
-	}
-	private int randIndex(int topBound){
-		return (int)(Math.random()*topBound);
 	}
 	
 	private Cell determineNextCellNonRandom(Cell ant, int pheromoneType) {
@@ -221,24 +214,6 @@ public class AntRule extends Rule {
 	@Override
 	public Parameter getParameterType(int initialState) {
 		return new AntParameter(initialState, startFoodLevel, startingAnts, maxPher);
-	}
-
-	@Override
-	public List<Property<?>> getProperties() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getSimTypeCopy() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Property<?>> getPropertiesNewConfig() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

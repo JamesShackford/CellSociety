@@ -130,15 +130,4 @@ public class CellGrid
 			}
 		}
 	}
-	
-	public String toString(){
-		String config = "";
-		for (int i = 0; i < myGrid.size(); i++) {
-			for (int j = 0; j < myGrid.get(i).size(); j++) {
-				config += myGrid.get(i).get(j).getState() + " ";
-			}
-			config += "\n";
-		}
-		return config;
-	}
 }
