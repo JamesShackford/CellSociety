@@ -5,10 +5,16 @@ import java.util.List;
 
 import cellsociety.CellSociety;
 import javafx.animation.Animation;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tab;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import rule.Rule;
 import xml.XMLParser;
 
@@ -19,12 +25,11 @@ public class SimulationTab extends AbstractTab
 
 	private final String TAB_NAME = "Simulation";
 	private Animation animation;
-	private Button pauseButton = makePauseButton(Display.DISPLAY_WIDTH / 2, Display.DISPLAY_HEIGHT - 150);
-	private Button startButton = makeStartButton(Display.DISPLAY_WIDTH / 2, Display.DISPLAY_HEIGHT - 125);
-	private Button stepButton = makeStepButton(Display.DISPLAY_WIDTH / 2, Display.DISPLAY_HEIGHT - 100);
-	private Slider speedSlider = makeSpeedSlider(Display.DISPLAY_WIDTH / 2, Display.DISPLAY_HEIGHT - 75);
-	private Slider numSimulationsSlider = makeNumSimulationsSlider(Display.DISPLAY_WIDTH - 100,
-			Display.DISPLAY_HEIGHT - 50);
+	private Button pauseButton = makePauseButton();
+	private Button startButton = makeStartButton();
+	private Button stepButton = makeStepButton();
+	private VBox speedSlider = makeSpeedSlider();
+	private VBox numSimulationsSlider = makeNumSimulationsSlider();
 	private List<SimulationGroup> cellGroups;
 	private List<CellSociety> cellSocieties;
 	private double defaultAnimationRate;
@@ -56,61 +61,77 @@ public class SimulationTab extends AbstractTab
 		return this.getTab();
 	}
 
-	private Group makeSimulation()
+	private BorderPane makeSimulation()
 	{
-		Group simulation = new Group();
-		for (SimulationGroup simulationGroup : cellGroups) {
-			simulation.getChildren().add(simulationGroup.getSimulationImage());
+		BorderPane simulation = new BorderPane();
+		GridPane gridSimulations = new GridPane();
+		for (int i = 0; i < cellGroups.size(); i++) {
+			Group simulationImage = cellGroups.get(i).getSimulationImage();
+			gridSimulations.add(simulationImage, cellGroups.get(i).getColNumber(), cellGroups.get(i).getRowNumber());
 		}
-		simulation.getChildren().add(pauseButton);
-		simulation.getChildren().add(startButton);
-		simulation.getChildren().add(stepButton);
-		simulation.getChildren().add(speedSlider);
-		simulation.getChildren().add(numSimulationsSlider);
-		// simulation.setScaleX(simulation.getScaleX() * 0.5);
-		// simulation.setScaleY(simulation.getScaleY() * 0.5);
+		simulation.setCenter(gridSimulations);
+		simulation.setBottom(makeButtonPane());
+		gridSimulations.setAlignment(Pos.CENTER);
+
 		return simulation;
 	}
 
-	private Button makePauseButton(int xPos, int yPos)
+	private HBox makeButtonPane()
+	{
+		HBox buttonBox = new HBox();
+		buttonBox.getChildren().addAll(pauseButton, startButton, stepButton, speedSlider, numSimulationsSlider);
+		buttonBox.setAlignment(Pos.CENTER);
+		return buttonBox;
+	}
+
+	private Button makePauseButton()
 	{
 		Button button = new Button();
 		button.setText("Pause");
 		button.setOnAction((event) -> {
 			animation.pause();
 		});
-		button.setLayoutX(xPos);
-		button.setLayoutY(yPos);
+		// button.setLayoutX(xPos);
+		// button.setLayoutY(yPos);
 		return button;
 	}
 
-	private Button makeStartButton(int xPos, int yPos)
+	private Button makeStartButton()
 	{
 		Button button = new Button();
 		button.setText("Start");
 		button.setOnAction((event) -> {
 			animation.play();
 		});
-		button.setLayoutX(xPos);
-		button.setLayoutY(yPos);
+		// button.setLayoutX(xPos);
+		// button.setLayoutY(yPos);
 		return button;
 	}
 
-	private Button makeStepButton(int xPos, int yPos)
+	private Button makeStepButton()
 	{
 		Button button = new Button();
 		button.setText("Step");
 		button.setOnAction((event) -> {
+			animation.play();
+			for (CellSociety currSociety : cellSocieties) {
+				currSociety.getCellGrid().updateCellGrid();
+			}
+			updateTab();
 			animation.pause();
-			animation.jumpTo(animation.getCycleDuration());
 		});
-		button.setLayoutX(xPos);
-		button.setLayoutY(yPos);
+		// button.setLayoutX(xPos);
+		// button.setLayoutY(yPos);
 		return button;
 	}
 
-	private Slider makeSpeedSlider(int xPos, int yPos)
+	private VBox makeSpeedSlider()
 	{
+		VBox sliderBox = new VBox();
+
+		Label sliderLabel = new Label();
+		sliderLabel.setText("Speed:");
+
 		Slider slider = new Slider();
 		slider.setMin(0.1);
 		slider.setMax(3);
@@ -118,8 +139,8 @@ public class SimulationTab extends AbstractTab
 		slider.setShowTickLabels(true);
 		slider.setMajorTickUnit(1);
 		slider.setMinorTickCount(5);
-		slider.setLayoutX(xPos);
-		slider.setLayoutY(yPos);
+		// slider.setLayoutX(xPos);
+		// slider.setLayoutY(yPos);
 		slider.setOnDragDetected((event) -> {
 			animation.pause();
 		});
@@ -127,11 +148,19 @@ public class SimulationTab extends AbstractTab
 			animation.play();
 			animation.setRate(defaultAnimationRate * slider.getValue());
 		});
-		return slider;
+
+		sliderBox.getChildren().addAll(sliderLabel, slider);
+
+		return sliderBox;
 	}
 
-	private Slider makeNumSimulationsSlider(int xPos, int yPos)
+	private VBox makeNumSimulationsSlider()
 	{
+		VBox sliderBox = new VBox();
+
+		Label sliderLabel = new Label();
+		sliderLabel.setText("Number of Simulations:");
+
 		Slider slider = new Slider();
 		slider.setMin(1);
 		slider.setMax(4);
@@ -139,8 +168,8 @@ public class SimulationTab extends AbstractTab
 		slider.setShowTickLabels(true);
 		slider.setMajorTickUnit(1);
 		slider.setMinorTickCount(5);
-		slider.setLayoutX(xPos);
-		slider.setLayoutY(yPos);
+		// slider.setLayoutX(xPos);
+		// slider.setLayoutY(yPos);
 		slider.valueProperty().addListener((obs, oldval, newVal) -> slider.setValue(newVal.intValue()));
 		slider.setOnDragDetected((event) -> {
 			animation.pause();
@@ -161,7 +190,10 @@ public class SimulationTab extends AbstractTab
 
 			animation.play();
 		});
-		return slider;
+
+		sliderBox.getChildren().addAll(sliderLabel, slider);
+
+		return sliderBox;
 	}
 
 }
