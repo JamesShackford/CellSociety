@@ -9,7 +9,7 @@ public class IntProperty extends Property<Integer>
 {
 
 	private int minValue = 0;
-	private int maxValue = 1;
+	private int maxValue = 30;
 
 	public IntProperty(String name)
 	{

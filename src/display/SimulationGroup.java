@@ -18,7 +18,7 @@ import xml.XMLParser;
 
 public class SimulationGroup
 {
-	public static int BUTTON_ROOM = 125;
+	public static int BUTTON_ROOM = 175;
 
 	private CellSociety cellSociety;
 	private ComboBox<String> selectionBox;
@@ -123,6 +123,7 @@ public class SimulationGroup
 			{
 				XMLParser parser = new XMLParser();
 				cellSociety.setRule(parser.getRule(XMLParser.FILE_MAP.get(newXML)));
+				dynamicUpdaters = getDynamicUpdaters(animation);
 				animation.play();
 			}
 
