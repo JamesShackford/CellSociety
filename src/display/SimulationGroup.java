@@ -100,6 +100,7 @@ public class SimulationGroup
 			}
 		}
 		vbox.getChildren().add(selectionBox);
+		vbox.getChildren().add(saveButton);
 		vbox.setAlignment(Pos.CENTER);
 		return vbox;
 	}
