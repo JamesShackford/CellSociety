@@ -1,6 +1,8 @@
 package rule;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -8,6 +10,8 @@ import cell.Cell;
 import cellgrid.CellGrid;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import property.DoubleProperty;
+import property.Property;
 
 public class FireRule extends Rule
 {
@@ -17,18 +21,16 @@ public class FireRule extends Rule
 	public static final Color COLOR_OF_FIRE = Color.RED;
 	public static final Color COLOR_OF_TREE = Color.FORESTGREEN;
 	public static final Color COLOR_OF_DEAD = Color.WHITESMOKE;
-	private double myProbFire;
+	public static final List<String> DATA_FIELDS = makeDataFields();
+	private DoubleProperty myProbFire = new DoubleProperty("fire_probability");
 
-	public FireRule(double probFire)
+	public FireRule(Map<String, String> dataValues)
 	{
-		super();
-		myProbFire = probFire;
-	}
-
-	public FireRule(CellGrid myGrid, double probFire)
-	{
-		super(myGrid);
-		myProbFire = probFire;
+		for (Property<?> currProperty : this.getProperties()) {
+			currProperty.setValue(dataValues.get(currProperty.getName()));
+		}
+		CellGrid grid = new CellGrid(this.getStartingConfiguration().getValue(), this);
+		this.setCellGrid(grid);
 	}
 
 	@Override
@@ -40,7 +42,8 @@ public class FireRule extends Rule
 		} else {
 			Random catchFire = new Random();
 			for (Cell neighborCell : neighbors.values()) {
-				if (neighborCell != null && neighborCell.getState() == FIRE && catchFire.nextDouble() <= myProbFire) {
+				if (neighborCell != null && neighborCell.getState() == FIRE
+						&& catchFire.nextDouble() <= myProbFire.getValue()) {
 					cell.setNextState(FIRE);
 				}
 			}
@@ -55,6 +58,23 @@ public class FireRule extends Rule
 		stateColorMap.put(1, COLOR_OF_TREE);
 		stateColorMap.put(0, COLOR_OF_DEAD);
 		return stateColorMap;
+	}
+
+	@Override
+	public List<Property<?>> getProperties()
+	{
+		List<Property<?>> properties = new ArrayList<Property<?>>();
+		properties.addAll(this.getGlobalProperties());
+		properties.add(myProbFire);
+		return properties;
+	}
+
+	private static List<String> makeDataFields()
+	{
+		List<String> fields = new ArrayList<String>();
+		fields.addAll(GLOBAL_DATA_FIELDS);
+		fields.add("fire_probability");
+		return fields;
 	}
 
 }

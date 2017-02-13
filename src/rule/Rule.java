@@ -1,16 +1,37 @@
 package rule;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import cell.Cell;
 import cellgrid.CellGrid;
 import javafx.scene.paint.Paint;
 import parameters.Parameter;
+import property.DoubleProperty;
+import property.IntArrayProperty;
+import property.Property;
 
 public abstract class Rule
 {
 	CellGrid cellGrid;
 	private Map<Integer, Paint> stateColorMap;
+	public static final List<String> GLOBAL_DATA_FIELDS = Arrays
+			.asList(new String[] { "initial_states", "width", "height" });
+	private IntArrayProperty startingConfiguration = new IntArrayProperty("initial_states");
+	private DoubleProperty width = new DoubleProperty("width");
+	private DoubleProperty height = new DoubleProperty("height");
+
+	public Rule(Map<String, String> dataValues)
+	{
+		// for (Property<?> currProperty : this.getProperties()) {
+		// currProperty.setValue(dataValues.get(currProperty.getName()));
+		// }
+		// CellGrid grid = new
+		// CellGrid(this.getStartingConfiguration().getValue(), this);
+		// this.setCellGrid(grid);
+	}
 
 	public Rule()
 	{
@@ -55,5 +76,21 @@ public abstract class Rule
 	public Parameter getParameterType(int intialState)
 	{
 		return new Parameter();
+	}
+
+	public abstract List<Property<?>> getProperties();
+
+	public List<Property<?>> getGlobalProperties()
+	{
+		List<Property<?>> globalProperties = new ArrayList<Property<?>>();
+		globalProperties.add(startingConfiguration);
+		globalProperties.add(width);
+		globalProperties.add(height);
+		return globalProperties;
+	}
+
+	public IntArrayProperty getStartingConfiguration()
+	{
+		return startingConfiguration;
 	}
 }

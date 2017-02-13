@@ -1,42 +1,77 @@
 package display;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cell.Cell;
-import cellgrid.CellGrid;
 import cellsociety.CellSociety;
-import javafx.scene.Group;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Tab;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
 public class GraphTab extends AbstractTab
 {
 	private final String TAB_NAME = "Graph";
-	Map<Paint, List<Integer>> stateNumberMap;
-	Tab tab;
-	int time;
+	private int numCols;
+	private int numRows;
+	private Tab tab;
 
 	public GraphTab(List<CellSociety> cellSocieties)
 	{
 		super(cellSocieties);
 		this.tab = new Tab();
-		time = -1;
 		tab.setText(TAB_NAME);
-		stateNumberMap = new HashMap<Paint, List<Integer>>();
 	}
 
 	@Override
 	public Tab updateTab()
 	{
-		Group graphs = new Group();
+		updateTime();
+		numCols = (int) Math.ceil(Math.sqrt(this.getSocieties().size()));
+		numRows = (int) Math.ceil(Math.sqrt(this.getSocieties().size()));
+		// for (Paint color : stateNumberMap.keySet()) {
+		// XYChart.Series<Number, Number> series = lineChart.getData().get(i);
+		// series.getNode().setStyle(String.format("-fx-stroke: #%s;",
+		// color.toString().replace("0x", "")));
+		// i++;
+		// }
 
+		// for (XYChart.Series<Number, Number> series : lineChart.getData()) {
+		// series.getNode().setStyle(String.format("-fx-stroke: #%s;"), );
+		// }
+		tab.setContent(makeGraphs());
+
+		return tab;
+	}
+
+	public BorderPane makeGraphs()
+	{
+		BorderPane pane = new BorderPane();
+		GridPane graphs = new GridPane();
+		for (int i = 0; i < this.getSocieties().size(); i++) {
+			int rowNumber = (int) Math.floor(i / numRows);
+			int colNumber = (i % numCols);
+			graphs.add(makeGraph(this.getSocieties().get(i)), colNumber, rowNumber);
+			// tab.setContent(makeGraph(society));
+		}
+		pane.setCenter(graphs);
+		return pane;
+	}
+
+	public void updateTime()
+	{
+		for (CellSociety cellSociety : this.getSocieties()) {
+			cellSociety.updateTimes();
+		}
+	}
+
+	private LineChart<Number, Number> makeGraph(CellSociety currSociety)
+	{
 		final NumberAxis xAxis = new NumberAxis();
 		final NumberAxis yAxis = new NumberAxis();
 		xAxis.setLabel("Time");
@@ -44,56 +79,9 @@ public class GraphTab extends AbstractTab
 		final LineChart<Number, Number> lineChart = new LineChart<Number, Number>(xAxis, yAxis);
 
 		lineChart.setTitle("Number of Cells vs. Time");
-		updateTime();
 
-		for (CellSociety society : this.getSocieties()) {
-			lineChart.getData().addAll(makeGraph(society.getCellGrid()));
-		}
-		int i = 0;
-		for (Paint color : stateNumberMap.keySet()) {
-			XYChart.Series<Number, Number> series = lineChart.getData().get(i);
-			series.getNode().setStyle(String.format("-fx-stroke: #%s;", color.toString().replace("0x", "")));
-			i++;
-		}
-
-		// for (XYChart.Series<Number, Number> series : lineChart.getData()) {
-		// series.getNode().setStyle(String.format("-fx-stroke: #%s;"), );
-		// }
-		tab.setContent(lineChart);
-		return tab;
-	}
-
-	public void updateTime()
-	{
-		time++;
-		for (List<Integer> stateNumberList : stateNumberMap.values()) {
-			stateNumberList.add(0);
-		}
-	}
-
-	private List<XYChart.Series<Number, Number>> makeGraph(CellGrid grid)
-	{
 		List<XYChart.Series<Number, Number>> allSeries = new ArrayList<XYChart.Series<Number, Number>>();
-		for (int i = 0; i < grid.getHeight(); i++) {
-			for (int j = 0; j < grid.getWidth(); j++) {
-				Cell currCell = grid.getCell(i, j);
-				int currState = currCell.getState();
-				// Paint stateColor =
-				// currCell.getRule().getStateMap().get(currState);
-				Paint stateColor = currCell.getRule().getColor(currState);
-				if (stateNumberMap.get(stateColor) == null) {
-					List<Integer> stateNumberList = new ArrayList<Integer>();
-					for (int k = 0; k < time; k++) {
-						stateNumberList.add(0);
-					}
-					stateNumberList.add(1);
-					stateNumberMap.put(stateColor, stateNumberList);
-				} else {
-					List<Integer> currStates = stateNumberMap.get(stateColor);
-					stateNumberMap.put(stateColor, incrementList(currStates, currStates.size() - 1));
-				}
-			}
-		}
+		Map<Paint, List<Integer>> stateNumberMap = currSociety.getNumberVsTimeMap();
 		for (Paint color : stateNumberMap.keySet()) {
 			XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>();
 			for (int t = 0; t < stateNumberMap.get(color).size(); t++) {
@@ -106,17 +94,17 @@ public class GraphTab extends AbstractTab
 			}
 			allSeries.add(series);
 		}
-		return allSeries;
-	}
 
-	private List<Integer> incrementList(List<Integer> list, int index)
-	{
-		List<Integer> updatedList = new ArrayList<Integer>();
-		for (int i = 0; i < list.size(); i++) {
-			updatedList.add(i, list.get(i));
+		lineChart.getData().addAll(allSeries);
+
+		int i = 0;
+		for (Paint color : stateNumberMap.keySet()) {
+			XYChart.Series<Number, Number> series = lineChart.getData().get(i);
+			series.getNode().setStyle(String.format("-fx-stroke: #%s;", color.toString().replace("0x", "")));
+			i++;
 		}
-		updatedList.set(index, list.get(index) + 1);
-		return updatedList;
+
+		return lineChart;
 	}
 
 }

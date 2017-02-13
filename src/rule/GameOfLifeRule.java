@@ -1,12 +1,15 @@
 package rule;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cell.Cell;
 import cellgrid.CellGrid;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import property.Property;
 
 public class GameOfLifeRule extends Rule
 {
@@ -15,15 +18,15 @@ public class GameOfLifeRule extends Rule
 	public static final int DEAD = 0;
 	public static final Paint ALIVE_COLOR = Color.WHITE;
 	public static final Paint DEAD_COLOR = Color.BLACK;
+	public static final List<String> DATA_FIELDS = makeDataFields();
 
-	public GameOfLifeRule()
+	public GameOfLifeRule(Map<String, String> dataValues)
 	{
-		super();
-	}
-
-	public GameOfLifeRule(CellGrid myGrid)
-	{
-		super(myGrid);
+		for (Property<?> currProperty : this.getProperties()) {
+			currProperty.setValue(dataValues.get(currProperty.getName()));
+		}
+		CellGrid grid = new CellGrid(this.getStartingConfiguration().getValue(), this);
+		this.setCellGrid(grid);
 	}
 
 	@Override
@@ -63,5 +66,19 @@ public class GameOfLifeRule extends Rule
 		return stateMap;
 	}
 
+	@Override
+	public List<Property<?>> getProperties()
+	{
+		List<Property<?>> properties = new ArrayList<Property<?>>();
+		properties.addAll(this.getGlobalProperties());
+		return properties;
+	}
+
+	private static List<String> makeDataFields()
+	{
+		List<String> fields = new ArrayList<String>();
+		fields.addAll(GLOBAL_DATA_FIELDS);
+		return fields;
+	}
 
 }
