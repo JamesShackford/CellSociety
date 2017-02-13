@@ -1,5 +1,11 @@
 package parameters;
 
+/**
+ * Stores relevant parameters for Wa Tor (Predator Prey) simulation
+ * 
+ * @author Derek
+ *
+ */
 public class PredatorPreyParameter extends Parameter {
 
 	public static final int BREED = 0;

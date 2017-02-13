@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import property.DoubleProperty;
 import property.Property;
+import xml.FireXMLRule;
 
 public class FireRule extends Rule
 {
@@ -69,6 +70,8 @@ public class FireRule extends Rule
 		properties.add(myProbFire);
 		return properties;
 	}
+	
+	
 
 	private static List<String> makeDataFields()
 	{
@@ -76,6 +79,24 @@ public class FireRule extends Rule
 		fields.addAll(GLOBAL_DATA_FIELDS);
 		fields.add("fire_probability");
 		return fields;
+	}
+
+	@Override
+	public List<Property<?>> getPropertiesNewConfig() {
+		List<Property<?>> properties = new ArrayList<Property<?>>();
+		properties.add(myProbFire);
+		List<Property<?>> globalProps = new ArrayList<Property<?>>();
+		globalProps.addAll(this.getGlobalProperties()); 
+		globalProps.remove(0);
+		properties.addAll(globalProps);
+		return properties;
+		
+	}
+
+	@Override
+	public String getSimTypeCopy() {
+		return FireXMLRule.DATA_TYPE_COPY;
+		
 	}
 
 }

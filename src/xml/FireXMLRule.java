@@ -9,6 +9,7 @@ public class FireXMLRule extends XMLRule
 {
 
 	public static final String DATA_TYPE = "Fire";
+	public static final String DATA_TYPE_COPY = "FireCopy";
 
 	// public static final List<String> DATA_FIELDS = makeDataFields();
 
@@ -35,5 +36,6 @@ public class FireXMLRule extends XMLRule
 	// dataFields.addAll(XMLRule.DATA_FIELDS);
 	// return dataFields;
 	// }
+
 
 }
