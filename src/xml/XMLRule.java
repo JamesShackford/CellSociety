@@ -7,7 +7,7 @@ import java.util.Map;
 import cell.Cell;
 import cell.RectangularCell;
 import cellgrid.CellGrid;
-import exeptions.ShowExceptions;
+import exceptions.ShowExceptions;
 import rule.Rule;
 
 public abstract class XMLRule {
