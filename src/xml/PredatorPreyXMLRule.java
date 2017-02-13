@@ -17,8 +17,19 @@ public class PredatorPreyXMLRule extends XMLRule
 	@Override
 	public Rule getRule(Map<String, String> dataValues)
 	{
-		int starveTime = Integer.parseInt(dataValues.get(DATA_FIELDS.get(0)));
-		int breedTime = Integer.parseInt(dataValues.get(DATA_FIELDS.get(1)));
+		int breedTime = 0;
+		int starveTime = 0;
+		Exception invalidPreyException = new Exception();
+		try{
+		starveTime = Integer.parseInt(dataValues.get(DATA_FIELDS.get(0)));
+		breedTime = Integer.parseInt(dataValues.get(DATA_FIELDS.get(1)));
+		if (starveTime < 0 || breedTime < 0){
+			throw invalidPreyException;
+		}
+		}catch(Exception e){
+			alert("INVALIDINITALSTATES");
+		}
+		
 		return new PredatorPreyRule(starveTime, breedTime);
 	}
 

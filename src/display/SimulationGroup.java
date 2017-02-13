@@ -93,7 +93,7 @@ public class SimulationGroup
 		selectionBox.setLayoutY(height);
 		selectionBox.setValue(xmlFiles.get(0));
 		selectionBox.setOnMousePressed((event) -> {
-			animation.pause();
+			animation.stop();
 		});
 		selectionBox.valueProperty().addListener(new ChangeListener<String>()
 		{
