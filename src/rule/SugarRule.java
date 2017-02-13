@@ -3,7 +3,6 @@ package rule;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import cell.Cell;
@@ -12,7 +11,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import parameters.Parameter;
 import parameters.SugarParameter;
-import property.Property;
 
 public class SugarRule extends Rule {
 
@@ -230,24 +228,6 @@ public class SugarRule extends Rule {
 	public Parameter getParameterType(int initialState) {
 		return new SugarParameter(initialState, upperMetabolismLimit, lowerMetabolismLimit,
 				upperVisionLimit, lowerVisionLimit, upperAgentStartSugar, lowerAgentStartSugar);
-	}
-
-	@Override
-	public List<Property<?>> getProperties() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getSimTypeCopy() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Property<?>> getPropertiesNewConfig() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
