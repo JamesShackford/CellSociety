@@ -10,20 +10,30 @@ Finished: 2/12
 
 Hours: 240
 
+
 Roles:
 
 Derek - Simulation implementation, generic cell structure
+
 Jonathan - Cell grid, individual cell subclass implementation (shapes), Exception handling, Fire Rule
+
 Jimmy - GUI, Segregation Rule, XML
+
 We all additonally helped each other with other parts as needed.
 
+
 Sources:
+
 JavaWorld.com - exception research
 
+
 Files used to start the project (the class(es) containing main):
+
 Main is used to start project
 
+
 Files used to test the project:
+
 XML files are in data folder
 
 
