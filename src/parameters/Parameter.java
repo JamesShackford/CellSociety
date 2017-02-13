@@ -33,6 +33,16 @@ public class Parameter {
 	public void incrementParameter(int incrementIndex, int referenceIndex) {
 		set(incrementIndex, get(referenceIndex) + 1);
 	}
+	
+	
+	/**
+	 * generic decrement method that can be called to increment any parameter
+	 * @param incrementIndex
+	 * @param referenceIndex is reference index
+	 */
+	public void decrementParameter(int incrementIndex, int referenceIndex) {
+		set(incrementIndex, get(referenceIndex) - 1);
+	}
 
 	public void updateParameters(){
 
