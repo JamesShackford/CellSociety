@@ -5,11 +5,13 @@ CompSci 308 Cell Society Project
 Derek Hill, Jimmy Shackford, Jonathan Rub
 
 Start: 1/25
+
 Finished: 2/12
 
 Hours: 240
 
 Roles:
+
 Derek - Simulation implementation, generic cell structure
 Jonathan - Cell grid, individual cell subclass implementation (shapes), Exception handling, Fire Rule
 Jimmy - GUI, Segregation Rule, XML
