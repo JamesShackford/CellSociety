@@ -16,8 +16,17 @@ public class FireXMLRule extends XMLRule
 
 	@Override
 	public Rule getRule(Map<String, String> dataValues)
-	{
-		double fireProb = Double.parseDouble(dataValues.get(DATA_FIELDS.get(0)));
+	{	
+		double fireProb = 0.0;
+		Exception invalidFireProbException = new Exception();
+		try{
+		fireProb = Double.parseDouble(dataValues.get(DATA_FIELDS.get(0)));
+		if (fireProb < 0 || fireProb>1){
+			throw invalidFireProbException;
+		}
+		}catch(Exception e){
+			alert("INVALIDFIREPROB");
+		}
 		return new FireRule(fireProb);
 	}
 

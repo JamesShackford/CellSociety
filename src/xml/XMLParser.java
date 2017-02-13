@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -15,6 +16,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import exceptions.ShowExceptions;
 import rule.Rule;
 
 public class XMLParser
@@ -33,7 +35,8 @@ public class XMLParser
 	 * Get the data contained in this XML file as an object
 	 */
 	public Rule getRule(File dataFile)
-	{
+	{	
+		ShowExceptions alert = new ShowExceptions();
 		Element root = getRootElement(dataFile);
 		String dataType = getAttribute(root, TYPE_ATTRIBUTE);
 		// if (!isValidFile(root, Music.DATA_TYPE)) {
@@ -43,9 +46,14 @@ public class XMLParser
 		// }
 		// read data associated with the fields given by the object
 		Map<String, String> results = new HashMap<>();
-		for (String field : FIELD_MAP.get(dataType)) {
-			results.put(field, getTextValue(root, field));
+		try{
+			for (String field : FIELD_MAP.get(dataType)) {
+				results.put(field, getTextValue(root, field));
+			}
+		}catch(NullPointerException e){
+			alert.showAlert("INVALIDRULE");
 		}
+
 		return RULE_MAP.get(dataType).makeRule(results);
 	}
 
