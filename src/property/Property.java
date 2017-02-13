@@ -26,6 +26,10 @@ public abstract class Property<T>
 	{
 		this.value = value;
 	}
+	
+	public String convertToXML(){
+		return "<" + name + ">" + value + "</" + name + ">";
+	}
 
 	public abstract void setValue(String stringValue);
 
