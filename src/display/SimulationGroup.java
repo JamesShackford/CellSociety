@@ -6,18 +6,23 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import property.Property;
 import xml.XMLParser;
 
 public class SimulationGroup
 {
-	public static int BUTTON_ROOM = 25;
+	public static int BUTTON_ROOM = 125;
 
 	private CellSociety cellSociety;
 	private ComboBox<String> selectionBox;
+	private VBox dynamicUpdaters;
 	private int societyNumber;
 	private Button saveButton = makeSaveButton();
 	private double width;
@@ -34,19 +39,18 @@ public class SimulationGroup
 		width = getXScaleFactor() * SimulationTab.SIMULATIONS_WIDTH;
 		height = getYScaleFactor() * SimulationTab.SIMULATIONS_HEIGHT;
 		selectionBox = makeSelectionBox(animation, cellSociety);
+		dynamicUpdaters = getDynamicUpdaters(animation);
 	}
 
-	public Group getSimulationImage()
+	public BorderPane getSimulationImage()
 	{
-		// Group simulationGroup = new Group();
-		// simulationGroup.getChildren().add(makeGridImage());
-		// simulationGroup.getChildren().add(selectionBox);
-		// return simulationGroup;
 		return makeGridImage();
 	}
 
-	private Group makeGridImage()
+	private BorderPane makeGridImage()
 	{
+		BorderPane borderPane = new BorderPane();
+
 		Group societyGroup = new Group();
 
 		for (int i = 0; i < cellSociety.getCellGrid().getHeight(); i++) {
@@ -55,15 +59,9 @@ public class SimulationGroup
 				societyGroup.getChildren().add(addedCell);
 			}
 		}
-		// societyGroup.setLayoutX(getXPosition());
-		// societyGroup.setLayoutY(getYPosition());
-		// societyGroup.getChildren().add(selectionBox);
-		// societyGroup.setScaleX(societyGroup.getScaleX() * getXScaleFactor());
-		// societyGroup.setScaleY(societyGroup.getScaleY() * getYScaleFactor());
-
-		societyGroup.getChildren().add(selectionBox);
-		societyGroup.getChildren().add(saveButton);
-		return societyGroup;
+		borderPane.setCenter(societyGroup);
+		borderPane.setBottom(dynamicUpdaters);
+		return borderPane;
 	}
 
 	private double getXScaleFactor()
@@ -86,12 +84,30 @@ public class SimulationGroup
 		return (societyNumber % numCols);
 	}
 
+	public VBox getDynamicUpdaters(Animation animation)
+	{
+		VBox vbox = new VBox();
+		for (Property<?> property : cellSociety.getRule().getProperties()) {
+			Node dynamicUpdater = property.makeDynamicUpdater();
+			if (dynamicUpdater != null) {
+				dynamicUpdater.setOnMousePressed((event) -> {
+					animation.stop();
+				});
+				dynamicUpdater.setOnMouseReleased((event) -> {
+					animation.play();
+				});
+				vbox.getChildren().add(dynamicUpdater);
+			}
+		}
+		vbox.getChildren().add(selectionBox);
+		vbox.setAlignment(Pos.CENTER);
+		return vbox;
+	}
+
 	private ComboBox<String> makeSelectionBox(Animation animation, CellSociety cellSociety)
 	{
 		ObservableList<String> xmlFiles = FXCollections.observableArrayList(XMLParser.RULE_MAP.keySet());
 		ComboBox<String> selectionBox = new ComboBox<String>(xmlFiles);
-		// System.out.println(getXPosition() + width);
-		// System.out.println(getYPosition() + height);
 		selectionBox.setLayoutX(width / 2);
 		selectionBox.setLayoutY(height);
 		selectionBox.setValue(xmlFiles.get(0));

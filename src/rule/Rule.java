@@ -16,8 +16,8 @@ import cell.Cell;
 import cellgrid.CellGrid;
 import javafx.scene.paint.Paint;
 import parameters.Parameter;
-import property.DoubleProperty;
 import property.IntArrayProperty;
+import property.IntProperty;
 import property.Property;
 
 public abstract class Rule {
@@ -26,8 +26,8 @@ public abstract class Rule {
 	public static final List<String> GLOBAL_DATA_FIELDS = Arrays
 			.asList(new String[] { "initial_states", "width", "height" });
 	private IntArrayProperty startingConfiguration = new IntArrayProperty("initial_states");
-	private DoubleProperty width = new DoubleProperty("width");
-	private DoubleProperty height = new DoubleProperty("height");
+	private IntProperty width = new IntProperty("width");
+	private IntProperty height = new IntProperty("height");
 
 	public Rule(Map<String, String> dataValues) {
 		// for (Property<?> currProperty : this.getProperties()) {
@@ -89,6 +89,7 @@ public abstract class Rule {
 		return startingConfiguration;
 	}
 
+
 	public void saveConfiguration() {
 		String filename = "./data/SaveConfiguration.xml";
 		BufferedWriter bw = null;
@@ -146,5 +147,16 @@ public abstract class Rule {
 		config += cellGrid.toString();
 		config += "</initial_states>";
 		return config;
+	}
+	
+	public IntProperty getWidth()
+	{
+		return width;
+	}
+
+	public IntProperty getHeight()
+	{
+		return height;
+
 	}
 }

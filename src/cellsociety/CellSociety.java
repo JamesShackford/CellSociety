@@ -35,6 +35,11 @@ public class CellSociety
 		time = 0;
 	}
 
+	public Rule getRule()
+	{
+		return rule;
+	}
+
 	public void updateTimes()
 	{
 		time++;
