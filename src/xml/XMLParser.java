@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -17,7 +16,10 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import exceptions.ShowExceptions;
+import rule.FireRule;
+import rule.PredatorPreyRule;
 import rule.Rule;
+import rule.SegregationRule;
 
 public class XMLParser
 {
@@ -35,7 +37,7 @@ public class XMLParser
 	 * Get the data contained in this XML file as an object
 	 */
 	public Rule getRule(File dataFile)
-	{	
+	{
 		ShowExceptions alert = new ShowExceptions();
 		Element root = getRootElement(dataFile);
 		String dataType = getAttribute(root, TYPE_ATTRIBUTE);
@@ -46,11 +48,11 @@ public class XMLParser
 		// }
 		// read data associated with the fields given by the object
 		Map<String, String> results = new HashMap<>();
-		try{
+		try {
 			for (String field : FIELD_MAP.get(dataType)) {
 				results.put(field, getTextValue(root, field));
 			}
-		}catch(NullPointerException e){
+		} catch (NullPointerException e) {
 			alert.showAlert("INVALIDRULE");
 		}
 
@@ -121,9 +123,9 @@ public class XMLParser
 	{
 		Map<String, List<String>> fieldMap = new HashMap<String, List<String>>();
 		fieldMap.put(GameOfLifeXMLRule.DATA_TYPE, GameOfLifeXMLRule.DATA_FIELDS);
-		fieldMap.put(FireXMLRule.DATA_TYPE, FireXMLRule.DATA_FIELDS);
-		fieldMap.put(PredatorPreyXMLRule.DATA_TYPE, PredatorPreyXMLRule.DATA_FIELDS);
-		fieldMap.put(SegregationXMLRule.DATA_TYPE, SegregationXMLRule.DATA_FIELDS);
+		fieldMap.put(FireXMLRule.DATA_TYPE, FireRule.DATA_FIELDS);
+		fieldMap.put(PredatorPreyXMLRule.DATA_TYPE, PredatorPreyRule.DATA_FIELDS);
+		fieldMap.put(SegregationXMLRule.DATA_TYPE, SegregationRule.DATA_FIELDS);
 		fieldMap.put(SugarXMLRule.DATA_TYPE, SugarXMLRule.DATA_FIELDS);
 		fieldMap.put(AntXMLRule.DATA_TYPE, AntXMLRule.DATA_FIELDS);
 		return fieldMap;
